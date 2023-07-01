@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Provider;
-use App\Http\Requests\StoreProviderRequest;
-use App\Http\Requests\UpdateProviderRequest;
+use App\Http\Requests\Provider\StoreProviderRequest;
+use App\Http\Requests\Provider\UpdateProviderRequest;
 
 class ProviderController extends Controller
 {
