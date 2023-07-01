@@ -4,7 +4,7 @@ namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class StoreCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,19 +24,18 @@ class StoreRequest extends FormRequest
         //definimos las reglas de la tabla
         return [
             'name'=>'required|string|max:50',
-            'description'=>'required|string|max:250'
+            'description'=>'nullable|string|max:250'
         ];
     }
 
     public function messages(){
         //definimos los mensajes de error que nos mostrara
         return[
-            'name.required'=>'Este campo es requerido',
-            'name.string'=>'El valor del campo es incorrecto',
-            'name.max'=>'Solo se permite 50 caracteres',
-            'description.required'=>'Este campo es requerido',
-            'description.string'=>'El valor del campo es incorrecto',
-            'description.max'=>'Solo se permite 250 caracteres'
+            'name.required'=>'Este campo es requerido.',
+            'name.string'=>'El valor del campo es incorrecto.',
+            'name.max'=>'Solo se permite 50 caracteres.',
+            'description.string'=>'El valor del campo es incorrecto.',
+            'description.max'=>'Solo se permite 250 caracteres.'
 
         ];
     }

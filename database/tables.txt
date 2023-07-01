@@ -1,0 +1,11 @@
+Compra
+Rol
+Encomendista
+Destino
+Usuario
+Venta
+Cliente
+DetalleVenta
+Articulo
+DetalleCompra
+Fotografia

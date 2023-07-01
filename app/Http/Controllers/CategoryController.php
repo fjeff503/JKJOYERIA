@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Http\Requests\Category\StoreRequest;
-use App\Http\Requests\Category\UpdateRequest;
+use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -19,7 +19,7 @@ class CategoryController extends Controller
         return view('admin.category.create');
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
         //este toma los parametros y reglas pa guardar del Http\Requests\Category\StoreRequest
         Category::create($request->all());
@@ -36,7 +36,7 @@ class CategoryController extends Controller
         return view('admin.category.show', compact('category'));
     }
 
-    public function update(UpdateRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->update($request->all());
         return redirect()->route('categories.index');
