@@ -16,8 +16,6 @@ return new class extends Migration
 
             $table->dateTime('date')->require();
             $table->decimal('total')->require();
-            $table->string('packageState');
-            $table->string('paymentState');
             $table->enum('status', ['VALID', 'CANCELED'])->default('VALID');
             $table->string('description')->nullable();
 
@@ -27,9 +25,12 @@ return new class extends Migration
             //relacion deliveryPoint
             $table->unsignedBigInteger('idDeliveryPoint');
             $table->foreign('idDeliveryPoint')->references('idDeliveryPoint')->on('delivery_points')->onUpdate('cascade');
-            //relacion user
-            $table->unsignedBigInteger('idUser');
-            $table->foreign('idUser')->references('id')->on('users')->onUpdate('cascade');
+            //relacion package_state
+            $table->unsignedBigInteger('packageState');
+            $table->foreign('packageState')->references('idPackageState')->on('package_states')->onUpdate('cascade');
+            ///relacion payment_state
+            $table->unsignedBigInteger('paymentState');
+            $table->foreign('paymentState')->references('idPaymentState')->on('payment_states')->onUpdate('cascade');
 
             $table->softDeletes();
             $table->timestamps();

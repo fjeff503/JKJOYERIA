@@ -6,6 +6,8 @@ use App\Models\Sale;
 use App\Http\Requests\Sale\StoreSaleRequest;
 use App\Http\Requests\Sale\UpdateSaleRequest;
 use App\Models\Client;
+use App\Models\packageState;
+use App\Models\paymentState;
 
 class SaleController extends Controller
 {
@@ -18,12 +20,14 @@ class SaleController extends Controller
     public function create()
     {
         $clients = Client::get();
-        return view('admin.sale.create', compact('clients'));
+        $packageStates = packageState::get();
+        $paymentStates = paymentState::get();
+        return view('admin.sale.create', compact('clients','packageStates', 'paymentStates'));
     }
 
     public function store(StoreSaleRequest $request)
     {
-        //este toma los parametros y reglas pa guardar del Http\Requests\Provider\StoreProviderRequest
+        //este toma los parametros y reglas pa guardar del Http\Requests\Sale\StoreSaleRequest
         $sale = Sale::create($request->all());
 
         foreach($request->idProduct as $key => $product){
@@ -38,15 +42,17 @@ class SaleController extends Controller
         return redirect()->route('sales.index');
     }
 
-    public function show(Sale $provider)
+    public function show(Sale $sale)
     {
         return view('admin.sale.show', compact('sale'));
     }
 
-    public function edit(Sale $provider)
+    public function edit(Sale $sale)
     {
         $clients = Client::get();
-        return view('admin.sale.show', compact('sale', 'clients'));
+        $packageStates = packageState::get();
+        $paymentStates = paymentState::get();
+        return view('admin.sale.show', compact('sale', 'clients', 'packageStates', 'paymentStates'));
     }
 
     public function update(UpdateSaleRequest $request, Sale $sale)

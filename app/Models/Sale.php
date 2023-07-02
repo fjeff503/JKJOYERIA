@@ -31,6 +31,16 @@ class Sale extends Model
         return $this->belongsTo(DeliveryPoint::class);
      }
 
+    //relacionar con paymentState
+    public function paymentState(){
+        return $this->belongsTo(paymentState::class);
+     }
+
+     //relacionar con paymentState
+    public function packageState(){
+        return $this->belongsTo(packageState::class);
+     }
+
     //relacionar con users
     public function user(){
         return $this->belongsTo(User::class);
