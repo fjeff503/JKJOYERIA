@@ -23,7 +23,7 @@ class StoreCategoryRequest extends FormRequest
     {
         //definimos las reglas de la tabla
         return [
-            'name'=>'required|string|max:50',
+            'name'=>'required|string|unique|max:50',
             'description'=>'nullable|string|max:250'
         ];
     }
@@ -34,6 +34,7 @@ class StoreCategoryRequest extends FormRequest
             'name.required'=>'Este campo es requerido.',
             'name.string'=>'El valor del campo es incorrecto.',
             'name.max'=>'Solo se permite 50 caracteres.',
+            'name.unique'=>'La categoria ya se encuentra registrada.',
             
             'description.string'=>'El valor del campo es incorrecto.',
             'description.max'=>'Solo se permite 250 caracteres.'

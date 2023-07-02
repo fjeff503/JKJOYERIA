@@ -20,26 +20,26 @@ class DeliveryPointController extends Controller
     {
         $parcels = Parcel::get();
         $days = Day::get();
-        return view('admin.deliveryPoint.create', compact('categories', 'parcels', 'days'));
+        return view('admin.deliveryPoint.create', compact('parcels', 'days'));
     }
 
     public function store(StoreDeliveryPointRequest $request)
     {
-        //este toma los parametros y reglas pa guardar del Http\Requests\Provider\StoreProviderRequest
+        //este toma los parametros y reglas pa guardar del Http\Requests\DeliveryPoint\StoreDeliveryPointRequest
         DeliveryPoint::create($request->all());
         return redirect()->route('deliveryPoints.index');
     }
 
-    public function show(DeliveryPoint $provider)
+    public function show(DeliveryPoint $deliveryPoint)
     {
         return view('admin.deliveryPoint.show', compact('deliveryPoint'));
     }
 
-    public function edit(DeliveryPoint $provider)
+    public function edit(DeliveryPoint $deliveryPoint)
     {
         $parcels = Parcel::get();
         $days = Day::get();
-        return view('admin.deliveryPoint.show', compact('categories', 'parcels', 'days'));
+        return view('admin.deliveryPoint.show', compact('deliveryPoint', 'parcels', 'days'));
     }
 
     public function update(UpdateDeliveryPointRequest $request, DeliveryPoint $deliveryPoint)

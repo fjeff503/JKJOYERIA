@@ -31,4 +31,9 @@ class Product extends Model
         return $this->belongsTo(Provider::class);
     }
 
+    //relacionar con purchaseDetail
+    public function purchaseDetail(){
+        return $this->hasMany(PurchaseDetail::class);
+    }
+
 }

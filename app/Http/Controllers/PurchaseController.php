@@ -3,64 +3,58 @@
 namespace App\Http\Controllers;
 
 use App\Models\Purchase;
-use App\Http\Requests\StorePurchaseRequest;
-use App\Http\Requests\UpdatePurchaseRequest;
+use App\Http\Requests\Purchase\StorePurchaseRequest;
+use App\Http\Requests\Purchase\UpdatePurchaseRequest;
+use App\Models\Provider;
 
 class PurchaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $purchases = Purchase::get();
+        return view('admin.purchase.index', compact('purchases'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $providers = Provider::get();
+        return view('admin.purchase.create', compact('providers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StorePurchaseRequest $request)
     {
-        //
+        //este toma los parametros y reglas pa guardar del Http\Requests\Provider\StoreProviderRequest
+        $purchase = Purchase::create($request->all());
+
+        foreach($request->idProduct as $key => $product){
+            $results[] = array("idProduct"=>$request->idProduct[$key], "quantity"=>$request->quantity[$key], "price"=>$request->price[$key]);
+        };
+
+        $purchase->purchaseDetails()->createMany($results);
+
+        return redirect()->route('purchases.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Purchase $purchase)
+    public function show(Purchase $provider)
     {
-        //
+        return view('admin.purchase.show', compact('purchase'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Purchase $purchase)
+    public function edit(Purchase $provider)
     {
-        //
+        $providers = Provider::get();
+        return view('admin.purchase.show', compact('purchase', 'providers'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
-        //
+        $purchase->update($request->all());
+        return redirect()->route('purchases.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Purchase $purchase)
     {
-        //
+        $purchase->delete();
+        return redirect()->route('purchases.index');
     }
 }

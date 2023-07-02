@@ -22,7 +22,7 @@ class StoreProviderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|string|max:50',
+            'name'=>'required|string|unique|max:50',
             'address'=>'required|string|max:150',
             'phone'=>'required|string|max:12|min:9|unique:providers',
             'facebook'=>'required|string|max:50',
@@ -37,6 +37,7 @@ class StoreProviderRequest extends FormRequest
             'name.required'=>'Este campo es requerido.',
             'name.string'=>'El valor del campo es incorrecto.',
             'name.max'=>'Solo se permite 50 caracteres.',
+            'name.unique'=>'El proveedor ya se encuentra registrado.',
 
             'address.required'=>'Este campo es requerido.',
             'address.string'=>'El valor del campo es incorrecto.',

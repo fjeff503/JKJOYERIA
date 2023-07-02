@@ -22,7 +22,11 @@ class StorePurchaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'date'=>'required|string|max:15',
+            'total'=>'required|string|max:200',
+            'voucher'=>'required|integer|exists:App\Parcel,idParcel',
+            'idProvider'=>'required|integer|exists:App\Parcel,idParcel',
+            'idUser'=>'required|integer|exists:App\Day,idDay'
         ];
     }
 }

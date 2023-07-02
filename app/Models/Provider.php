@@ -19,7 +19,13 @@ class Provider extends Model
     ];
 
     //relacionar con product
-    public function products(){
+    public function product(){
         return $this->hasMany(Product::class);
      }
+
+    //relacionar con purchase
+    public function purchase(){
+        return $this->hasMany(Purchase::class);
+     }
+     
 }
