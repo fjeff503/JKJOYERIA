@@ -27,8 +27,8 @@ class StoreProductRequest extends FormRequest
             'name'=>'required|string|max:50|unique:products',
             'sellPrice'=>'required|double',
             'description'=>'required|string|max:500',
-            'idCategory'=>'required|integer|exists:App\Category,id',
-            'idProvider'=>'required|integer|exists:App\Provider,id'
+            'idCategory'=>'required|integer|exists:App\Category,idCategory',
+            'idProvider'=>'required|integer|exists:App\Provider,idProvider'
         ];
     }
 
@@ -49,16 +49,16 @@ class StoreProductRequest extends FormRequest
             'sellPrice.double'=>'El valor del campo es incorrecto.',
 
             'description.required'=>'Este campo es requerido.',
-            'description.integer'=>'El valor del campo es incorrecto.',
-            'description.exists'=>'Solo se permite 500 caracteres.',
+            'description.string'=>'El valor del campo es incorrecto.',
+            'description.max'=>'Solo se permite 500 caracteres.',
 
             'idCategory.required'=>'Este campo es requerido.',
-            'idCategory.string'=>'El valor del campo es incorrecto.',
-            'idCategory.max'=>'La categoria no existe.',
+            'idCategory.integer'=>'El valor del campo es incorrecto.',
+            'idCategory.exists'=>'La categoria no existe.',
 
             'idProvider.required'=>'Este campo es requerido.',
-            'idProvider.string'=>'El valor del campo es incorrecto.',
-            'idProvider.max'=>'El proveedor no existe.',
+            'idProvider.integer'=>'El valor del campo es incorrecto.',
+            'idProvider.exists'=>'El proveedor no existe.',
         ];
     }
 }
