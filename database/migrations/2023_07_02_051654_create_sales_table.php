@@ -22,6 +22,9 @@ return new class extends Migration
             //relacion client
             $table->unsignedBigInteger('idClient');
             $table->foreign('idClient')->references('idClient')->on('clients')->onUpdate('cascade');
+            //relacion user
+            $table->unsignedBigInteger('idUser');
+            $table->foreign('idUser')->references('id')->on('users')->onUpdate('cascade');
             //relacion deliveryPoint
             $table->unsignedBigInteger('idDeliveryPoint');
             $table->foreign('idDeliveryPoint')->references('idDeliveryPoint')->on('delivery_points')->onUpdate('cascade');
