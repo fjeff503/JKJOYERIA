@@ -10,7 +10,6 @@ class Purchase extends Model
     use HasFactory;
 
     protected $fillable = [ 
-        'idPurchase',
         'date',
         'total',
         'voucher',
@@ -29,7 +28,7 @@ class Purchase extends Model
         return $this->belongsTo(Provider::class);
      }
 
-    //relacionar con purchase_details
+    //relacionar con purchaseDetails
     public function purchaseDetails(){
         return $this->hasMany(PurchaseDetail::class);
      }

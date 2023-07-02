@@ -28,4 +28,9 @@ class DeliveryPoint extends Model
     public function day(){
         return $this->belongsTo(Day::class);
     }
+
+    //relacionar con sale
+    public function sale(){
+        return $this->hasMany(Sale::class);
+     }
 }

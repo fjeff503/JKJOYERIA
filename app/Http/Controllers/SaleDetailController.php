@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PurchaseDetail;
-use App\Http\Requests\PurchaseDetail\StorePurchaseDetailRequest;
-use App\Http\Requests\PurchaseDetail\UpdatePurchaseDetailRequest;
+use App\Models\SaleDetail;
+use App\Http\Requests\SaleDetail\StoreSaleDetailRequest;
+use App\Http\Requests\SaleDetail\UpdateSaleDetailRequest;
 
-class PurchaseDetailController extends Controller
+class SaleDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class PurchaseDetailController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePurchaseDetailRequest $request)
+    public function store(StoreSaleDetailRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class PurchaseDetailController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PurchaseDetail $purchaseDetail)
+    public function show(SaleDetail $saleDetail)
     {
         //
     }
@@ -43,7 +43,7 @@ class PurchaseDetailController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PurchaseDetail $purchaseDetail)
+    public function edit(SaleDetail $saleDetail)
     {
         //
     }
@@ -51,7 +51,7 @@ class PurchaseDetailController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePurchaseDetailRequest $request, PurchaseDetail $purchaseDetail)
+    public function update(UpdateSaleDetailRequest $request, SaleDetail $saleDetail)
     {
         //
     }
@@ -59,7 +59,7 @@ class PurchaseDetailController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PurchaseDetail $purchaseDetail)
+    public function destroy(SaleDetail $saleDetail)
     {
         //
     }

@@ -14,4 +14,9 @@ class Client extends Model
         'phone',
         'whatsapp'
     ];
+
+    //relacionar con sale
+    public function sale(){
+        return $this->hasMany(Sale::class);
+     }
 }

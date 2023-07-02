@@ -27,7 +27,9 @@ class PurchaseController extends Controller
         $purchase = Purchase::create($request->all());
 
         foreach($request->idProduct as $key => $product){
-            $results[] = array("idProduct"=>$request->idProduct[$key], "quantity"=>$request->quantity[$key], "price"=>$request->price[$key]);
+            $results[] = array("idProduct"=>$request->idProduct[$key], 
+                                "quantity"=>$request->quantity[$key], 
+                                "price"=>$request->price[$key]);
         };
 
         $purchase->purchaseDetails()->createMany($results);
