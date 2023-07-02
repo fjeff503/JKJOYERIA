@@ -34,6 +34,7 @@ class StoreCategoryRequest extends FormRequest
             'name.required'=>'Este campo es requerido.',
             'name.string'=>'El valor del campo es incorrecto.',
             'name.max'=>'Solo se permite 50 caracteres.',
+            
             'description.string'=>'El valor del campo es incorrecto.',
             'description.max'=>'Solo se permite 250 caracteres.'
 

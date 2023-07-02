@@ -50,7 +50,7 @@ class UpdateDeliveryPointRequest extends FormRequest
 
             'idDay.required'=>'Este campo es requerido.',
             'idDay.integer'=>'El valor del campo es incorrecto.',
-            'idDay.exists'=>'La encomienda no existe.'
+            'idDay.exists'=>'El dia no existe.'
         ];
     }
 }

@@ -28,4 +28,26 @@ class UpdateParcelRequest extends FormRequest
             'facebook'=>'nullable|string|unique:parcels,facebook'.$this->route('parcel')->id.'|max:100'
         ];
     }
+
+    public function messages(){
+        //definimos los mensajes de error que nos mostrara
+        return[
+            'name.required'=>'Este campo es requerido.',
+            'name.string'=>'El valor del campo es incorrecto.',
+            'name.max'=>'Solo se permite 50 caracteres.',
+
+            'phone.string'=>'El valor del campo es incorrecto.',
+            'phone.max'=>'Solo se permite 9 caracteres.',
+            'phone.unique'=>'El telefono ya se encuentra registrado.',
+
+            'whatsapp.string'=>'El valor del campo es incorrecto.',
+            'whatsapp.max'=>'Solo se permite 9 caracteres.',
+            'whatsapp.unique'=>'El whatsapp ya se encuentra registrado.',
+
+            'facebook.string'=>'El valor del campo es incorrecto.',
+            'facebook.max'=>'Solo se permite 100 caracteres.',
+            'facebook.unique'=>'El facebook ya se encuentra registrado.',
+
+        ];
+    }
 }

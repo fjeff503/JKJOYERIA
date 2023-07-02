@@ -45,7 +45,7 @@ class UpdateProviderRequest extends FormRequest
             'phone.required'=>'Este campo es requerido.',
             'phone.string'=>'El valor del campo es incorrecto.',
             'phone.max'=>'Solo se permite menos de 12 caracteres.',
-            'phone.min'=>'Solo se permite más de 12 caracteres.',
+            'phone.min'=>'Solo se permite más de 9 caracteres.',
             'phone.unique'=>'El telefono ya se encuentra registrado.',
 
             'facebook.required'=>'Este campo es requerido.',
@@ -55,7 +55,7 @@ class UpdateProviderRequest extends FormRequest
             'whatsapp.required'=>'Este campo es requerido.',
             'whatsapp.string'=>'El valor del campo es incorrecto.',
             'whatsapp.max'=>'Solo se permite menos de 12 caracteres.',
-            'whatsapp.min'=>'Solo se permite más de 12 caracteres.',
+            'whatsapp.min'=>'Solo se permite más de 9 caracteres.',
 
             'description.string'=>'El valor del campo es incorrecto.',
             'description.max'=>'Solo se permite 150 caracteres.',
