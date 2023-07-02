@@ -19,10 +19,10 @@ return new class extends Migration
 
             //relacion products
             $table->unsignedBigInteger('idProduct');
-            $table->foreign('idProduct')->references('idProduct')->on('products');
+            $table->foreign('idProduct')->references('idProduct')->on('products')->onUpdate('cascade');
             //relacion purchases
             $table->unsignedBigInteger('idPurchase');
-            $table->foreign('idPurchase')->references('idPurchase')->on('purchases');
+            $table->foreign('idPurchase')->references('idPurchase')->on('purchases')->onUpdate('cascade');
 
             $table->softDeletes();
             $table->timestamps();

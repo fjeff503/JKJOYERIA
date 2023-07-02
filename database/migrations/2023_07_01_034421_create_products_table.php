@@ -23,10 +23,10 @@ return new class extends Migration
 
             //relacion category
             $table->unsignedBigInteger('idCategory');
-            $table->foreign('idCategory')->references('idCategory')->on('categories');
+            $table->foreign('idCategory')->references('idCategory')->on('categories')->onUpdate('cascade');
             //relacion provider
             $table->unsignedBigInteger('idProvider');
-            $table->foreign('idProvider')->references('idProvider')->on('providers');
+            $table->foreign('idProvider')->references('idProvider')->on('providers')->onUpdate('cascade');
 
             $table->softDeletes();
             $table->timestamps();

@@ -20,10 +20,10 @@ return new class extends Migration
 
             //relacion provider
             $table->unsignedBigInteger('idProvider');
-            $table->foreign('idProvider')->references('idProvider')->on('providers');
+            $table->foreign('idProvider')->references('idProvider')->on('providers')->onUpdate('cascade');
             //relacion user
             $table->unsignedBigInteger('idUser');
-            $table->foreign('idUser')->references('id')->on('users');
+            $table->foreign('idUser')->references('id')->on('users')->onUpdate('cascade');
 
             $table->softDeletes();
             $table->timestamps();

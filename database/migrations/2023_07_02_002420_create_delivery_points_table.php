@@ -20,11 +20,11 @@ return new class extends Migration
 
             //relacion parcel
             $table->unsignedBigInteger('idParcel');
-            $table->foreign('idParcel')->references('idParcel')->on('parcels');
+            $table->foreign('idParcel')->references('idParcel')->on('parcels')->onUpdate('cascade');
 
             //relacion day
             $table->unsignedBigInteger('idDay');
-            $table->foreign('idDay')->references('idDay')->on('days');
+            $table->foreign('idDay')->references('idDay')->on('days')->onUpdate('cascade');
 
             $table->softDeletes();
             $table->timestamps();
