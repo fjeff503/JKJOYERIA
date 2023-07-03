@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\paymentState;
-use App\Http\Requests\StorepaymentStateRequest;
-use App\Http\Requests\UpdatepaymentStateRequest;
+use App\Http\Requests\PaymentState\StorepaymentStateRequest;
+use App\Http\Requests\PaymentState\UpdatepaymentStateRequest;
 
 class PaymentStateController extends Controller
 {

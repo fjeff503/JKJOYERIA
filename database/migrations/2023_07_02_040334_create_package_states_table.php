@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('package_states', function (Blueprint $table) {
             $table->id('idPackageState');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\packageState;
-use App\Http\Requests\StorepackageStateRequest;
-use App\Http\Requests\UpdatepackageStateRequest;
+use App\Http\Requests\PackageState\StorepackageStateRequest;
+use App\Http\Requests\PackageState\UpdatepackageStateRequest;
 
 class PackageStateController extends Controller
 {

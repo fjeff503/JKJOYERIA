@@ -12,10 +12,10 @@ class Sale extends Model
     protected $fillable = [ 
         'date',
         'total',
-        'packageState',
-        'paymentState',
         'status',
         'description',
+        'idPaymentState',
+        'idPackageState',
         'idClient',
         'idDeliveryPoint',
         'idUser'

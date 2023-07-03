@@ -11,7 +11,7 @@ class StorepaymentStateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,18 @@ class StorepaymentStateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name'=>'required|string|unique|max:15',
+        ];
+    }
+
+    public function messages(){
+        //definimos los mensajes de error que nos mostrara
+        return[
+            'name.required'=>'Este campo es requerido.',
+            'name.string'=>'El valor del campo es incorrecto.',
+            'name.max'=>'Solo se permite 15 caracteres.',
+            'name.unique'=>'El estado de pago ya se encuentra registrado.'
+
         ];
     }
 }
