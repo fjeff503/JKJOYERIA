@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -23,7 +24,11 @@ class StoreCategoryRequest extends FormRequest
     {
         //definimos las reglas de la tabla
         return [
-            'name'=>'required|string|unique|max:50',
+            'name'=>[
+                'required',
+                Rule::unique('categories', 'name'),
+                'string',
+                'max:50',],
             'description'=>'nullable|string|max:250'
         ];
     }
@@ -33,8 +38,8 @@ class StoreCategoryRequest extends FormRequest
         return[
             'name.required'=>'Este campo es requerido.',
             'name.string'=>'El valor del campo es incorrecto.',
+            'name.unique'=>'El nombre ya está registrado.',
             'name.max'=>'Solo se permite 50 caracteres.',
-            'name.unique'=>'La categoria ya se encuentra registrada.',
             
             'description.string'=>'El valor del campo es incorrecto.',
             'description.max'=>'Solo se permite 250 caracteres.'

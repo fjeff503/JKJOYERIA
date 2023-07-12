@@ -1,0 +1,32 @@
+<script>
+    destroy = function(e, mensaje1, mensaje2) {
+        let url = e.getAttribute('url')
+        let token = e.getAttribute('token')
+        Swal.fire({
+            icon: 'question',
+            title: '¿Desea continuar?',
+            text: mensaje1,
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Si'
+        }).then((res) => {
+            if (res.isConfirmed) {
+                const request = new XMLHttpRequest();
+                request.open('delete', url);
+                request.setRequestHeader('X-CSRF-TOKEN', token);
+                request.onload = () => {
+                    if (request.status == 200) {
+                        e.closest('tr').remove()
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Éxito!',
+                            text: mensaje2,
+                        })
+                    }
+                }
+                request.onerror = err => rejects(err);
+                request.send();
+            }
+        })
+    }
+</script>
