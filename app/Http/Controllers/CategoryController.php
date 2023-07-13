@@ -30,12 +30,30 @@ class CategoryController extends Controller
 
     public function store(StoreCategoryRequest $request)
     {
-        //Validamos la data
+        // Validamos la data
         $validatedData = $request->validated();
-        //este toma los parametros y reglas pa guardar del Http\Requests\Category\StoreRequest
+    
+        // Verificar si ya existe una categoría con el mismo nombre (incluyendo las eliminadas lógicamente)
+        $existingCategory = Category::withTrashed()->where('name', $validatedData['name'])->first();
+    
+        if ($existingCategory) {
+            // Si ya existe una categoría con el mismo nombre, verifica si está eliminada lógicamente
+            if ($existingCategory->trashed()) {
+                // Restaurar la categoría eliminada lógicamente
+                $existingCategory->restore();
+                return redirect('categories')->with('success', 'Categoría restaurada correctamente');
+            } else {
+                // Si la categoría no está eliminada lógicamente, muestra un mensaje de error
+                return redirect()->back()->withErrors('El nombre de categoría ya está en uso');
+            }
+        }
+    
+        // Si no existe una categoría con el mismo nombre, crea una nueva categoría
         Category::create($validatedData);
+    
         return redirect('categories')->with('success', 'Categoría creada correctamente');
     }
+    
 
     public function edit(Category $category)
     {
@@ -68,6 +86,6 @@ class CategoryController extends Controller
     {
         $category->delete();
         //Retornar una respuesta json
-        return response()->json(array('res' => true, 'delete'=>'Categoría eliminada correctamente'));
+        return response()->json(array('res' => true));
     }
 }

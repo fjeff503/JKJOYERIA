@@ -1,8 +1,11 @@
 <script>
+
+
     destroy = function(e, mensaje1, mensaje2) {
         let url = e.getAttribute('url')
         let token = e.getAttribute('token')
         Swal.fire({
+            padding: '2rem',
             icon: 'question',
             title: '¿Desea continuar?',
             text: mensaje1,
@@ -18,6 +21,7 @@
                     if (request.status == 200) {
                         e.closest('tr').remove()
                         Swal.fire({
+                            padding: '2rem',
                             icon: 'success',
                             title: '¡Éxito!',
                             text: mensaje2,

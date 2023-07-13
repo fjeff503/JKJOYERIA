@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCategoryRequest extends FormRequest
 {
@@ -21,10 +22,18 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        //definimos las reglas de la tabla
+        // Obtén el ID de la categoría actual desde la URL
+        $categoryId = $this->route('category');
+    
+        // Definimos las reglas de la tabla
         return [
-            'name' => 'required|string|max:50|',
-            'description'=>'nullable|string|max:250'
+            'name' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('categories', 'name')->ignore($categoryId),
+            ],
+            'description' => 'nullable|string|max:250',
         ];
     }
 

@@ -23,8 +23,8 @@ class UpdateClientRequest extends FormRequest
     {
         return [
             'name'=>'required|string|max:50',
-            'phone'=>'nullable|string|unique:clients,phone'.$this->route('client')->id.'|max:9',
-            'whatsapp'=>'nullable|string|unique:clients,whatsapp'.$this->route('client')->id.'|max:9'
+            'phone'=>'nullable|string|max:9',
+            'whatsapp'=>'nullable|string|max:9'
         ];
     }
 

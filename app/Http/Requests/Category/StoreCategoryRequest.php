@@ -26,7 +26,7 @@ class StoreCategoryRequest extends FormRequest
         return [
             'name'=>[
                 'required',
-                Rule::unique('categories', 'name'),
+                Rule::unique('categories', 'name')->whereNull('deleted_at'),
                 'string',
                 'max:50',],
             'description'=>'nullable|string|max:250'

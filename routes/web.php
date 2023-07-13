@@ -34,29 +34,6 @@ Route::get('inicio', function () {
     return view('inicio');
 });
 
-// RUTAS PARA CATEGORIAS
-//Ruta para mostrar productos
-Route::get('/categories', [CategoryController::class, 'index']);
-
-//Ruta para Crear Producto (FrontEnd)
-Route::get('/categories/create', [CategoryController::class, 'create']);
-
-//Ruta para Crear Producto (BackEnd)
-Route::post('/categories/store', [CategoryController::class, 'store']);
-
-//Ruta para Modificar Producto (FrontEnd)
-Route::get('/categories/edit/{category}', [CategoryController::class, 'edit']);
-
-//Ruta para Modificar Producto (BackEnd)
-Route::put('/categories/update/{category}', [CategoryController::class, 'update']);
-
-//Ruta para Eliminar Producto (BackEnd)
-Route::delete('/categories/destroy/{category}', [CategoryController::class, 'destroy']);
-
-
-
-
-Route::resource('clients', ClientController::class);
 Route::resource('delivery_points', DeliveryPointController::class);
 Route::resource('package_states', PackageStateController::class);
 Route::resource('parcels', ParcelController::class);
@@ -65,3 +42,47 @@ Route::resource('products', ProductController::class);
 Route::resource('providers', ProviderController::class);
 Route::resource('purchases', PurchaseController::class);
 Route::resource('sales', SaleController::class);
+
+// ===RUTAS PARA CLIENTES===
+//Ruta para mostrar
+Route::get('/clients', [ClientController::class, 'index']);
+
+//Ruta para Crear (FrontEnd)
+Route::get('/clients/create', [ClientController::class, 'create']);
+
+//Ruta para Crear (BackEnd)
+Route::post('/clients/store', [ClientController::class, 'store']);
+
+//Ruta para Modificar (FrontEnd)
+Route::get('/clients/edit/{client}', [ClientController::class, 'edit']);
+
+//Ruta para Modificar (BackEnd)
+Route::put('/clients/update/{client}', [ClientController::class, 'update']);
+
+//Ruta para Eliminar (BackEnd)
+Route::delete('/clients/destroy/{client}', [ClientController::class, 'destroy']);
+
+
+// ===RUTAS PARA CATEGORIAS===
+//Ruta para mostrar
+Route::get('/categories', [CategoryController::class, 'index']);
+
+//Ruta para Crear (FrontEnd)
+Route::get('/categories/create', [CategoryController::class, 'create']);
+
+//Ruta para Crear (BackEnd)
+Route::post('/categories/store', [CategoryController::class, 'store']);
+
+//Ruta para Modificar (FrontEnd)
+Route::get('/categories/edit/{category}', [CategoryController::class, 'edit']);
+
+//Ruta para Modificar (BackEnd)
+Route::put('/categories/update/{category}', [CategoryController::class, 'update']);
+
+//Ruta para Eliminar (BackEnd)
+Route::delete('/categories/destroy/{category}', [CategoryController::class, 'destroy']);
+
+
+
+
+

@@ -1,11 +1,11 @@
     {{-- Mensaje de exito --}}
-    @if (session('success'))
+    @if (session('error'))
         <script>
             Swal.fire({
                 padding: '2rem',
-                icon: 'success',
-                title: '¡Éxito!',
-                text: '{{ session('success') }}'
+                icon: 'error',
+                title: '¡Error!',
+                text: '{{ session('error') }}'
             });
         </script>
     @endif

@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
     use HasFactory;
 
-    protected $perPage = 10; // Establece un límite por defecto de 10 elementos por página
+    use SoftDeletes;
 
     //Nombre de la tabla
     protected $table = 'categories';

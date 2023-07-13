@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="{{ asset('melody/vendors/css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ asset('melody/vendors/css/vendor.bundle.addons.css') }}">
   <link rel="stylesheet" href="{{ asset('melody/css/style.css') }}">
+  <link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.16/dist/sweetalert2.min.css
+" rel="stylesheet">
 
   <!-- INCLUIR USO DE MIS ARCHIVOS CSS -->
   @yield('styles')

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreClientRequest extends FormRequest
 {
@@ -22,26 +23,40 @@ class StoreClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|string|max:50',
-            'phone'=>'nullable|string|unique:clients|max:9',
-            'whatsapp'=>'nullable|string|unique:clients|max:9'
+            'name' => 'required|string|max:50',
+            'phone' => [
+                'nullable',
+                Rule::unique('clients', 'phone')->whereNull('deleted_at'),
+                'string',
+                'max:9',
+                'min:9',
+            ],
+            'whatsapp' => [
+                'nullable',
+                Rule::unique('clients', 'whatsapp')->whereNull('deleted_at'),
+                'string',
+                'max:9',
+            ],
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         //definimos los mensajes de error que nos mostrara
-        return[
-            'name.required'=>'Este campo es requerido.',
-            'name.string'=>'El valor del campo es incorrecto.',
-            'name.max'=>'Solo se permite 50 caracteres.',
+        return [
+            'name.required' => 'Este campo es requerido.',
+            'name.string' => 'El valor del campo es incorrecto.',
+            'name.max' => 'Solo se permite 50 caracteres.',
 
-            'phone.string'=>'El valor del campo es incorrecto.',
-            'phone.max'=>'Solo se permite 9 caracteres.',
-            'phone.unique'=>'El telefono ya se encuentra registrado.',
+            'phone.string' => 'El valor del campo es incorrecto.',
+            'phone.max' => 'Solo se permite 9 caracteres.',
+            'phone.min' => 'El numero está incompleto.',
+            'phone.unique' => 'El telefono ya se encuentra registrado.',
 
-            'whatsapp.string'=>'El valor del campo es incorrecto.',
-            'whatsapp.max'=>'Solo se permite 9 caracteres.',
-            'whatsapp.unique'=>'El whatsapp ya se encuentra registrado.',
+            'whatsapp.string' => 'El valor del campo es incorrecto.',
+            'whatsapp.max' => 'Solo se permite 9 caracteres.',
+            'whatsapp.min' => 'El numero está incompleto.',
+            'whatsapp.unique' => 'El whatsapp ya se encuentra registrado.',
         ];
     }
 }

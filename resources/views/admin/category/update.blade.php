@@ -43,7 +43,7 @@
                             </div>
                             <div class="col-12 mt-2 text-center pt-3">
                                 <button
-                                    class="btn btn-success btn-md col-xxl-4 col-xl-6 col-lg-8 col-md-10 col-sm-12">Actualizar</button>
+                                    class="btn btn-primary btn-md col-xxl-4 col-xl-6 col-lg-8 col-md-10 col-sm-12">Actualizar</button>
                             </div>
                         </div>
                     </form>
