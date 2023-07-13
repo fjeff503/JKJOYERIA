@@ -30,10 +30,10 @@ return new class extends Migration
             $table->foreign('idDeliveryPoint')->references('idDeliveryPoint')->on('delivery_points')->onUpdate('cascade');
             //relacion package_state
             $table->unsignedBigInteger('idPackageState');
-            $table->foreign('packageState')->references('idPackageState')->on('package_states')->onUpdate('cascade');
+            $table->foreign('idPackageState')->references('idPackageState')->on('package_states')->onUpdate('cascade');
             ///relacion payment_state
             $table->unsignedBigInteger('idPaymentState');
-            $table->foreign('paymentState')->references('idPaymentState')->on('payment_states')->onUpdate('cascade');
+            $table->foreign('idPaymentState')->references('idPaymentState')->on('payment_states')->onUpdate('cascade');
 
             $table->softDeletes();
             $table->timestamps();
