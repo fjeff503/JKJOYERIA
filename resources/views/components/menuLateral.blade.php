@@ -48,6 +48,20 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="/package_states">
+                <i class="fas fa-box menu-icon"></i>
+                <span class="menu-title">Estado Paquetes</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/bugs">
+                <i class="fas fa-bug menu-icon"></i>
+                <span class="menu-title">Errores</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false"
                 aria-controls="page-layouts">
                 <i class="far fa-file-alt menu-icon"></i>

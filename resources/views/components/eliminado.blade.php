@@ -1,7 +1,5 @@
 <script>
-
-
-    destroy = function(e, mensaje1, mensaje2) {
+    destroy = function(e, mensaje1, mensaje2,mensaje3) {
         let url = e.getAttribute('url')
         let token = e.getAttribute('token')
         Swal.fire({
@@ -26,6 +24,13 @@
                             title: '¡Éxito!',
                             text: mensaje2,
                         })
+                    }else{
+                        Swal.fire({
+                            padding: '2rem',
+                            icon: 'error',
+                            title: '¡Error!',
+                            text: mensaje3,
+                        }) 
                     }
                 }
                 request.onerror = err => rejects(err);

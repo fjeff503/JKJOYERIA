@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 {{-- Definimos el titulo --}}
-@section('title', 'Clientes')
+@section('title', 'Estado de Paquetes')
 
 {{-- Definimos estilos propios --}}
 @section('styles')
@@ -11,7 +11,7 @@
 {{-- Definimos el contenido --}}
 @section('content')
     {{-- Cuerpo de mi index --}}
-    <h1 class="text-center">Gesti&oacute;n de Clientes</h1>
+    <h1 class="text-center">Gesti&oacute;n de Estados de Paquetes</h1>
     <br>
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
@@ -20,21 +20,20 @@
                     <div class="d-flex justify-content-between">
                         {{-- Boton para agregar --}}
                         <div class="btn-group align-self-center">
-                            <a href="/clients/create" type="button" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Nuevo Cliente
+                            <a href="/package_states/create" type="button" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Nuevo Estado
                             </a>
                         </div>
                         {{-- FIN Boton para agregar --}}
                     </div>
                     {{-- Tabla donde muestro la informacion --}}
                     <div class="table-responsive pt-4">
-                        <table id="clientes-table" class="table table-hover table-bordered">
+                        <table id="data-table" class="table table-hover table-bordered">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>N°</th>
                                     <th>Nombre</th>
-                                    <th>Tel&eacute;fono</th>
-                                    <th>Whatsapp</th>
+                                    <th>Descripci&oacute;n</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -49,18 +48,17 @@
                                         @endphp
                                         <td>{{ $count }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ $item->phone }}</td>
-                                        <td>{{ $item->whatsapp }}</td>
+                                        <td>{{ $item->description }}</td>
                                         <td>
                                             {{-- @if (Auth::user()->role == 'admin') --}}
                                             {{-- boton para modificar --}}
                                             <a class="btn btn-primary p-2"
-                                                href="/clients/edit/{{ $item->idClient }}">Modificar</a>
+                                                href="/package_states/edit/{{ $item->idPackageState }}">Modificar</a>
                                             {{-- @endif --}}
                                             {{-- boton para eliminar --}}
                                             <button class="btn btn-danger p-2"
-                                                url="/clients/destroy/{{ $item->idClient }}"
-                                                onclick="destroy(this, 'Se eliminara el cliente {{ $item->name }}','El cliente fue eliminado con exito', 'El Cliente NO fue eliminado')"
+                                                url="/package_states/destroy/{{ $item->idPackageState }}"
+                                                onclick="destroy(this, 'Se eliminara el estado {{ $item->name }}','El estado fue eliminado con exito', 'El estado NO fue eliminado')"
                                                 token="{{ csrf_token() }}">Eliminar</button>
                                         </td>
                                     </tr>
@@ -92,5 +90,6 @@
     {{-- Incliomos dataTable --}}
     <script src="{{ asset('jQuery/jquery-3.6.0.min.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
-    @include('components.dataTable', ['tablaId' => 'clientes-table'])
+    @include('components.dataTable', ['tablaId' => 'data-table'])
 @endsection
+

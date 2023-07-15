@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('package_states', function (Blueprint $table) {
-            $table->id('idPackageState');
-            $table->string('name')->unique();
-            $table->string('description')->nullable();
-            $table->softDeletes();
+        Schema::create('fails', function (Blueprint $table) {
+            $table->id('idFail');
+            $table->string('tableName');
+            $table->string('action');
+            $table->string('message');
+            $table->string('file');
+            $table->string('line');
+
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('package_states');
+        Schema::dropIfExists('fails');
     }
 };

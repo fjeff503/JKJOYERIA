@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DeliveryPointController;
+use App\Http\Controllers\FailController;
 use App\Http\Controllers\PackageStateController;
 use App\Http\Controllers\ParcelController;
 use App\Http\Controllers\PaymentStateController;
@@ -35,13 +36,33 @@ Route::get('inicio', function () {
 });
 
 Route::resource('delivery_points', DeliveryPointController::class);
-Route::resource('package_states', PackageStateController::class);
 Route::resource('parcels', ParcelController::class);
 Route::resource('payment_states', PaymentStateController::class);
 Route::resource('products', ProductController::class);
 Route::resource('providers', ProviderController::class);
 Route::resource('purchases', PurchaseController::class);
 Route::resource('sales', SaleController::class);
+
+
+// ===RUTAS PARA ESTADOS DE PAQUETES===
+//Ruta para mostrar
+Route::get('/package_states', [PackageStateController::class, 'index']);
+
+//Ruta para Crear (FrontEnd)
+Route::get('/package_states/create', [PackageStateController::class, 'create']);
+
+//Ruta para Crear (BackEnd)
+Route::post('/package_states/store', [PackageStateController::class, 'store']);
+
+//Ruta para Modificar (FrontEnd)
+Route::get('/package_states/edit/{package_state}', [PackageStateController::class, 'edit']);
+
+//Ruta para Modificar (BackEnd)
+Route::put('/package_states/update/{package_state}', [PackageStateController::class, 'update']);
+
+//Ruta para Eliminar (BackEnd)
+Route::delete('/package_states/destroy/{package_state}', [PackageStateController::class, 'destroy']);
+
 
 // ===RUTAS PARA CLIENTES===
 //Ruta para mostrar
@@ -77,12 +98,11 @@ Route::post('/categories/store', [CategoryController::class, 'store']);
 Route::get('/categories/edit/{category}', [CategoryController::class, 'edit']);
 
 //Ruta para Modificar (BackEnd)
-Route::put('/categories/update/{category}', [CategoryController::class, 'update']);
+Route::put('/categories/update/{client}', [CategoryController::class, 'update']);
 
 //Ruta para Eliminar (BackEnd)
 Route::delete('/categories/destroy/{category}', [CategoryController::class, 'destroy']);
 
-
-
-
-
+// ===RUTAS PARA ERRORES===
+//Ruta para mostrar
+Route::get('/bugs', [FailController::class, 'index']);
