@@ -37,11 +37,30 @@ Route::get('inicio', function () {
 
 Route::resource('delivery_points', DeliveryPointController::class);
 Route::resource('parcels', ParcelController::class);
-Route::resource('payment_states', PaymentStateController::class);
 Route::resource('products', ProductController::class);
 Route::resource('providers', ProviderController::class);
 Route::resource('purchases', PurchaseController::class);
 Route::resource('sales', SaleController::class);
+
+
+// ===RUTAS PARA ESTADOS DE PAGOS===
+//Ruta para mostrar
+Route::get('/payment_states', [PaymentStateController::class, 'index']);
+
+//Ruta para Crear (FrontEnd)
+Route::get('/payment_states/create', [PaymentStateController::class, 'create']);
+
+//Ruta para Crear (BackEnd)
+Route::post('/payment_states/store', [PaymentStateController::class, 'store']);
+
+//Ruta para Modificar (FrontEnd)
+Route::get('/payment_states/edit/{payment_state}', [PaymentStateController::class, 'edit']);
+
+//Ruta para Modificar (BackEnd)
+Route::put('/payment_states/update/{payment_state}', [PaymentStateController::class, 'update']);
+
+//Ruta para Eliminar (BackEnd)
+Route::delete('/payment_states/destroy/{payment_state}', [PaymentStateController::class, 'destroy']);
 
 
 // ===RUTAS PARA ESTADOS DE PAQUETES===

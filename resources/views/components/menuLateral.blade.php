@@ -55,6 +55,13 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="/payment_states">
+                <i class="fas fa-receipt menu-icon"></i>
+                <span class="menu-title">Estado Pagos</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="/bugs">
                 <i class="fas fa-bug menu-icon"></i>
                 <span class="menu-title">Errores</span>
