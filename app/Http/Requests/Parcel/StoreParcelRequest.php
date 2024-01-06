@@ -22,10 +22,10 @@ class StoreParcelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|string|max:50',
-            'phone'=>'nullable|string|unique:clients|max:9',
-            'whatsapp'=>'nullable|string|unique:clients|max:9',
-            'facebook'=>'nullable|string|unique:clients|max:100'
+            'name'=>'required|string|unique:parcels|max:50',
+            'phone'=>'nullable|string|unique:parcels|max:9',
+            'whatsapp'=>'nullable|string|unique:parcels|max:9',
+            'facebook'=>'nullable|string|unique:parcels|max:255'
         ];
     }
 
@@ -35,6 +35,7 @@ class StoreParcelRequest extends FormRequest
             'name.required'=>'Este campo es requerido.',
             'name.string'=>'El valor del campo es incorrecto.',
             'name.max'=>'Solo se permite 50 caracteres.',
+            'name.unique'=>'El encomendista ya se encuentra registrado.',
 
             'phone.string'=>'El valor del campo es incorrecto.',
             'phone.max'=>'Solo se permite 9 caracteres.',
@@ -45,7 +46,7 @@ class StoreParcelRequest extends FormRequest
             'whatsapp.unique'=>'El whatsapp ya se encuentra registrado.',
 
             'facebook.string'=>'El valor del campo es incorrecto.',
-            'facebook.max'=>'Solo se permite 100 caracteres.',
+            'facebook.max'=>'Solo se permite 255 caracteres.',
             'facebook.unique'=>'El facebook ya se encuentra registrado.',
 
         ];

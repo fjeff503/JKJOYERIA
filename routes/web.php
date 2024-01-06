@@ -43,6 +43,26 @@ Route::resource('purchases', PurchaseController::class);
 Route::resource('sales', SaleController::class);
 
 
+// ===RUTAS PARA ENCOMENDISTAS===
+//Ruta para mostrar
+Route::get('/parcels', [ParcelController::class, 'index']);
+
+//Ruta para Crear (FrontEnd)
+Route::get('/parcels/create', [ParcelController::class, 'create']);
+
+//Ruta para Crear (BackEnd)
+Route::post('/parcels/store', [ParcelController::class, 'store']);
+
+//Ruta para Modificar (FrontEnd)
+Route::get('/parcels/edit/{parcel}', [ParcelController::class, 'edit']);
+
+//Ruta para Modificar (BackEnd)
+Route::put('/parcels/update/{parcel}', [ParcelController::class, 'update']);
+
+//Ruta para Eliminar (BackEnd)
+Route::delete('/parcels/destroy/{parcel}', [ParcelController::class, 'destroy']);
+
+
 // ===RUTAS PARA ESTADOS DE PAGOS===
 //Ruta para mostrar
 Route::get('/payment_states', [PaymentStateController::class, 'index']);
@@ -117,10 +137,11 @@ Route::post('/categories/store', [CategoryController::class, 'store']);
 Route::get('/categories/edit/{category}', [CategoryController::class, 'edit']);
 
 //Ruta para Modificar (BackEnd)
-Route::put('/categories/update/{client}', [CategoryController::class, 'update']);
+Route::put('/categories/update/{category}', [CategoryController::class, 'update']);
 
 //Ruta para Eliminar (BackEnd)
 Route::delete('/categories/destroy/{category}', [CategoryController::class, 'destroy']);
+
 
 // ===RUTAS PARA ERRORES===
 //Ruta para mostrar

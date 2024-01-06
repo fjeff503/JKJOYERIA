@@ -62,6 +62,13 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="/parcels">
+                <i class="fas fa-truck menu-icon"></i>
+                <span class="menu-title">Encomendistas</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="/bugs">
                 <i class="fas fa-bug menu-icon"></i>
                 <span class="menu-title">Errores</span>

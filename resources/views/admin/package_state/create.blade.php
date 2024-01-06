@@ -24,7 +24,7 @@
                             <div class="col-12">
                                 <label for="name" class="form-label">Nombre:</label>
                                 <input type="text" class="form-control" placeholder="Nombre" id="name"
-                                    name="name" maxlength="15">
+                                    name="name" maxlength="50" value="{{ old('name') }}">
                                 @error('name')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>

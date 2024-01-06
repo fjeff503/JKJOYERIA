@@ -23,9 +23,9 @@ class UpdateParcelRequest extends FormRequest
     {
         return [
             'name'=>'required|string|max:50',
-            'phone'=>'nullable|string|unique:parcels,phone'.$this->route('parcel')->id.'|max:9',
-            'whatsapp'=>'nullable|string|unique:parcels,whatsapp'.$this->route('parcel')->id.'|max:9',
-            'facebook'=>'nullable|string|unique:parcels,facebook'.$this->route('parcel')->id.'|max:100'
+            'phone'=>'nullable|string|max:9',
+            'whatsapp'=>'nullable|string|max:9',
+            'facebook'=>'nullable|string|max:255'
         ];
     }
 
@@ -45,7 +45,7 @@ class UpdateParcelRequest extends FormRequest
             'whatsapp.unique'=>'El whatsapp ya se encuentra registrado.',
 
             'facebook.string'=>'El valor del campo es incorrecto.',
-            'facebook.max'=>'Solo se permite 100 caracteres.',
+            'facebook.max'=>'Solo se permite 255 caracteres.',
             'facebook.unique'=>'El facebook ya se encuentra registrado.',
 
         ];

@@ -129,7 +129,7 @@ class ClientController extends Controller
                     'error' => 'La acción no pudo ser realizada',
                 ));
             } catch (\Throwable $th) {
-                return redirect('categories')->with(array(
+                return redirect('clients')->with(array(
                     'error' => 'Error no reconocido',
                 ));
             }

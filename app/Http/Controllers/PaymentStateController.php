@@ -46,9 +46,6 @@ class PaymentStateController extends Controller
                     // Restaurar lógicamente
                     $existingPaymentState->restore();
                     return redirect('payment_states')->with('info', 'Estado de pago restaurado correctamente');
-                } else {
-                    // Si no está eliminada lógicamente, muestra un mensaje de error
-                    return redirect()->back()->withErrors('El nombre de estado de pago ya está en uso');
                 }
             }
 

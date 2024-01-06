@@ -46,9 +46,6 @@ class PackageStateController extends Controller
                     // Restaurar lógicamente
                     $existingPackageState->restore();
                     return redirect('package_states')->with('info', 'Estado de paquetes restaurado correctamente');
-                } else {
-                    // Si no está eliminada lógicamente, muestra un mensaje de error
-                    return redirect()->back()->withErrors('El nombre de estado de paquete ya está en uso');
                 }
             }
 
