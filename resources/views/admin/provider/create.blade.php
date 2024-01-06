@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 {{-- Definimos el titulo --}}
-@section('title', 'Encomendistas | Crear')
+@section('title', 'Proveedores | Crear')
 
 {{-- Definimos estilos propios --}}
 @section('styles')
@@ -16,11 +16,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Inputmask({
-            mask: '9999-9999',
+            mask: '(999)999-9999',
             placeholder: ''
         }).mask('#phone');
         Inputmask({
-            mask: '9999-9999',
+            mask: '(999)999-9999',
             placeholder: ''
         }).mask('#whatsapp');
     });
@@ -30,14 +30,14 @@
 {{-- Definimos el contenido --}}
 @section('content')
     {{-- Cuerpo de mi index --}}
-    <h1 class="text-center">Crear Encomenditas</h1>
+    <h1 class="text-center">Crear Proveedores</h1>
     <br>
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card bg-light">
                 <div class="card-body">
                     {{-- CUERPO PARA CREAR --}}
-                    <form action="/parcels/store" method="POST">
+                    <form action="/providers/store" method="POST">
                         @csrf
                         <div class="row m-auto col-xxl-8 col-xl-9 col-lg-10 col-md-11 col-sm-12">
                             <div class="col-12">
@@ -50,10 +50,20 @@
                                     </span>
                                 @enderror
                             </div>
+                            <div class="col-12 mt-4">
+                                <label for="address" class="form-label">Direcci&oacute;n:</label>
+                                <textarea rows="5" type="text" class="form-control" placeholder="Dirección" id="address"
+                                    name="address" maxlength="255" value="{{ old('address') }}"></textarea>
+                                @error('address')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-4">
                                 <label for="phone" class="form-label">Teléfono:</label>
                                 <input type="text" class="form-control" placeholder="Teléfono" id="phone"
-                                    name="phone" maxlength="9" value="{{ old('phone') }}">
+                                    name="phone" maxlength="13" value="{{ old('phone') }}">
                                 @error('phone')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -63,7 +73,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-4">
                                 <label for="whatsapp" class="form-label">WhatsApp:</label>
                                 <input type="text" class="form-control" placeholder="WhatsApp" id="whatsapp"
-                                    name="whatsapp" maxlength="9" value="{{ old('whatsapp') }}">
+                                    name="whatsapp" maxlength="13" value="{{ old('whatsapp') }}">
                                 @error('whatsapp')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -80,11 +90,21 @@
                                     </span>
                                 @enderror
                             </div>
+                            <div class="col-12 mt-4">
+                                <label for="description" class="form-label">Descripci&oacute;n:</label>
+                                <textarea rows="5" type="text" class="form-control" placeholder="Descripción" id="description"
+                                    name="description" maxlength="255" value="{{ old('description') }}"></textarea>
+                                @error('description')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                             <div class="col-12 mt-2 text-center pt-3">
                                 <button
                                     class="btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Guardar</button>
                                 <a class="btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
-                                    href="/parcels">Cancelar</a>
+                                    href="/providers">Cancelar</a>
                             </div>
                         </div>
                     </form>

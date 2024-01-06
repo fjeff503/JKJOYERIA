@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 {{-- Definimos el titulo --}}
-@section('title', 'Encomendistas')
+@section('title', 'Proveedores')
 
 {{-- Definimos estilos propios --}}
 @section('styles')
@@ -11,7 +11,7 @@
 {{-- Definimos el contenido --}}
 @section('content')
     {{-- Cuerpo de mi index --}}
-    <h1 class="text-center">Gesti&oacute;n de Encomendistas</h1>
+    <h1 class="text-center">Gesti&oacute;n de Proveedores</h1>
     <br>
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
@@ -20,8 +20,8 @@
                     <div class="d-flex justify-content-between">
                         {{-- Boton para agregar --}}
                         <div class="btn-group align-self-center">
-                            <a href="/parcels/create" type="button" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Nuevo Encomendista
+                            <a href="/providers/create" type="button" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Nuevo Proveedor
                             </a>
                         </div>
                         {{-- FIN Boton para agregar --}}
@@ -33,9 +33,11 @@
                                 <tr>
                                     <th>N°</th>
                                     <th>Nombre</th>
+                                    <th>Direcci&oacute;n</th>
                                     <th>Tel&eacute;fono</th>
                                     <th>Whatsapp</th>
                                     <th>Facebook</th>
+                                    <th>Descripci&oacute;n</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -50,6 +52,7 @@
                                         @endphp
                                         <td>{{ $count }}</td>
                                         <td>{{ $item->name }}</td>
+                                        <td>{{ $item->address }}</td>
                                         <td>{{ $item->phone }}</td>
                                         <td>{{ $item->whatsapp }}</td>
                                         <td>
@@ -57,16 +60,17 @@
                                                 <i class="fas fa-share"></i>
                                                 Ir al perfil </a>
                                         </td>
+                                        <td>{{ $item->description }}</td>
                                         <td>
                                             {{-- @if (Auth::user()->role == 'admin') --}}
                                             {{-- boton para modificar --}}
                                             <a class="btn btn-primary p-2"
-                                                href="/parcels/edit/{{ $item->idParcel }}">Modificar</a>
+                                                href="/providers/edit/{{ $item->idProvider }}">Modificar</a>
                                             {{-- @endif --}}
                                             {{-- boton para eliminar --}}
                                             <button class="btn btn-danger p-2"
-                                                url="/parcels/destroy/{{ $item->idParcel }}"
-                                                onclick="destroy(this, 'Se eliminara el encomendista {{ $item->name }}','El encomendista fue eliminado con exito', 'El encomendista NO fue eliminado')"
+                                                url="/providers/destroy/{{ $item->idProvider }}"
+                                                onclick="destroy(this, 'Se eliminara el proveedor {{ $item->name }}','El proveedor fue eliminado con exito', 'El proveedor NO fue eliminado')"
                                                 token="{{ csrf_token() }}">Eliminar</button>
                                         </td>
                                     </tr>

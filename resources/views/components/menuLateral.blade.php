@@ -69,6 +69,13 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="/providers">
+                <i class="fas fa-cart-plus menu-icon"></i>
+                <span class="menu-title">Proveedores</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="/bugs">
                 <i class="fas fa-bug menu-icon"></i>
                 <span class="menu-title">Errores</span>

@@ -14,14 +14,14 @@ class ParcelController extends Controller
     public function index(Request $request)
     {
         //Extraemos los clientes
-        $parcels = Parcel::all();
+        $data = Parcel::all();
 
-        return view('/admin/parcel/index', compact('parcels'));
+        return view('/admin/parcel/index', compact('data'));
     }
 
     public function create()
     {
-        return view('admin.parcel.create');
+        return view('/admin/parcel/create');
     }
 
     public function store(StoreParcelRequest $request)
@@ -31,13 +31,13 @@ class ParcelController extends Controller
             $validatedData = $request->validated();
 
             // Verificar si ya existe un encomendista con el mismo telefono (incluyendo las eliminadas lógicamente)
+            $existingName = Parcel::withTrashed()->where('name', $validatedData['name'])->first();
+            // Verificar si ya existe un encomendista con el mismo telefono (incluyendo las eliminadas lógicamente)
             $existingPhone = Parcel::withTrashed()->where('phone', $validatedData['phone'])->first();
             // Verificar si ya existe un encomendista con el mismo whatsapp (incluyendo las eliminadas lógicamente)
             $existingWhatsapp = Parcel::withTrashed()->where('whatsapp', $validatedData['whatsapp'])->first();
             // Verificar si ya existe un encomendista con el mismo facebook (incluyendo las eliminadas lógicamente)
             $existingFacebook = Parcel::withTrashed()->where('facebook', $validatedData['facebook'])->first();
-            // Verificar si ya existe un encomendista con el mismo telefono (incluyendo las eliminadas lógicamente)
-            $existingName = Parcel::withTrashed()->where('name', $validatedData['name'])->first();
 
             //para Nombre
             if ($existingName) {
@@ -118,16 +118,21 @@ class ParcelController extends Controller
             $parcel = Parcel::findOrFail($idParcel);
 
             // Verificar si el nuevo valor del campo "telefono" ya existe en otro registro
-            if ($parcel->phone !== $request->input('phone') && Parcel::where('phone', $request->input('phone'))->exists()) {
+            if ($parcel->name !== $request->input('name') && Parcel::where('name', $request->input('name'))->exists()) {
+                return redirect()->back()->withErrors(['name' => 'El nombre ya está siendo utilizado por otro registro.'])->withInput();
+            } else if ($parcel->phone !== $request->input('phone') && Parcel::where('phone', $request->input('phone'))->exists()) {
                 return redirect()->back()->withErrors(['phone' => 'El teléfono ya está siendo utilizado por otro registro.'])->withInput();
             } else if ($parcel->whatsapp !== $request->input('whatsapp') && Parcel::where('whatsapp', $request->input('whatsapp'))->exists()) {
                 return redirect()->back()->withErrors(['whatsapp' => 'El whatsapp ya está siendo utilizado por otro registro.'])->withInput();
+            } else if ($parcel->facebook !== $request->input('facebook') && Parcel::where('facebook', $request->input('facebook'))->exists()) {
+                return redirect()->back()->withErrors(['facebook' => 'El facebook ya está siendo utilizado por otro registro.'])->withInput();
             }
 
             //actualizamos los datos
             $parcel->name = $request->input('name');
             $parcel->phone = $request->input('phone');
             $parcel->whatsapp = $request->input('whatsapp');
+            $parcel->facebook = $request->input('facebook');
 
             //guardamos los cambios
             $parcel->save();

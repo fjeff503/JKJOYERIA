@@ -36,11 +36,28 @@ Route::get('inicio', function () {
 });
 
 Route::resource('delivery_points', DeliveryPointController::class);
-Route::resource('parcels', ParcelController::class);
 Route::resource('products', ProductController::class);
-Route::resource('providers', ProviderController::class);
 Route::resource('purchases', PurchaseController::class);
 Route::resource('sales', SaleController::class);
+
+// ===RUTAS PARA PROVEEDORES===
+//Ruta para mostrar
+Route::get('/providers', [ProviderController::class, 'index']);
+
+//Ruta para Crear (FrontEnd)
+Route::get('/providers/create', [ProviderController::class, 'create']);
+
+//Ruta para Crear (BackEnd)
+Route::post('/providers/store', [ProviderController::class, 'store']);
+
+//Ruta para Modificar (FrontEnd)
+Route::get('/providers/edit/{provider}', [ProviderController::class, 'edit']);
+
+//Ruta para Modificar (BackEnd)
+Route::put('/providers/update/{provider}', [ProviderController::class, 'update']);
+
+//Ruta para Eliminar (BackEnd)
+Route::delete('/providers/destroy/{provider}', [ProviderController::class, 'destroy']);
 
 
 // ===RUTAS PARA ENCOMENDISTAS===

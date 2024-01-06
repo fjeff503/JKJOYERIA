@@ -23,8 +23,8 @@ class UpdateParcelRequest extends FormRequest
     {
         return [
             'name'=>'required|string|max:50',
-            'phone'=>'nullable|string|max:9',
-            'whatsapp'=>'nullable|string|max:9',
+            'phone'=>'nullable|max:11|min:9',
+            'whatsapp'=>'required|string|max:11|min:9',
             'facebook'=>'nullable|string|max:255'
         ];
     }
@@ -37,11 +37,13 @@ class UpdateParcelRequest extends FormRequest
             'name.max'=>'Solo se permite 50 caracteres.',
 
             'phone.string'=>'El valor del campo es incorrecto.',
-            'phone.max'=>'Solo se permite 9 caracteres.',
+            'phone.max'=>'Solo se permite menos de 10 caracteres.',
+            'phone.min'=>'Solo se permite más de 8 caracteres.',
             'phone.unique'=>'El telefono ya se encuentra registrado.',
 
             'whatsapp.string'=>'El valor del campo es incorrecto.',
-            'whatsapp.max'=>'Solo se permite 9 caracteres.',
+            'whatsapp.max'=>'Solo se permite menos de 10 caracteres.',
+            'whatsapp.min'=>'Solo se permite más de 8 caracteres.',
             'whatsapp.unique'=>'El whatsapp ya se encuentra registrado.',
 
             'facebook.string'=>'El valor del campo es incorrecto.',

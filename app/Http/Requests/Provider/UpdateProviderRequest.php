@@ -22,11 +22,11 @@ class UpdateProviderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|string|unique:providers,name'.$this->route('provider')->id.'max:50',
+            'name'=>'required|string|max:50',
             'address'=>'required|string|max:150',
-            'phone'=>'required|string|min:9|unique:providers,phone,'.$this->route('provider')->id.'|max:12',
+            'phone'=>'nullable|max:13|min:11',
             'facebook'=>'required|string|max:50',
-            'whatsapp'=>'required|string|max:12|min:9',
+            'whatsapp'=>'required|string|max:13|min:11',
             'description'=>'nullable|string|max:150'
         ];
     }
@@ -45,8 +45,8 @@ class UpdateProviderRequest extends FormRequest
 
             'phone.required'=>'Este campo es requerido.',
             'phone.string'=>'El valor del campo es incorrecto.',
-            'phone.max'=>'Solo se permite menos de 12 caracteres.',
-            'phone.min'=>'Solo se permite más de 9 caracteres.',
+            'phone.max'=>'Solo se permite menos de 10 caracteres.',
+            'phone.min'=>'El numero está incompleto.',
             'phone.unique'=>'El telefono ya se encuentra registrado.',
 
             'facebook.required'=>'Este campo es requerido.',
@@ -55,8 +55,8 @@ class UpdateProviderRequest extends FormRequest
 
             'whatsapp.required'=>'Este campo es requerido.',
             'whatsapp.string'=>'El valor del campo es incorrecto.',
-            'whatsapp.max'=>'Solo se permite menos de 12 caracteres.',
-            'whatsapp.min'=>'Solo se permite más de 9 caracteres.',
+            'whatsapp.max'=>'Solo se permite menos de 10 caracteres.',
+            'whatsapp.min'=>'El numero está incompleto.',
 
             'description.string'=>'El valor del campo es incorrecto.',
             'description.max'=>'Solo se permite 150 caracteres.',

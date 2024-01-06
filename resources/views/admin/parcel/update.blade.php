@@ -54,9 +54,9 @@
                             </div>
                             <div class="col-12">
                                 <label for="facebook" class="form-label">Facebook:</label>
-                                <input type="text" class="form-control" placeholder="Facebook url" id="name"
-                                    name="name" maxlength="255" value="{{ $parcel->name }}">
-                                @error('name')
+                                <input type="text" class="form-control" placeholder="Facebook url" id="facebook"
+                                    name="facebook" maxlength="255" value="{{ $parcel->facebook }}">
+                                @error('facebook')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
