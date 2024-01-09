@@ -114,7 +114,7 @@ class ParcelController extends Controller
     {
         //intento
         try {
-            //traemos la data si el iteme que estamos modificando
+            //traemos la data si el item que estamos modificando existe
             $parcel = Parcel::findOrFail($idParcel);
 
             // Verificar si el nuevo valor del campo "telefono" ya existe en otro registro

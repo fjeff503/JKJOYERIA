@@ -35,10 +35,29 @@ Route::get('inicio', function () {
     return view('inicio');
 });
 
-Route::resource('delivery_points', DeliveryPointController::class);
 Route::resource('products', ProductController::class);
 Route::resource('purchases', PurchaseController::class);
 Route::resource('sales', SaleController::class);
+
+// ===RUTAS PARA PUNTOS DE ENTREGA===
+//Ruta para mostrar
+Route::get('/delivery_points', [DeliveryPointController::class, 'index']);
+
+//Ruta para Crear (FrontEnd)
+Route::get('/delivery_points/create', [DeliveryPointController::class, 'create']);
+
+//Ruta para Crear (BackEnd)
+Route::post('/delivery_points/store', [DeliveryPointController::class, 'store']);
+
+//Ruta para Modificar (FrontEnd)
+Route::get('/delivery_points/edit/{delivery_point}', [DeliveryPointController::class, 'edit']);
+
+//Ruta para Modificar (BackEnd)
+Route::put('/delivery_points/update/{delivery_point}', [DeliveryPointController::class, 'update']);
+
+//Ruta para Eliminar (BackEnd)
+Route::delete('/delivery_points/destroy/{delivery_point}', [DeliveryPointController::class, 'destroy']);
+
 
 // ===RUTAS PARA PROVEEDORES===
 //Ruta para mostrar

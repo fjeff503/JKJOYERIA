@@ -52,10 +52,10 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="col-12 mt-2 text-center pt-3">
+                            <div class="col-12 text-center pt-3">
                                 <button
-                                    class="btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Actualizar</button>
-                                <a class="btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
+                                    class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Actualizar</button>
+                                <a class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
                                     href="/clients">Cancelar</a>
                             </div>
                         </div>

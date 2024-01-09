@@ -76,6 +76,13 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="/delivery_points">
+                <i class="fas fa-map-pin menu-icon"></i>
+                <span class="menu-title">Puntos de entrega</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="/bugs">
                 <i class="fas fa-bug menu-icon"></i>
                 <span class="menu-title">Errores</span>

@@ -25,32 +25,32 @@ class UpdateDeliveryPointRequest extends FormRequest
             'name'=>'required|string|max:50',
             'hour'=>'required|string|max:15',
             'description'=>'nullable|string|max:200',
-            'idParcel'=>'required|integer|exists:App\Parcel,idParcel',
-            'idDay'=>'required|integer|exists:App\Day,idDay'
+            'idParcel'=>'required|integer',
+            'idDay'=>'required|integer'
         ];
     }
 
     public function messages(){
         //definimos los mensajes de error que nos mostrara
         return[
-            'name.required'=>'Este campo es requerido.',
+            'name.required'=>'El nombre es requerido.',
             'name.string'=>'El valor del campo es incorrecto.',
             'name.max'=>'Solo se permite 50 caracteres.',
 
-            'hour.required'=>'Este campo es requerido.',
+            'hour.required'=>'La hora es requerida.',
             'hour.string'=>'El valor del campo es incorrecto.',
             'hour.max'=>'Solo se permite 15 caracteres.',
 
             'description.string'=>'El valor del campo es incorrecto.',
             'description.max'=>'Solo se permite 200 caracteres.',
 
-            'idCategory.required'=>'Este campo es requerido.',
-            'idCategory.integer'=>'El valor del campo es incorrecto.',
-            'idCategory.exists'=>'La encomienda no existe.',
+            'idParcel.required'=>'El encomendista es requerido.',
+            'idParcel.integer'=>'El valor del campo es incorrecto.',
+            'idParcel.exists'=>'La encomienda no existe.',
 
-            'idDay.required'=>'Este campo es requerido.',
+            'idDay.required'=>'El dia es requerido.',
             'idDay.integer'=>'El valor del campo es incorrecto.',
-            'idDay.exists'=>'El dia no existe.'
+            'idDay.exists'=>'La encomienda no existe.'
         ];
     }
 }

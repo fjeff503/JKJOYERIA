@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('hour');
             $table->string('description')->nullable();
-            $table->enum('status', ['ACTIVE', 'DEACTIVED'])->default('ACTIVE');
 
             //relacion parcel
             $table->unsignedBigInteger('idParcel');
