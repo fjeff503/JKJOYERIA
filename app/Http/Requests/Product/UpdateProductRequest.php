@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Product;
+namespace App\Http\Requests\DeliveryPoint;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProductRequest extends FormRequest
+class UpdateDeliveryPointRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,43 +22,49 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //para la imagen ver video 4 min 15
-            'codeProductProvider'=>'required|string|unique:products,codeProductProvider'.$this->route('product')->id.'|max:10',
-            'name'=>'required|string|unique:products,name'.$this->route('product')->id.'|max:50',
-            'sellPrice'=>'required|double',
-            'description'=>'required|string|max:500',
-            'idCategory'=>'required|integer|exists:App\Category,id',
-            'idProvider'=>'required|integer|exists:App\Provider,id'
+            'codeProduct'=>'required|string|max:25',
+            'codeProductProvider'=>'string|max:25',
+            'name'=>'required|string|max:50',
+            'sellPrice'=>'required|string|max:15',
+            'stock'=>'required|integer',
+            'description'=>'nullable|string|max:200',
+            'idCategory'=>'required|integer',
+            'idProvider'=>'required|integer'
         ];
     }
 
     public function messages(){
         //definimos los mensajes de error que nos mostrara
         return[
-            'codeProductProvider.required'=>'Este campo es requerido.',
-            'codeProductProvider.string'=>'El valor del campo es incorrecto.',
-            'codeProductProvider.max'=>'Solo se permite 10 caracteres.',
-            'codeProductProvider.unique'=>'El codigo ya se encuentra registrado.',
+            'codeProduct.required'=>'El código del producto es requerido.',
+            'codeProduct.string'=>'El valor del campo es incorrecto.',
+            'codeProduct.max'=>'Solo se permite 25 caracteres.',
 
-            'name.required'=>'Este campo es requerido.',
+            'codeProductProvider.string'=>'El valor del campo es incorrecto.',
+            'codeProductProvider.max'=>'Solo se permite 25 caracteres.',
+
+            'name.required'=>'El nombre es requerido.',
             'name.string'=>'El valor del campo es incorrecto.',
             'name.max'=>'Solo se permite 50 caracteres.',
-            'name.unique'=>'El nombre ya se encuentra registrado.',
+            'name.unique'=>'El producto ya se encuentra registrado.',
 
-            'sellPrice.required'=>'Este campo es requerido.',
-            'sellPrice.double'=>'El valor del campo es incorrecto.',
+            'sellPrice.required'=>'El precio de venta es necesario.',
+            'sellPrice.string'=>'El valor del campo es incorrecto.',
+            'sellPrice.max'=>'Solo se permite 15 caracteres.',
 
-            'description.required'=>'Este campo es requerido.',
-            'description.integer'=>'El valor del campo es incorrecto.',
-            'description.exists'=>'Solo se permite 500 caracteres.',
+            'stock.required'=>'El stock es requerido.',
+            'stock.integer'=>'El valor del campo es incorrecto.',
 
-            'idCategory.required'=>'Este campo es requerido.',
-            'idCategory.string'=>'El valor del campo es incorrecto.',
-            'idCategory.max'=>'La categoria no existe.',
+            'description.string'=>'El valor del campo es incorrecto.',
+            'description.max'=>'Solo se permite 200 caracteres.',
 
-            'idProvider.required'=>'Este campo es requerido.',
-            'idProvider.string'=>'El valor del campo es incorrecto.',
-            'idProvider.max'=>'El proveedor no existe.',
+            'idCategory.required'=>'La categoría es requerida.',
+            'idCategory.integer'=>'El valor del campo es incorrecto.',
+            'idCategory.exists'=>'La categoría no existe.',
+
+            'idProvider.required'=>'El proveedor es requerido.',
+            'idProvider.integer'=>'El valor del campo es incorrecto.',
+            'idProvider.exists'=>'El proveedor no existe.'
         ];
     }
 }

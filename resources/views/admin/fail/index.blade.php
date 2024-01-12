@@ -19,7 +19,7 @@
                 <div class="card-body">
                     {{-- Tabla donde muestro la informacion --}}
                     <div class="table-responsive pt-4">
-                        <table id="data-table" class="table table-hover table-bordered">
+                        <table id="data-table" class="table table-hover table-bordered text-center">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>N°</th>

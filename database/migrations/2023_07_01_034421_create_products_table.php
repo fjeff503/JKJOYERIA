@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->decimal('sellPrice', 12, 2);
             $table->integer('stock');
-            $table->enum('status', ['ACTIVE', 'DEACTIVED'])->default('ACTIVE');
             $table->string('description');
 
             //relacion category

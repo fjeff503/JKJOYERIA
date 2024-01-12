@@ -35,9 +35,28 @@ Route::get('inicio', function () {
     return view('inicio');
 });
 
-Route::resource('products', ProductController::class);
 Route::resource('purchases', PurchaseController::class);
 Route::resource('sales', SaleController::class);
+
+// ===RUTAS PARA PRODUCTOS===
+//Ruta para mostrar
+Route::get('/products', [ProductController::class, 'index']);
+
+//Ruta para Crear (FrontEnd)
+Route::get('/products/create', [ProductController::class, 'create']);
+
+//Ruta para Crear (BackEnd)
+Route::post('/products/store', [ProductController::class, 'store']);
+
+//Ruta para Modificar (FrontEnd)
+Route::get('/products/edit/{product}', [ProductController::class, 'edit']);
+
+//Ruta para Modificar (BackEnd)
+Route::put('/products/update/{product}', [ProductController::class, 'update']);
+
+//Ruta para Eliminar (BackEnd)
+Route::delete('/products/destroy/{product}', [ProductController::class, 'destroy']);
+
 
 // ===RUTAS PARA PUNTOS DE ENTREGA===
 //Ruta para mostrar

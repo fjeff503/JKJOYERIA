@@ -27,7 +27,7 @@
         {{-- DASHBOARD --}}
         <li class="nav-item">
             <a class="nav-link" href="/inicio">
-                <i class="fa fa-home menu-icon"></i>
+                <i class="fas fa-home menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
@@ -35,7 +35,7 @@
         {{-- CATEGORIA --}}
         <li class="nav-item">
             <a class="nav-link" href="/categories">
-                <i class="fab fa-trello menu-icon"></i>
+                <i class="fas fa-tags menu-icon"></i>
                 <span class="menu-title">Categor&iacute;as</span>
             </a>
         </li>
@@ -49,14 +49,14 @@
 
         <li class="nav-item">
             <a class="nav-link" href="/package_states">
-                <i class="fas fa-box menu-icon"></i>
+                <i class="fas fa-archive menu-icon"></i>
                 <span class="menu-title">Estado Paquetes</span>
             </a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link" href="/payment_states">
-                <i class="fas fa-receipt menu-icon"></i>
+                <i class="fas fa-check-square menu-icon"></i>
                 <span class="menu-title">Estado Pagos</span>
             </a>
         </li>
@@ -79,6 +79,13 @@
             <a class="nav-link" href="/delivery_points">
                 <i class="fas fa-map-pin menu-icon"></i>
                 <span class="menu-title">Puntos de entrega</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/products">
+                <i class="fas fa-plus-square menu-icon"></i>
+                <span class="menu-title">Productos</span>
             </a>
         </li>
 

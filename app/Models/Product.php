@@ -4,10 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     use HasFactory;
+
+    use SoftDeletes;
+    //Nombre de la tabla
+    protected $table = 'products';
+ 
+    //Llave primaria
+    protected $primaryKey = 'idProduct';
 
     protected $fillable = [ 
         'codeProduct',
@@ -15,7 +23,6 @@ class Product extends Model
         'name',
         'sellPrice',
         'stock',
-        'status',
         'description',
         'idCategory',
         'idProvider'
@@ -39,6 +46,11 @@ class Product extends Model
     //relacionar con saleDetail
     public function saleDetail(){
         return $this->hasMany(SaleDetail::class);
+    }
+
+    //relacionar con galery
+    public function galery(){
+        return $this->hasMany(Galery::class, 'idProduct');
     }
 
 }
