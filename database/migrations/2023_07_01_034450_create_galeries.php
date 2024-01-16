@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('url');
 
             //relacion producto
-            $table->foreignId('idProduct')->constrained();
-
+            $table->unsignedBigInteger('idProduct');
+            $table->foreign('idProduct')->references('idProduct')->on('products')->onUpdate('cascade');
             $table->timestamps();
         });
     }

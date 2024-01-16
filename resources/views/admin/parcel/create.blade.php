@@ -30,7 +30,7 @@
 {{-- Definimos el contenido --}}
 @section('content')
     {{-- Cuerpo de mi index --}}
-    <h1 class="text-center">Crear Encomenditas</h1>
+    <h1 class="text-center">Crear Encomendistas</h1>
     <br>
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">

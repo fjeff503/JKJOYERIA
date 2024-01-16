@@ -37,7 +37,7 @@
             <div class="card bg-light">
                 <div class="card-body">
                     {{-- CUERPO PARA CREAR --}}
-                    <form action="/clients/store" method="POST">
+                    <form id="Formulario" action="/clients/store" method="POST">
                         @csrf
                         <div class="row m-auto col-xxl-8 col-xl-9 col-lg-10 col-md-11 col-sm-12">
                             <div class="col-12">
@@ -71,9 +71,8 @@
                                 @enderror
                             </div>
                             <div class="col-12 text-center pt-3">
-                                <button
-                                    class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Guardar</button>
-                                <a class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
+                                <button onclick="deshabilitar(this)" class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Guardar</button>
+                                <a id="btnCancelar" class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
                                     href="/clients">Cancelar</a>
                             </div>
                         </div>
@@ -82,7 +81,10 @@
             </div>
         </div>
     </div>
-    
+
+{{-- Incluimos el script para desactivar los botones --}}
+@include('components.procesando')
+
 {{-- Para escribir lo mismo en el campo whatsapp --}}
 <script src="{{ asset('jQuery/jquery-3.6.0.min.js') }}"></script>
     <script>

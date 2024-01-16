@@ -9,6 +9,8 @@ use App\Models\Category;
 use App\Models\Provider;
 use App\Models\Fail;
 use App\Models\Galery;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProductController extends Controller
 {
@@ -48,7 +50,6 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        
         try {
             // Validamos la data
             $validatedData = $request->validated();
@@ -73,17 +74,17 @@ class ProductController extends Controller
 
             //almacenar las imagenes
             try{
-                // Asociar imágenes
-                $images = $request->input('images');
+                // Guardar imágenes en AWS S3
+                $images = $request->file('images');
 
                 if ($images) {
-                    foreach ($images as $imageUrl) {
-                        if($imageUrl){
-                            // Crea la relación con la tabla Gallery
-                            $galleryImage = new Galery(['url' => $imageUrl]);
-                            // Guarda la relación
-                            $product->galery()->save($galleryImage);
-                        }
+                    foreach ($images as $image) {
+                        $path = $image->store('images', 's3'); // 'images' es la carpeta en tu bucket
+                    
+                        // Guardar la URL en la tabla 'gallery'
+                        $url = Storage::disk('s3')->url($path);
+                        // Guardar la URL en la tabla 'gallery' asociada al producto
+                        $product->galery()->create(['url' => $url]);
                     }
                 }
             } catch (\Throwable $th) {
@@ -105,7 +106,6 @@ class ProductController extends Controller
                 ));
             }
         }
-
             return redirect('products')->with('success', 'Producto creado correctamente');
         } catch (\Throwable $th) {
             try {
@@ -146,7 +146,34 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        $product->delete();
-        return redirect()->route('products.index');
+        try{
+            // Elimina las imágenes del bucket
+            foreach ($product->galery as $image) {
+                // Extraer la ruta relativa desde la URL completa
+                $relativePath = parse_url($image->url, PHP_URL_PATH);
+                Storage::disk('s3')->delete($relativePath);
+            }
+
+            // Elimina relaciones en la tabla Gallery
+            $product->galery()->delete();
+
+            // Elimina el producto
+            $product->delete();
+
+            // Retornar una respuesta json
+            return response()->json(['res' => true]);  
+        }catch (\Throwable $th){
+            // Retornamos el mensaje
+            Fail::create(array(
+                'tableName' => 'products',
+                'action' => 'destroy',
+                'message' => $th->getMessage(),
+                'file' => $th->getFile(),
+                'line' => $th->getLine()
+            ));
+            return redirect('products')->with(array(
+                'error' => 'La acción no pudo ser realizada',
+            ));
+        }
     }
 }

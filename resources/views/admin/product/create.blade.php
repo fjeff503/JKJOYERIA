@@ -17,7 +17,7 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card bg-light">
                     {{-- CUERPO PARA CREAR --}}
-                    <form action="/products/store" method="POST">
+                    <form id="Formulario" action="/products/store" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row mx-auto col-xxl-8 col-xl-9 col-lg-10 col-md-11 col-sm-12">
                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mt-3">
@@ -105,14 +105,10 @@
                             </div>
 
                             {{-- agregar imagenes --}}
-                            <div class="col-12 mt-3 text-center">
+                            <div class="col-12 mt-3">
                                 <label for="imageInputs" class="form-label">Fotos:</label>
                                 <br>
-                                <button type="button" onclick="addImageInput()" class="btn btn-info btn-sm col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Agregar Imagen</button>               
-                            </div>
-
-                            <div class="row col-12 mt-3 text-center" id="imageInputs">
-                                
+                                <input class="form-control form-control-lg" type="file" name="images[]" accept="image/*" multiple/>
                             </div>
 
                             <div class="col-12 mt-3">
@@ -126,9 +122,8 @@
                             </div>
 
                             <div class="col-12 text-center pt-3 mb-3">
-                                <button
-                                    class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Guardar</button>
-                                <a class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
+                                <button onclick="deshabilitar(this)" class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Guardar</button>
+                                <a id="btnCancelar" class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
                                     href="/products">Cancelar</a>
                             </div>
                         </div>
@@ -138,43 +133,6 @@
     </div>
 @endsection
 
-<script>
-    function addImageInput() {
-        const container = document.getElementById('imageInputs');
 
-        // Crea un nuevo input de tipo texto
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.name = 'images[]'; // Usar corchetes para indicar un array en PHP
-        input.placeholder = 'URL de la imagen';
-        input.className = 'form-control col-12';
-
-        // Crea un botón para quitar el campo de entrada si es necesario
-        const removeButton = document.createElement('button');
-        removeButton.type = 'button';
-        removeButton.className = 'btn btn-lg btn-danger col-12';
-        // Añade un ícono de basurero al botón
-        const trashIcon = document.createElement('i');
-        trashIcon.className = 'fas fa-trash';
-        removeButton.appendChild(trashIcon);
-
-        removeButton.onclick = function () {
-            container.removeChild(wrapper1);
-            container.removeChild(wrapper2);
-        };
-
-        // Crea un contenedor para el input y el botón de eliminación
-        const wrapper1 = document.createElement('div');
-        wrapper1.className = 'col-10 mt-2';
-        wrapper1.appendChild(input);
-
-        // Crea un contenedor para el input y el botón de eliminación
-        const wrapper2 = document.createElement('div');
-        wrapper2.className = 'col-2 mt-2';
-        wrapper2.appendChild(removeButton);
-
-        // Agrega el contenedor al contenedor principal
-        container.appendChild(wrapper1);
-        container.appendChild(wrapper2);
-    }
-</script>
+{{-- Incluimos el script para desactivar los botones --}}
+@include('components.procesando')

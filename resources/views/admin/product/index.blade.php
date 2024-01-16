@@ -47,31 +47,35 @@
                                 @php
                                     $count = 0;
                                 @endphp
-                                @foreach ($data as $item)
-                                    <tr data-toggle="modal" data-target="#galleryModal{{$item->first()->codeProduct}}">
+                                @foreach ($data as $item)                        
+                                    <tr>
                                         @php
                                             $count++;
                                         @endphp
-                                        <td>{{ $count }}</td>
-                                        <td>{{ $item->first()->codeProduct }}</td>
-                                        <td>{{ $item->first()->codeProductProvider }}</td>
-                                        <td>{{ $item->first()->name }}</td>
-                                        <td>${{ $item->first()->sellPrice }}</td>
-                                        <td>{{ $item->first()->stock }}</td>
-                                        <td>{{ $item->first()->category }}</td>
-                                        <td>{{ $item->first()->provider }}</td>
-                                        <td>
-                                            <img src="{{ $item->first()->fotos }}" alt="{{$item->first()->name}}">                                            
+                                        <td data-toggle="modal" data-target="#galleryModal{{$item->first()->codeProduct}}">{{ $count }}</td>
+                                        <td data-toggle="modal" data-target="#galleryModal{{$item->first()->codeProduct}}">{{ $item->first()->codeProduct }}</td>
+                                        <td data-toggle="modal" data-target="#galleryModal{{$item->first()->codeProduct}}">{{ $item->first()->codeProductProvider }}</td>
+                                        <td data-toggle="modal" data-target="#galleryModal{{$item->first()->codeProduct}}">{{ $item->first()->name }}</td>
+                                        <td data-toggle="modal" data-target="#galleryModal{{$item->first()->codeProduct}}">${{ $item->first()->sellPrice }}</td>
+                                        <td data-toggle="modal" data-target="#galleryModal{{$item->first()->codeProduct}}">{{ $item->first()->stock }}</td>
+                                        <td data-toggle="modal" data-target="#galleryModal{{$item->first()->codeProduct}}">{{ $item->first()->category }}</td>
+                                        <td data-toggle="modal" data-target="#galleryModal{{$item->first()->codeProduct}}">{{ $item->first()->provider }}</td>
+                                        <td data-toggle="modal" data-target="#galleryModal{{$item->first()->codeProduct}}">
+                                            @if ($item->first()->fotos)
+                                            <img src="{{ $item->first()->fotos }}" alt="{{$item->first()->name}}"> 
+                                            @else
+                                                <p>Sin imagen</p>
+                                            @endif                                           
                                         </td>
                                         <td>
                                             {{-- @if (Auth::user()->role == 'admin') --}}
                                             {{-- boton para modificar --}}
                                             <a class="btn btn-primary p-2"
-                                                href="/products/edit/{{ $item->first()->codeProduct }}">Modificar</a>
+                                                href="/products/edit/{{ $item->first()->idProduct }}">Modificar</a>
                                             {{-- @endif --}}
                                             {{-- boton para eliminar --}}
                                             <button class="btn btn-danger p-2"
-                                                url="/products/destroy/{{ $item->first()->codeProduct }}"
+                                                url="/products/destroy/{{ $item->first()->idProduct }}"
                                                 onclick="destroy(this, 'Se eliminara el punto de envio {{ $item->first()->name }}','El punto de envio fue eliminado con exito', 'El punto de envio NO fue eliminada')"
                                                 token="{{ csrf_token() }}">Eliminar</button>
                                         </td>
@@ -142,6 +146,6 @@
     {{-- Incliomos dataTable --}}
     <script src="{{ asset('jQuery/jquery-3.6.0.min.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
-    @include('components.dataTable', ['tablaId' => 'data-table'])
+    @include('components.dataTable', ['tablaId' => 'data-table'])   
 @endsection
 

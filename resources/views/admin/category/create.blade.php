@@ -18,7 +18,7 @@
             <div class="card bg-light">
                 <div class="card-body">
                     {{-- CUERPO PARA CREAR --}}
-                    <form action="/categories/store" method="POST">
+                    <form id="Formulario" action="/categories/store" method="POST">
                         @csrf
                         <div class="row m-auto col-xxl-8 col-xl-9 col-lg-10 col-md-11 col-sm-12">
                             <div class="col-12">
@@ -42,8 +42,8 @@
                             </div>
                             <div class="col-12 text-center pt-3">
                                 <button
-                                    class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Guardar</button>
-                                <a class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
+                                    class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5" onclick="deshabilitar(this)">Guardar</button>
+                                <a id="btnCancelar" class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
                                     href="/categories">Cancelar</a>
                             </div>
                         </div>
@@ -53,3 +53,6 @@
         </div>
     </div>
 @endsection
+
+{{-- Incluimos el script para desactivar los botones --}}
+@include('components.procesando')
