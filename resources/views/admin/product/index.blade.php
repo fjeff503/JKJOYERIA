@@ -143,7 +143,7 @@
     {{-- Incluimos script de errores --}}
     @include('components.error')
 
-    {{-- Incliomos dataTable --}}
+    {{-- Incluimos dataTable --}}
     <script src="{{ asset('jQuery/jquery-3.6.0.min.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
     @include('components.dataTable', ['tablaId' => 'data-table'])   

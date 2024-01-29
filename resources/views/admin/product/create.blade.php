@@ -107,8 +107,10 @@
                             {{-- agregar imagenes --}}
                             <div class="col-12 mt-3">
                                 <label for="imageInputs" class="form-label">Fotos:</label>
-                                <br>
                                 <input class="form-control form-control-lg" type="file" name="images[]" accept="image/*" multiple/>
+                                <!-- Aquí se agregarán las miniaturas de las imágenes seleccionadas -->
+                                <div id="selectedImagesContainer" class="d-flex flex-wrap justify-content-center">
+                                </div>
                             </div>
 
                             <div class="col-12 mt-3">
@@ -136,3 +138,8 @@
 
 {{-- Incluimos el script para desactivar los botones --}}
 @include('components.procesando')
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{{-- Incluimos el script para mostrar Imagenes --}}
+@include('components.mostrarImagenes')

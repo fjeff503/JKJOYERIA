@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\DeliveryPoint;
+namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDeliveryPointRequest extends FormRequest
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

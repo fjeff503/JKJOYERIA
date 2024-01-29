@@ -11,8 +11,10 @@
   <link rel="stylesheet" href="{{ asset('melody/vendors/css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ asset('melody/vendors/css/vendor.bundle.addons.css') }}">
   <link rel="stylesheet" href="{{ asset('melody/css/style.css') }}">
-  <link href="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.7.16/dist/sweetalert2.min.css
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css">
+  
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.16/dist/sweetalert2.min.css
 " rel="stylesheet">
 
   <!-- INCLUIR USO DE MIS ARCHIVOS CSS -->
@@ -63,10 +65,10 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.16/dist/sweetalert2.min.css
 <script src="{{ asset('melody/js/hoverable-collapse.js') }}"></script>
 <script src="{{ asset('melody/js/misc.js') }}"></script>
 <script src="{{ asset('melody/js/settings.js') }}"></script>
+
 <!-- endinject -->
 <!-- Custom js for this page-->
 <script src="{{ asset('melody/js/dashboard.js') }}"></script>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <!-- End custom js for this page-->
