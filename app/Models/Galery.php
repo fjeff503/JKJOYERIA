@@ -9,20 +9,20 @@ class Galery extends Model
 {
     use HasFactory;
 
-        //Nombre de la tabla
-        protected $table = 'galeries';
+    //Nombre de la tabla
+    protected $table = 'galeries';
 
-        //Llave primaria
-        protected $primaryKey = 'idGalery';
-    
-        protected $fillable = [ 
-            'url',
-            'idProduct'
-        ];
+    //Llave primaria
+    protected $primaryKey = 'idGalery';
 
-        //relacionar con productos
-        public function product(){
-            return $this->belongsTo(Product::class);
-        }
+    protected $fillable = [
+        'url',
+        'idProduct'
+    ];
 
+    //relacionar con productos
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

@@ -92,9 +92,9 @@
             </div>
         </div>
     </div>
-    
-{{-- Para escribir lo mismo en el campo whatsapp --}}
-<script src="{{ asset('jQuery/jquery-3.6.0.min.js') }}"></script>
+
+    {{-- Para escribir lo mismo en el campo whatsapp --}}
+    <script src="{{ asset('jQuery/jquery-3.6.0.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#phone').on('input', function() {
@@ -103,4 +103,3 @@
         });
     </script>
 @endsection
-

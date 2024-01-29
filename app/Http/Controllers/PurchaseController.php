@@ -26,10 +26,12 @@ class PurchaseController extends Controller
         //este toma los parametros y reglas pa guardar del Http\Requests\Provider\StoreProviderRequest
         $purchase = Purchase::create($request->all());
 
-        foreach($request->idProduct as $key => $product){
-            $results[] = array("idProduct"=>$request->idProduct[$key], 
-                                "quantity"=>$request->quantity[$key], 
-                                "price"=>$request->price[$key]);
+        foreach ($request->idProduct as $key => $product) {
+            $results[] = array(
+                "idProduct" => $request->idProduct[$key],
+                "quantity" => $request->quantity[$key],
+                "price" => $request->price[$key]
+            );
         };
 
         $purchase->purchaseDetails()->createMany($results);

@@ -9,12 +9,13 @@ class Day extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 
+    protected $fillable = [
         'name'
     ];
 
     //relacionar con DeliveryPoint
-    public function deliveryPoint(){
+    public function deliveryPoint()
+    {
         return $this->hasMany(DeliveryPoint::class);
     }
 }

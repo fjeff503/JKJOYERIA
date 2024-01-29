@@ -16,12 +16,12 @@ class PaymentStateSeeder extends Seeder
     {
         $data = array(
             [
-                'name'=>'Pagado',
-            'created_at' => Carbon::now()
+                'name' => 'Pagado',
+                'created_at' => Carbon::now()
             ],
             [
-                'name'=>'Pendiente',
-            'created_at' => Carbon::now()
+                'name' => 'Pendiente',
+                'created_at' => Carbon::now()
             ]
         );
 

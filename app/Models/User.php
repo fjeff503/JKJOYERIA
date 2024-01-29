@@ -44,12 +44,14 @@ class User extends Authenticatable
     ];
 
     //relacionar con purchase
-    public function purchase(){
+    public function purchase()
+    {
         return $this->hasMany(Purchase::class);
     }
 
     //relacionar con sale
-    public function sale(){
+    public function sale()
+    {
         return $this->hasMany(Sale::class);
-     }
+    }
 }

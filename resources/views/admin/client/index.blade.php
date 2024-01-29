@@ -58,8 +58,7 @@
                                                 href="/clients/edit/{{ $item->idClient }}">Modificar</a>
                                             {{-- @endif --}}
                                             {{-- boton para eliminar --}}
-                                            <button class="btn btn-danger p-2"
-                                                url="/clients/destroy/{{ $item->idClient }}"
+                                            <button class="btn btn-danger p-2" url="/clients/destroy/{{ $item->idClient }}"
                                                 onclick="destroy(this, 'Se eliminara el cliente {{ $item->name }}','El cliente fue eliminado con exito', 'El Cliente NO fue eliminado')"
                                                 token="{{ csrf_token() }}">Eliminar</button>
                                         </td>
@@ -80,8 +79,8 @@
     {{-- Incluimos el script para mensajes satisfactorios --}}
     @include('components.exito')
 
-     {{-- Incluimos el script para mensajes de informacion --}}
-     @include('components.info')
+    {{-- Incluimos el script para mensajes de informacion --}}
+    @include('components.info')
 
     {{-- Incluimos el script para mensajes satisfactorios al eliminar --}}
     @include('components.eliminado')

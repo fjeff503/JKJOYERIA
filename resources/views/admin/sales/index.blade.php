@@ -48,7 +48,7 @@
                                     $count = 0;
                                 @endphp
                                 @foreach ($data as $item)
-                                    <tr data-toggle="modal" data-target="#galleryModal{{$item->first()->codeProduct}}">
+                                    <tr data-toggle="modal" data-target="#galleryModal{{ $item->first()->codeProduct }}">
                                         @php
                                             $count++;
                                         @endphp
@@ -61,7 +61,7 @@
                                         <td>{{ $item->first()->category }}</td>
                                         <td>{{ $item->first()->provider }}</td>
                                         <td>
-                                            <img src="{{ $item->first()->fotos }}" alt="{{$item->first()->name}}">                                            
+                                            <img src="{{ $item->first()->fotos }}" alt="{{ $item->first()->name }}">
                                         </td>
                                         <td>
                                             {{-- @if (Auth::user()->role == 'admin') --}}
@@ -77,43 +77,58 @@
                                         </td>
                                     </tr>
 
-                                        {{-- creamos el modal para cada producto --}}
-                                        <div class="modal fade" id="galleryModal{{$item->first()->codeProduct}}" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel{{$item->first()->codeProduct}}" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="galleryModalLabel{{$item->first()->codeProduct}}">{{$item->first()->name}}</h5>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <!-- Mostrar aquí todas las fotos relacionadas con el producto -->
-                                                        @if($item->first()->fotos)
-                                                        <div id="galleryCarouselLabel{{$item->first()->codeProduct}}" class="carousel slide">
+                                    {{-- creamos el modal para cada producto --}}
+                                    <div class="modal fade" id="galleryModal{{ $item->first()->codeProduct }}"
+                                        tabindex="-1" role="dialog"
+                                        aria-labelledby="galleryModalLabel{{ $item->first()->codeProduct }}"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        id="galleryModalLabel{{ $item->first()->codeProduct }}">
+                                                        {{ $item->first()->name }}</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Mostrar aquí todas las fotos relacionadas con el producto -->
+                                                    @if ($item->first()->fotos)
+                                                        <div id="galleryCarouselLabel{{ $item->first()->codeProduct }}"
+                                                            class="carousel slide">
                                                             <div class="carousel-inner">
                                                                 @foreach ($item->pluck('fotos') as $i => $foto)
-                                                                    @if ($foto)                                                            
-                                                                          <div class="carousel-item{{ $i === 0 ? ' active' : '' }}">
-                                                                            <img class="d-block w-100 h-100" src="{{ $foto }}" alt="{{$item->first()->name}}">
-                                                                          </div>                                                               
+                                                                    @if ($foto)
+                                                                        <div
+                                                                            class="carousel-item{{ $i === 0 ? ' active' : '' }}">
+                                                                            <img class="d-block w-100 h-100"
+                                                                                src="{{ $foto }}"
+                                                                                alt="{{ $item->first()->name }}">
+                                                                        </div>
                                                                     @endif
                                                                 @endforeach
                                                             </div>
-                                                            <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarouselLabel{{$item->first()->codeProduct}}" data-bs-slide="prev">
-                                                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <button class="carousel-control-prev" type="button"
+                                                                data-bs-target="#galleryCarouselLabel{{ $item->first()->codeProduct }}"
+                                                                data-bs-slide="prev">
+                                                                <span class="carousel-control-prev-icon"
+                                                                    aria-hidden="true"></span>
                                                             </button>
-                                                            <button class="carousel-control-next" type="button" data-bs-target="#galleryCarouselLabel{{$item->first()->codeProduct}}" data-bs-slide="next">
-                                                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <button class="carousel-control-next" type="button"
+                                                                data-bs-target="#galleryCarouselLabel{{ $item->first()->codeProduct }}"
+                                                                data-bs-slide="next">
+                                                                <span class="carousel-control-next-icon"
+                                                                    aria-hidden="true"></span>
                                                             </button>
                                                         </div>
-                                                        @endif
-                                                        <br>
-                                                        <hr>
-                                                        <br>
-                                                        <h6>Descripci&oacute;n:</h6>
-                                                        <p>{{ $item->first()->description }}</p>
-                                                    </div>
+                                                    @endif
+                                                    <br>
+                                                    <hr>
+                                                    <br>
+                                                    <h6>Descripci&oacute;n:</h6>
+                                                    <p>{{ $item->first()->description }}</p>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>
@@ -130,8 +145,8 @@
     {{-- Incluimos el script para mensajes satisfactorios --}}
     @include('components.exito')
 
-     {{-- Incluimos el script para mensajes de informacion --}}
-     @include('components.info')
+    {{-- Incluimos el script para mensajes de informacion --}}
+    @include('components.info')
 
     {{-- Incluimos el script para mensajes satisfactorios al eliminar --}}
     @include('components.eliminado')
@@ -144,4 +159,3 @@
     <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
     @include('components.dataTable', ['tablaId' => 'data-table'])
 @endsection
-

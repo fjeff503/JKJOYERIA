@@ -18,7 +18,7 @@ class Provider extends Model
     //Llave primaria
     protected $primaryKey = 'idProvider';
 
-    protected $fillable = [ 
+    protected $fillable = [
         'name',
         'address',
         'phone',
@@ -28,13 +28,14 @@ class Provider extends Model
     ];
 
     //relacionar con product
-    public function product(){
+    public function product()
+    {
         return $this->hasMany(Product::class);
-     }
+    }
 
     //relacionar con purchase
-    public function purchase(){
+    public function purchase()
+    {
         return $this->hasMany(Purchase::class);
-     }
-     
+    }
 }

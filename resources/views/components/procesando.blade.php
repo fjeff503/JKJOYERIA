@@ -1,5 +1,5 @@
 <script>
-    function deshabilitar(button){
+    function deshabilitar(button) {
         // Cambia el texto del botón
         button.innerHTML = 'Procesando...';
         // Deshabilita el botón

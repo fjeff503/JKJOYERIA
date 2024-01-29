@@ -9,7 +9,7 @@ class PurchaseDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 
+    protected $fillable = [
         'quantity',
         'price',
         'idProduct',
@@ -17,12 +17,14 @@ class PurchaseDetail extends Model
     ];
 
     //relacionar con purchase
-    public function purchase(){
+    public function purchase()
+    {
         return $this->belongsTo(Purchase::class);
-     }
+    }
 
     //relacionar con product
-    public function product(){
+    public function product()
+    {
         return $this->belongsTo(Product::class);
-     }
+    }
 }

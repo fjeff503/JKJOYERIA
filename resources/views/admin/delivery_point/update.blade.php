@@ -34,8 +34,8 @@
                             </div>
                             <div class="col-lg-4 col-md-12 mt-lg-0 mt-md-3">
                                 <label for="hour" class="form-label">Hora:</label>
-                                <input type="time" class="form-control" id="hour"
-                                    name="hour" value="{{ $deliveryPoint->hour }}">
+                                <input type="time" class="form-control" id="hour" name="hour"
+                                    value="{{ $deliveryPoint->hour }}">
                                 @error('hour')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -48,7 +48,8 @@
                                 <select name="idDay" id="idDay" class="form-control">
                                     <option value="">-- Seleccionar --</option>
                                     @foreach ($days as $item)
-                                    <option value="{{$item->idDay}}" @if ($deliveryPoint->idDay == $item->idDay) selected @endif>{{$item->name}}</option>
+                                        <option value="{{ $item->idDay }}"
+                                            @if ($deliveryPoint->idDay == $item->idDay) selected @endif>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('idDay')
@@ -63,7 +64,8 @@
                                 <select name="idParcel" id="idParcel" class="form-control">
                                     <option value="">-- Seleccionar --</option>
                                     @foreach ($parcels as $item)
-                                    <option value="{{$item->idParcel}}" @if ($deliveryPoint->idParcel == $item->idParcel) selected @endif>{{$item->name}}</option>
+                                        <option value="{{ $item->idParcel }}"
+                                            @if ($deliveryPoint->idParcel == $item->idParcel) selected @endif>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('idParcel')

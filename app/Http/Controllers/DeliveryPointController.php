@@ -23,11 +23,11 @@ class DeliveryPointController extends Controller
             "parcels.name as parcel",
             "days.name as day"
         )
-        ->join("days", "days.idDay", "=", "delivery_points.idDay")
-        ->join("parcels", "parcels.idParcel", "=", "delivery_points.idParcel")
-        ->get();
+            ->join("days", "days.idDay", "=", "delivery_points.idDay")
+            ->join("parcels", "parcels.idParcel", "=", "delivery_points.idParcel")
+            ->get();
 
-        return view('/admin/delivery_point/index')-> with(['data' => $data]);
+        return view('/admin/delivery_point/index')->with(['data' => $data]);
     }
 
     public function create()
@@ -36,7 +36,7 @@ class DeliveryPointController extends Controller
         $parcels = Parcel::get();
         //extraemos los dias 
         $days = Day::get();
-        
+
         return view('/admin/delivery_point/create', compact('parcels', 'days'));
     }
 
@@ -45,7 +45,7 @@ class DeliveryPointController extends Controller
         try {
             // Validamos la data
             $validatedData = $request->validated();
-        
+
             // Verificar si ya existe un DeliveryPoint con el mismo nombre, idDay, e idParcel
             $existingDeliveryPoint = DeliveryPoint::withTrashed()
                 ->where('name', $validatedData['name'])
@@ -90,12 +90,12 @@ class DeliveryPointController extends Controller
 
     public function edit(DeliveryPoint $deliveryPoint)
     {
-       //extraemos los encomendistas
-       $parcels = Parcel::get();
-       //extraemos los dias 
-       $days = Day::get(); 
-       
-       return view('/admin/delivery_point/update', compact('deliveryPoint', 'parcels', 'days'));
+        //extraemos los encomendistas
+        $parcels = Parcel::get();
+        //extraemos los dias 
+        $days = Day::get();
+
+        return view('/admin/delivery_point/update', compact('deliveryPoint', 'parcels', 'days'));
     }
 
     public function update(UpdateDeliveryPointRequest $request, $idDeliveryPoint)
@@ -105,17 +105,17 @@ class DeliveryPointController extends Controller
             // Traemos la data del item que estamos modificando
             $deliveryPoint = DeliveryPoint::findOrFail($idDeliveryPoint);
             // Verificar si el nuevo valor del campo "name, parcel y day" ya existe en otro registro con el mismo idParcel e idDay
-            if (($deliveryPoint->name != $request->input('name') 
-            || $deliveryPoint->idDay != $request->input('idDay')
-            || $deliveryPoint->idParcel != $request->input('idParcel')) &&
+            if (($deliveryPoint->name != $request->input('name')
+                    || $deliveryPoint->idDay != $request->input('idDay')
+                    || $deliveryPoint->idParcel != $request->input('idParcel')) &&
                 DeliveryPoint::where('name', $request->input('name'))
-                    ->where('idParcel', $request->input('idParcel'))
-                    ->where('idDay', $request->input('idDay'))
-                    ->exists()
+                ->where('idParcel', $request->input('idParcel'))
+                ->where('idDay', $request->input('idDay'))
+                ->exists()
             ) {
                 return redirect()->back()->withErrors(['name' => 'El Punto de Entrega ya está siendo utilizado por otro registro.'])->withInput();
             }
-        
+
             // Actualizamos los datos
             $deliveryPoint->name = $request->input('name');
             $deliveryPoint->hour = $request->input('hour');
@@ -124,7 +124,7 @@ class DeliveryPointController extends Controller
             $deliveryPoint->idDay = $request->input('idDay');
             // Guardamos los cambios
             $deliveryPoint->save();
-        
+
             // Retornamos a la vista principal
             return redirect('delivery_points')->with('success', 'Punto de Entrega actualizado correctamente');
         } catch (\Throwable $th) {

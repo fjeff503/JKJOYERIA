@@ -16,24 +16,24 @@ class PackageStateSeeder extends Seeder
     {
         $data = array(
             [
-                'name'=>'Entregado',
-            'created_at' => Carbon::now()
+                'name' => 'Entregado',
+                'created_at' => Carbon::now()
             ],
             [
-                'name'=>'No Entregado',
-            'created_at' => Carbon::now()
+                'name' => 'No Entregado',
+                'created_at' => Carbon::now()
             ],
             [
-                'name'=>'Reenvio',
-            'created_at' => Carbon::now()
+                'name' => 'Reenvio',
+                'created_at' => Carbon::now()
             ],
             [
-                'name'=>'Extraviado',
-            'created_at' => Carbon::now()
+                'name' => 'Extraviado',
+                'created_at' => Carbon::now()
             ],
             [
-                'name'=>'Dañado',
-            'created_at' => Carbon::now()
+                'name' => 'Dañado',
+                'created_at' => Carbon::now()
             ],
         );
 

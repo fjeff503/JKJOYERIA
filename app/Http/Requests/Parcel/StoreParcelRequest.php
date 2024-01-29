@@ -51,13 +51,14 @@ class StoreParcelRequest extends FormRequest
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         //definimos los mensajes de error que nos mostrara
-        return[
-            'name.required'=>'Este campo es requerido.',
-            'name.string'=>'El valor del campo es incorrecto.',
-            'name.max'=>'Solo se permite 50 caracteres.',
-            'name.unique'=>'El encomendista ya se encuentra registrado.',
+        return [
+            'name.required' => 'Este campo es requerido.',
+            'name.string' => 'El valor del campo es incorrecto.',
+            'name.max' => 'Solo se permite 50 caracteres.',
+            'name.unique' => 'El encomendista ya se encuentra registrado.',
 
             'phone.required' => 'Este campo es requerido.',
             'phone.string' => 'El valor del campo es incorrecto.',

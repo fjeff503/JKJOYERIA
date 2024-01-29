@@ -41,8 +41,10 @@
                                 @enderror
                             </div>
                             <div class="col-12 text-center pt-3">
-                                <button onclick="deshabilitar(this)" class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Guardar</button>
-                                <a id="btnCancelar" class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
+                                <button onclick="deshabilitar(this)"
+                                    class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Guardar</button>
+                                <a id="btnCancelar"
+                                    class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
                                     href="/payment_states">Cancelar</a>
                             </div>
                         </div>

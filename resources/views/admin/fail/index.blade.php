@@ -46,7 +46,7 @@
                                         <td>{{ $item->message }}</td>
                                         <td>{{ $item->file }}</td>
                                         <td>{{ $item->line }}</td>
-                                        <td>{{ $item->created_at }}</td>   
+                                        <td>{{ $item->created_at }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -63,4 +63,3 @@
     <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
     @include('components.dataTable', ['tablaId' => 'data-table'])
 @endsection
-

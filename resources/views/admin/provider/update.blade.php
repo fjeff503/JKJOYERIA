@@ -34,8 +34,8 @@
                             </div>
                             <div class="col-12">
                                 <label for="address" class="form-label">Direcci&oacute;n:</label>
-                                <textarea rows="5" type="text" class="form-control" placeholder="Dirección" id="address"
-                                    name="address" maxlength="255">{{ $provider->address }}</textarea>
+                                <textarea rows="5" type="text" class="form-control" placeholder="Dirección" id="address" name="address"
+                                    maxlength="255">{{ $provider->address }}</textarea>
                                 @error('address')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>

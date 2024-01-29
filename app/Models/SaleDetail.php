@@ -9,7 +9,7 @@ class SaleDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 
+    protected $fillable = [
         'quantity',
         'price',
         'discount',
@@ -18,12 +18,14 @@ class SaleDetail extends Model
     ];
 
     //relacionar con product
-    public function product(){
+    public function product()
+    {
         return $this->belongsTo(Product::class);
-     }
+    }
 
     //relacionar con sale
-    public function sale(){
+    public function sale()
+    {
         return $this->belongsTo(Sale::class);
-     }
+    }
 }

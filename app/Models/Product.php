@@ -13,11 +13,11 @@ class Product extends Model
     use SoftDeletes;
     //Nombre de la tabla
     protected $table = 'products';
- 
+
     //Llave primaria
     protected $primaryKey = 'idProduct';
 
-    protected $fillable = [ 
+    protected $fillable = [
         'codeProduct',
         'codeProductProvider',
         'name',
@@ -29,28 +29,32 @@ class Product extends Model
     ];
 
     //relacionar con category
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
     //relacionar con provider
-    public function provider(){
+    public function provider()
+    {
         return $this->belongsTo(Provider::class);
     }
 
     //relacionar con purchaseDetail
-    public function purchaseDetail(){
+    public function purchaseDetail()
+    {
         return $this->hasMany(PurchaseDetail::class);
     }
 
     //relacionar con saleDetail
-    public function saleDetail(){
+    public function saleDetail()
+    {
         return $this->hasMany(SaleDetail::class);
     }
 
     //relacionar con galery
-    public function galery(){
+    public function galery()
+    {
         return $this->hasMany(Galery::class, 'idProduct');
     }
-
 }

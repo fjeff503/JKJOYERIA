@@ -22,7 +22,7 @@ class SaleController extends Controller
         $clients = Client::get();
         $packageStates = packageState::get();
         $paymentStates = paymentState::get();
-        return view('admin.sale.create', compact('clients','packageStates', 'paymentStates'));
+        return view('admin.sale.create', compact('clients', 'packageStates', 'paymentStates'));
     }
 
     public function store(StoreSaleRequest $request)
@@ -30,11 +30,13 @@ class SaleController extends Controller
         //este toma los parametros y reglas pa guardar del Http\Requests\Sale\StoreSaleRequest
         $sale = Sale::create($request->all());
 
-        foreach($request->idProduct as $key => $product){
-            $results[] = array("idProduct"=>$request->idProduct[$key], 
-                                "discount"=>$request->discount[$key], 
-                                "quantity"=>$request->quantity[$key], 
-                                "price"=>$request->price[$key]);
+        foreach ($request->idProduct as $key => $product) {
+            $results[] = array(
+                "idProduct" => $request->idProduct[$key],
+                "discount" => $request->discount[$key],
+                "quantity" => $request->quantity[$key],
+                "price" => $request->price[$key]
+            );
         };
 
         $sale->saleDetails()->createMany($results);

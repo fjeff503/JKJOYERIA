@@ -13,11 +13,11 @@ class DeliveryPoint extends Model
     use SoftDeletes;
     //Nombre de la tabla
     protected $table = 'delivery_points';
- 
+
     //Llave primaria
     protected $primaryKey = 'idDeliveryPoint';
 
-    protected $fillable = [ 
+    protected $fillable = [
         'name',
         'hour',
         'description',
@@ -27,17 +27,20 @@ class DeliveryPoint extends Model
 
 
     //relacionar con parcel
-    public function parcel(){
+    public function parcel()
+    {
         return $this->belongsTo(Parcel::class);
     }
 
     //relacionar con day
-    public function day(){
+    public function day()
+    {
         return $this->belongsTo(Day::class);
     }
 
     //relacionar con sale
-    public function sale(){
+    public function sale()
+    {
         return $this->hasMany(Sale::class);
-     }
+    }
 }

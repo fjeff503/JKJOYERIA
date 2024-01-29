@@ -16,37 +16,36 @@ class DaySeeder extends Seeder
     {
         $data = array(
             [
-                'name'=>'Lunes',
-            'created_at' => Carbon::now()
+                'name' => 'Lunes',
+                'created_at' => Carbon::now()
             ],
             [
-                'name'=>'Martes',
-            'created_at' => Carbon::now()
+                'name' => 'Martes',
+                'created_at' => Carbon::now()
             ],
             [
-                'name'=>'Miercoles',
-            'created_at' => Carbon::now()
+                'name' => 'Miercoles',
+                'created_at' => Carbon::now()
             ],
             [
-                'name'=>'Jueves',
-            'created_at' => Carbon::now()
+                'name' => 'Jueves',
+                'created_at' => Carbon::now()
             ],
             [
-                'name'=>'Viernes',
-            'created_at' => Carbon::now()
+                'name' => 'Viernes',
+                'created_at' => Carbon::now()
             ],
             [
-                'name'=>'Sabado',
-            'created_at' => Carbon::now()
+                'name' => 'Sabado',
+                'created_at' => Carbon::now()
             ],
             [
-                'name'=>'Domingo',
-            'created_at' => Carbon::now()
+                'name' => 'Domingo',
+                'created_at' => Carbon::now()
             ],
         );
 
         //almacenar data
         DB::table('days')->insert($data);
-
     }
 }

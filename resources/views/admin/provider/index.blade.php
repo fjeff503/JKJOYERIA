@@ -90,8 +90,8 @@
     {{-- Incluimos el script para mensajes satisfactorios --}}
     @include('components.exito')
 
-     {{-- Incluimos el script para mensajes de informacion --}}
-     @include('components.info')
+    {{-- Incluimos el script para mensajes de informacion --}}
+    @include('components.info')
 
     {{-- Incluimos el script para mensajes satisfactorios al eliminar --}}
     @include('components.eliminado')

@@ -33,7 +33,8 @@ class StorePaymentStateRequest extends FormRequest
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         //definimos los mensajes de error que nos mostrara
         return [
             'name.required' => 'Este campo es requerido.',

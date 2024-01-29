@@ -18,7 +18,7 @@ class Parcel extends Model
     //Llave primaria
     protected $primaryKey = 'idParcel';
 
-    protected $fillable = [ 
+    protected $fillable = [
         'name',
         'phone',
         'whatsapp',
@@ -26,8 +26,8 @@ class Parcel extends Model
     ];
 
     //relacionar con DeliveryPoint
-    public function deliveryPoint(){
+    public function deliveryPoint()
+    {
         return $this->hasMany(DeliveryPoint::class);
     }
-
 }

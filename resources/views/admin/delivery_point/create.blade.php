@@ -34,8 +34,8 @@
 
                             <div class="col-lg-4 col-md-12 mt-lg-0 mt-md-3">
                                 <label for="hour" class="form-label">Hora:</label>
-                                <input type="time" class="form-control" id="hour"
-                                    name="hour" value="{{ old('hour') }}">
+                                <input type="time" class="form-control" id="hour" name="hour"
+                                    value="{{ old('hour') }}">
                                 @error('hour')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -48,7 +48,8 @@
                                 <select name="idDay" id="idDay" class="form-control">
                                     <option value="">-- Seleccionar --</option>
                                     @foreach ($days as $item)
-                                    <option value="{{$item->idDay}}" @if (old('idDay') == $item->idDay) selected @endif>{{$item->name}}</option>
+                                        <option value="{{ $item->idDay }}"
+                                            @if (old('idDay') == $item->idDay) selected @endif>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('idDay')
@@ -63,7 +64,8 @@
                                 <select name="idParcel" id="idParcel" class="form-control">
                                     <option value="">-- Seleccionar --</option>
                                     @foreach ($parcels as $item)
-                                    <option value="{{$item->idParcel}}" @if (old('idParcel') == $item->idParcel) selected @endif>{{$item->name}}</option>
+                                        <option value="{{ $item->idParcel }}"
+                                            @if (old('idParcel') == $item->idParcel) selected @endif>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('idParcel')
@@ -83,8 +85,10 @@
                                 @enderror
                             </div>
                             <div class="col-12 text-center pt-3">
-                                <button onclick="deshabilitar(this)" class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Guardar</button>
-                                <a id="btnCancelar" class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
+                                <button onclick="deshabilitar(this)"
+                                    class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Guardar</button>
+                                <a id="btnCancelar"
+                                    class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
                                     href="/delivery_points">Cancelar</a>
                             </div>
                         </div>

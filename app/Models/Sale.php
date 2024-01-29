@@ -9,7 +9,7 @@ class Sale extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 
+    protected $fillable = [
         'date',
         'total',
         'status',
@@ -22,33 +22,38 @@ class Sale extends Model
     ];
 
     //relacionar con client
-    public function client(){
+    public function client()
+    {
         return $this->belongsTo(Client::class);
-     }
-        
+    }
+
     //relacionar con deliveryPoint
-    public function deliveryPoint(){
+    public function deliveryPoint()
+    {
         return $this->belongsTo(DeliveryPoint::class);
-     }
+    }
 
     //relacionar con paymentState
-    public function paymentState(){
+    public function paymentState()
+    {
         return $this->belongsTo(paymentState::class);
-     }
+    }
 
-     //relacionar con paymentState
-    public function packageState(){
+    //relacionar con paymentState
+    public function packageState()
+    {
         return $this->belongsTo(packageState::class);
-     }
+    }
 
     //relacionar con users
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    
+
     //relacionar con sale_details
-    public function saleDetail(){
+    public function saleDetail()
+    {
         return $this->hasMany(SaleDetail::class);
     }
-
 }

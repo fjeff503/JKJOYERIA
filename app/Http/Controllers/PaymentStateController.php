@@ -33,7 +33,7 @@ class PaymentStateController extends Controller
      */
     public function store(StorePaymentStateRequest $request)
     {
-                try {
+        try {
             // Validamos la data
             $validatedData = $request->validated();
 
@@ -79,14 +79,14 @@ class PaymentStateController extends Controller
      */
     public function edit(PaymentState $paymentState)
     {
-       //Mostrar la vista 
+        //Mostrar la vista 
         return view('/admin/payment_state/update')->with(['data' => $paymentState]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePaymentStateRequest $request,$idPaymentState)
+    public function update(UpdatePaymentStateRequest $request, $idPaymentState)
     {
         //intento
         try {

@@ -64,8 +64,7 @@
                                                 href="/parcels/edit/{{ $item->idParcel }}">Modificar</a>
                                             {{-- @endif --}}
                                             {{-- boton para eliminar --}}
-                                            <button class="btn btn-danger p-2"
-                                                url="/parcels/destroy/{{ $item->idParcel }}"
+                                            <button class="btn btn-danger p-2" url="/parcels/destroy/{{ $item->idParcel }}"
                                                 onclick="destroy(this, 'Se eliminara el encomendista {{ $item->name }}','El encomendista fue eliminado con exito', 'El encomendista NO fue eliminado')"
                                                 token="{{ csrf_token() }}">Eliminar</button>
                                         </td>
@@ -86,8 +85,8 @@
     {{-- Incluimos el script para mensajes satisfactorios --}}
     @include('components.exito')
 
-     {{-- Incluimos el script para mensajes de informacion --}}
-     @include('components.info')
+    {{-- Incluimos el script para mensajes de informacion --}}
+    @include('components.info')
 
     {{-- Incluimos el script para mensajes satisfactorios al eliminar --}}
     @include('components.eliminado')
