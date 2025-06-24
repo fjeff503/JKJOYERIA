@@ -201,3 +201,7 @@ Route::delete('/categories/destroy/{category}', [CategoryController::class, 'des
 // ===RUTAS PARA ERRORES===
 //Ruta para mostrar
 Route::get('/bugs', [FailController::class, 'index']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
