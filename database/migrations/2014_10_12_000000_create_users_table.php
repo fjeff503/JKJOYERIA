@@ -14,11 +14,17 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+
+            //relacion roles
+            $table->unsignedBigInteger('idRole')->default(1);
+            $table->foreign('idRole')->references('idRole')->on('roles')->onUpdate('cascade');
+
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

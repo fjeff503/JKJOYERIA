@@ -37,10 +37,12 @@
                             Settings
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item">
-                            <i class="fas fa-power-off text-primary"></i>
-                            Logout
-                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="dropdown-item" style="background: none; border: none; width: 100%; text-align: left;">
+                                <i class="fas fa-power-off text-primary"></i> Cerrar sesión
+                            </button>
+                        </form>
                     </div>
                 </li>
                 {{-- Opciones personales de cada --}}

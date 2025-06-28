@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             DaySeeder::class,
             PackageStateSeeder::class,
             PaymentStateSeeder::class,
+            RolesSeeder::class,
         ]);
     }
 }

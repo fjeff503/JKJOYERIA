@@ -3,6 +3,7 @@
     {{-- Items del menu --}}
     <ul class="nav">
         {{-- Nombre rol y fotografia --}}
+        @if (Auth::check())
         <li class="nav-item nav-profile">
             <div class="nav-link">
                 <div class="profile-image">
@@ -12,16 +13,25 @@
                 </div>
                 <div class="profile-name">
                     {{-- NOMBRE --}}
-                    <p class="name">
-                        Jefferson Pineda
+                    <p class="name" style="max-width: 100%; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
+                        {{ Auth::user()->name }}
                     </p>
                     {{-- ROL --}}
                     <p class="designation">
-                        Super Admin
+                        @if (Auth::user()->idRole == 1)
+                            Usuario
+                        @elseif (Auth::user()->idRole == 2)
+                            Vendedor
+                        @elseif (Auth::user()->idRole == 3)
+                            Administrador
+                        @else
+                            Rol desconocido
+                        @endif
                     </p>
                 </div>
             </div>
         </li>
+        @endif
 
         {{-- OPCIONES DEL MENU --}}
         {{-- DASHBOARD --}}
@@ -86,6 +96,13 @@
             <a class="nav-link" href="/products">
                 <i class="fas fa-plus-square menu-icon"></i>
                 <span class="menu-title">Productos</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/users">
+                <i class="fas fa-user menu-icon"></i>
+                <span class="menu-title">Usuarios</span>
             </a>
         </li>
 
