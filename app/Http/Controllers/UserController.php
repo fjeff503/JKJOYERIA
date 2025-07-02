@@ -7,7 +7,7 @@ use App\Models\Fail;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Symfony\Component\VarDumper\VarDumper;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -20,7 +20,11 @@ class UserController extends Controller
          $data = User::select(
             "users.id",
             "users.name",
+            "users.lastname",
             "users.email",
+            "users.phone",
+            "users.profile_photo",
+            "users.address",
             "roles.name as role"
         )
             ->join("roles", "roles.idRole", "=", "users.idRole")
@@ -67,8 +71,28 @@ class UserController extends Controller
     
             // Actualizamos los datos
             $user->name = $request->input('name');
-            $user->idRole = $request->input('idRole');
+            $user->lastname = $request->input('lastname');
+            $user->phone = $request->input('phone');
+            $user->address = $request->input('address');
+            
+            // Solo actualizamos el rol si viene en el request (es decir, si el admin lo modificó)
+            if ($request->input('idRole')) {
+                $user->idRole = $request->input('idRole');
+            }
     
+            //Si se subió nueva imagen
+            if ($request->hasFile('profile_photo')) {
+                // Borra la anterior si existía
+                $relativePath = parse_url($user->profile_photo, PHP_URL_PATH);
+                Storage::disk('s3')->delete($relativePath);
+
+            // Almacena nueva imagen
+            $path = $request->file('profile_photo')->store('profile-photos', 's3');
+
+            // Guarda la URL pública o path, según uses
+            $user->profile_photo = Storage::disk('s3')->url($path);
+        }
+
             // Guardamos los cambios
             $user->save();
     
@@ -97,8 +121,19 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-        //Retornar una respuesta json
-        return response()->json(array('res' => true));
+        try {
+            // Si tiene imagen de perfil, eliminarla del bucket S3
+            if ($user->profile_photo && filter_var($user->profile_photo, FILTER_VALIDATE_URL)) {
+                $relativePath = ltrim(parse_url($user->profile_photo, PHP_URL_PATH), '/');
+                Storage::disk('s3')->delete($relativePath);
+            }
+    
+            // Eliminar usuario (soft delete)
+            $user->delete();
+    
+            return response()->json(['res' => true]);
+        } catch (\Throwable $e) {
+            return response()->json(['res' => false, 'error' => $e->getMessage()], 500);
+        }
     }
 }

@@ -24,7 +24,10 @@
                                 <tr>
                                     <th>N°</th>
                                     <th>Nombre</th>
+                                    <th>Apellido</th>
                                     <th>Email</th>
+                                    <th>Tel&eacute;fono</th>
+                                    <th>Foto</th>
                                     <th>Rol</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -40,7 +43,16 @@
                                         @endphp
                                         <td>{{ $count }}</td>
                                         <td>{{ $item->name }}</td>
+                                        <td>{{ $item->lastname }}</td>
                                         <td>{{ $item->email }}</td>
+                                        <td>{{ $item->phone }}</td>
+                                        <td>
+                                            @if ($item->profile_photo)
+                                                <img src="{{ $item->profile_photo }}" alt="Foto de Perfil">
+                                            @else
+                                                <p>Sin imagen</p>
+                                            @endif
+                                        </td>
                                         <td>{{ $item->role }}</td>
                                         <td>
                                             {{-- @if (Auth::user()->role == 'admin') --}}
@@ -49,8 +61,7 @@
                                                 href="/users/edit/{{ $item->id }}">Modificar</a>
                                             {{-- @endif --}}
                                             {{-- boton para eliminar --}}
-                                            <button class="btn btn-danger p-2"
-                                                url="/users/destroy/{{ $item->id }}"
+                                            <button class="btn btn-danger p-2" url="/users/destroy/{{ $item->id }}"
                                                 onclick="destroy(this, 'Se eliminara el usuario {{ $item->name }}','El usuario fue eliminado con exito', 'El usuario NO fue eliminado')"
                                                 token="{{ csrf_token() }}">Eliminar</button>
                                         </td>

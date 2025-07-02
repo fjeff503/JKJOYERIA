@@ -19,11 +19,13 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         {{-- Boton para agregar --}}
-                        <div class="btn-group align-self-center">
-                            <a href="/products/create" type="button" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Nuevo Producto
-                            </a>
-                        </div>
+                        @if(Auth::user()->role->name === 'admin')
+                            <div class="btn-group align-self-center">
+                                <a href="/products/create" type="button" class="btn btn-success">
+                                    <i class="fas fa-plus"></i> Nuevo Producto
+                                </a>
+                            </div>
+                        @endif
                         {{-- FIN Boton para agregar --}}
                     </div>
                     {{-- Tabla donde muestro la informacion --}}
@@ -40,7 +42,9 @@
                                     <th>Categor&iacute;a</th>
                                     <th>Proveedor</th>
                                     <th>Foto</th>
+                                    @if(Auth::user()->role->name === 'admin')
                                     <th>Acciones</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,18 +88,18 @@
                                                 <p>Sin imagen</p>
                                             @endif
                                         </td>
+                                        @if(Auth::user()->role->name === 'admin')
                                         <td>
-                                            {{-- @if (Auth::user()->role == 'admin') --}}
                                             {{-- boton para modificar --}}
                                             <a class="btn btn-primary p-2"
                                                 href="/products/edit/{{ $item->first()->idProduct }}">Modificar</a>
-                                            {{-- @endif --}}
                                             {{-- boton para eliminar --}}
                                             <button class="btn btn-danger p-2"
                                                 url="/products/destroy/{{ $item->first()->idProduct }}"
                                                 onclick="destroy(this, 'Se eliminara el punto de envio {{ $item->first()->name }}','El punto de envio fue eliminado con exito', 'El punto de envio NO fue eliminada')"
                                                 token="{{ csrf_token() }}">Eliminar</button>
                                         </td>
+                                        @endif
                                     </tr>
 
                                     {{-- creamos el modal para cada producto --}}

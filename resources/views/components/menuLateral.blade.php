@@ -4,39 +4,43 @@
     <ul class="nav">
         {{-- Nombre rol y fotografia --}}
         @if (Auth::check())
-        <li class="nav-item nav-profile">
-            <div class="nav-link">
-                <div class="profile-image">
-                    {{-- FOTOGRAFIA --}}
-                    {{-- <img src="{{ asset('melody/images/faces/face5.jpg') }}" alt="profile"> --}}
-                    <i class="fas fa-solid fa-user text-primary"></i>
-                </div>
-                <div class="profile-name">
-                    {{-- NOMBRE --}}
-                    <p class="name" style="max-width: 100%; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
-                        {{ Auth::user()->name }}
-                    </p>
-                    {{-- ROL --}}
-                    <p class="designation">
-                        @if (Auth::user()->idRole == 1)
-                            Usuario
-                        @elseif (Auth::user()->idRole == 2)
-                            Vendedor
-                        @elseif (Auth::user()->idRole == 3)
-                            Administrador
+            <li class="nav-item nav-profile">
+                <div class="nav-link">
+                    <div class="profile-image">
+                        {{-- FOTOGRAFIA --}}
+                        @if (Auth::user()->profile_photo)
+                            <img src="{{ Auth::user()->profile_photo }}" alt="Foto de perfil">
                         @else
-                            Rol desconocido
+                            <i class="fas fa-solid fa-user text-primary"></i>
                         @endif
-                    </p>
+                    </div>
+                    <div class="profile-name">
+                        {{-- NOMBRE --}}
+                        <p class="name"
+                            style="max-width: 100%; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
+                            {{ Auth::user()->name }}
+                        </p>
+                        {{-- ROL --}}
+                        <p class="designation">
+                            @if (Auth::user()->idRole == 1)
+                                Usuario
+                            @elseif (Auth::user()->idRole == 2)
+                                Vendedor
+                            @elseif (Auth::user()->idRole == 3)
+                                Administrador
+                            @else
+                                Rol desconocido
+                            @endif
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </li>
+            </li>
         @endif
 
         {{-- OPCIONES DEL MENU --}}
         {{-- DASHBOARD --}}
         <li class="nav-item">
-            <a class="nav-link" href="/inicio">
+            <a class="nav-link" href="/">
                 <i class="fas fa-home menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>

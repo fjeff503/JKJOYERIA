@@ -22,6 +22,18 @@
 
     <!--ICONO-->
     <link rel="shortcut icon" href="{{ asset('melody/images/logo-mini.svg') }}">
+    <!-- Incluye los archivos de inputmask -->
+    <script src="{{ asset('InputMask/inputmask.min.js') }}"></script>
+
+    <!-- Agrega un script para inicializar la máscara en el campo de teléfono -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Inputmask({
+                mask: '9999-9999',
+                placeholder: ''
+            }).mask('#phone');
+        });
+    </script>
 </head>
 
 <!-- CUERPO DE LA PAGINA -->
@@ -34,7 +46,8 @@
             <!-- CONTENDIO PRINCIPAL -->
             <div class="p-4">
                 <!--CONTENIDO DEL MENU OCULTO -->
-                <img src="{{ asset('melody/images/logonuevo.png') }}" alt="logo" class="mx-auto d-block" style="width: 8%; height: auto;">
+                <img src="{{ asset('melody/images/logonuevo.png') }}" alt="logo" class="mx-auto d-block"
+                    style="width: 8%; height: auto;">
                 @yield('content')
                 <!-- FIN CONTENDIO PRINCIPAL -->
             </div>

@@ -19,11 +19,13 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         {{-- Boton para agregar --}}
-                        <div class="btn-group align-self-center">
-                            <a href="/delivery_points/create" type="button" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Nuevo Punto de Entrega
-                            </a>
-                        </div>
+                        @if (Auth::user()->role->name === 'admin')
+                            <div class="btn-group align-self-center">
+                                <a href="/delivery_points/create" type="button" class="btn btn-success">
+                                    <i class="fas fa-plus"></i> Nuevo Punto de Entrega
+                                </a>
+                            </div>
+                        @endif
                         {{-- FIN Boton para agregar --}}
                     </div>
                     {{-- Tabla donde muestro la informacion --}}
@@ -37,7 +39,9 @@
                                     <th>D&iacute;a</th>
                                     <th>Hora</th>
                                     <th>Descripci&oacute;n</th>
-                                    <th>Acciones</th>
+                                    @if (Auth::user()->role->name === 'admin')
+                                        <th>Acciones</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,18 +59,20 @@
                                         <td>{{ $item->day }}</td>
                                         <td>{{ $item->hour }}</td>
                                         <td>{{ $item->description }}</td>
-                                        <td>
-                                            {{-- @if (Auth::user()->role == 'admin') --}}
-                                            {{-- boton para modificar --}}
-                                            <a class="btn btn-primary p-2"
-                                                href="/delivery_points/edit/{{ $item->idDeliveryPoint }}">Modificar</a>
-                                            {{-- @endif --}}
-                                            {{-- boton para eliminar --}}
-                                            <button class="btn btn-danger p-2"
-                                                url="/delivery_points/destroy/{{ $item->idDeliveryPoint }}"
-                                                onclick="destroy(this, 'Se eliminara el punto de envio {{ $item->name }}','El punto de envio fue eliminado con exito', 'El punto de envio NO fue eliminada')"
-                                                token="{{ csrf_token() }}">Eliminar</button>
-                                        </td>
+                                        @if (Auth::user()->role->name === 'admin')
+                                            <td>
+                                                {{-- @if (Auth::user()->role == 'admin') --}}
+                                                {{-- boton para modificar --}}
+                                                <a class="btn btn-primary p-2"
+                                                    href="/delivery_points/edit/{{ $item->idDeliveryPoint }}">Modificar</a>
+                                                {{-- @endif --}}
+                                                {{-- boton para eliminar --}}
+                                                <button class="btn btn-danger p-2"
+                                                    url="/delivery_points/destroy/{{ $item->idDeliveryPoint }}"
+                                                    onclick="destroy(this, 'Se eliminara el punto de envio {{ $item->name }}','El punto de envio fue eliminado con exito', 'El punto de envio NO fue eliminada')"
+                                                    token="{{ csrf_token() }}">Eliminar</button>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

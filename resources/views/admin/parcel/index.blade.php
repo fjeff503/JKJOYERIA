@@ -19,11 +19,13 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         {{-- Boton para agregar --}}
-                        <div class="btn-group align-self-center">
-                            <a href="/parcels/create" type="button" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Nuevo Encomendista
-                            </a>
-                        </div>
+                        @if (Auth::user()->role->name === 'admin')
+                            <div class="btn-group align-self-center">
+                                <a href="/parcels/create" type="button" class="btn btn-success">
+                                    <i class="fas fa-plus"></i> Nuevo Encomendista
+                                </a>
+                            </div>
+                        @endif
                         {{-- FIN Boton para agregar --}}
                     </div>
                     {{-- Tabla donde muestro la informacion --}}
@@ -57,17 +59,20 @@
                                                 <i class="fas fa-share"></i>
                                                 Ir al perfil </a>
                                         </td>
-                                        <td>
-                                            {{-- @if (Auth::user()->role == 'admin') --}}
-                                            {{-- boton para modificar --}}
-                                            <a class="btn btn-primary p-2"
-                                                href="/parcels/edit/{{ $item->idParcel }}">Modificar</a>
-                                            {{-- @endif --}}
-                                            {{-- boton para eliminar --}}
-                                            <button class="btn btn-danger p-2" url="/parcels/destroy/{{ $item->idParcel }}"
-                                                onclick="destroy(this, 'Se eliminara el encomendista {{ $item->name }}','El encomendista fue eliminado con exito', 'El encomendista NO fue eliminado')"
-                                                token="{{ csrf_token() }}">Eliminar</button>
-                                        </td>
+                                        @if (Auth::user()->role->name === 'admin')
+                                            <td>
+                                                {{-- @if (Auth::user()->role == 'admin') --}}
+                                                {{-- boton para modificar --}}
+                                                <a class="btn btn-primary p-2"
+                                                    href="/parcels/edit/{{ $item->idParcel }}">Modificar</a>
+                                                {{-- @endif --}}
+                                                {{-- boton para eliminar --}}
+                                                <button class="btn btn-danger p-2"
+                                                    url="/parcels/destroy/{{ $item->idParcel }}"
+                                                    onclick="destroy(this, 'Se eliminara el encomendista {{ $item->name }}','El encomendista fue eliminado con exito', 'El encomendista NO fue eliminado')"
+                                                    token="{{ csrf_token() }}">Eliminar</button>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -1,222 +1,27 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\DeliveryPointController;
-use App\Http\Controllers\FailController;
-use App\Http\Controllers\PackageStateController;
-use App\Http\Controllers\ParcelController;
-use App\Http\Controllers\PaymentStateController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Auth::routes();
 
 // Index
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('role:admin,sales,user');
 
-// Dashboard
-Route::get('inicio', function () {
-    return view('inicio');
-});
+require __DIR__.'/categories.php';
+require __DIR__.'/clients.php';
+require __DIR__.'/delivery_points.php';
+require __DIR__.'/fails.php';
+require __DIR__.'/package_states.php';
+require __DIR__.'/parcels.php';
+require __DIR__.'/payment_states.php';
+require __DIR__.'/products.php';
+require __DIR__.'/providers.php';
+require __DIR__.'/users.php';
 
 Route::resource('purchases', PurchaseController::class);
 Route::resource('sales', SaleController::class);
-
-// ===RUTAS PARA PRODUCTOS===
-//Ruta para mostrar
-Route::get('/products', [ProductController::class, 'index']);
-
-//Ruta para Crear (FrontEnd)
-Route::get('/products/create', [ProductController::class, 'create']);
-
-//Ruta para Crear (BackEnd)
-Route::post('/products/store', [ProductController::class, 'store']);
-
-//Ruta para Modificar (FrontEnd)
-Route::get('/products/edit/{product}', [ProductController::class, 'edit']);
-
-//Ruta para Modificar (BackEnd)
-Route::put('/products/update/{product}', [ProductController::class, 'update']);
-
-//Ruta para Eliminar (BackEnd)
-Route::delete('/products/destroy/{product}', [ProductController::class, 'destroy']);
-
-
-// ===RUTAS PARA PUNTOS DE ENTREGA===
-//Ruta para mostrar
-Route::get('/delivery_points', [DeliveryPointController::class, 'index']);
-
-//Ruta para Crear (FrontEnd)
-Route::get('/delivery_points/create', [DeliveryPointController::class, 'create']);
-
-//Ruta para Crear (BackEnd)
-Route::post('/delivery_points/store', [DeliveryPointController::class, 'store']);
-
-//Ruta para Modificar (FrontEnd)
-Route::get('/delivery_points/edit/{delivery_point}', [DeliveryPointController::class, 'edit']);
-
-//Ruta para Modificar (BackEnd)
-Route::put('/delivery_points/update/{delivery_point}', [DeliveryPointController::class, 'update']);
-
-//Ruta para Eliminar (BackEnd)
-Route::delete('/delivery_points/destroy/{delivery_point}', [DeliveryPointController::class, 'destroy']);
-
-
-// ===RUTAS PARA PROVEEDORES===
-//Ruta para mostrar
-Route::get('/providers', [ProviderController::class, 'index']);
-
-//Ruta para Crear (FrontEnd)
-Route::get('/providers/create', [ProviderController::class, 'create']);
-
-//Ruta para Crear (BackEnd)
-Route::post('/providers/store', [ProviderController::class, 'store']);
-
-//Ruta para Modificar (FrontEnd)
-Route::get('/providers/edit/{provider}', [ProviderController::class, 'edit']);
-
-//Ruta para Modificar (BackEnd)
-Route::put('/providers/update/{provider}', [ProviderController::class, 'update']);
-
-//Ruta para Eliminar (BackEnd)
-Route::delete('/providers/destroy/{provider}', [ProviderController::class, 'destroy']);
-
-
-// ===RUTAS PARA ENCOMENDISTAS===
-//Ruta para mostrar
-Route::get('/parcels', [ParcelController::class, 'index']);
-
-//Ruta para Crear (FrontEnd)
-Route::get('/parcels/create', [ParcelController::class, 'create']);
-
-//Ruta para Crear (BackEnd)
-Route::post('/parcels/store', [ParcelController::class, 'store']);
-
-//Ruta para Modificar (FrontEnd)
-Route::get('/parcels/edit/{parcel}', [ParcelController::class, 'edit']);
-
-//Ruta para Modificar (BackEnd)
-Route::put('/parcels/update/{parcel}', [ParcelController::class, 'update']);
-
-//Ruta para Eliminar (BackEnd)
-Route::delete('/parcels/destroy/{parcel}', [ParcelController::class, 'destroy']);
-
-
-// ===RUTAS PARA ESTADOS DE PAGOS===
-//Ruta para mostrar
-Route::get('/payment_states', [PaymentStateController::class, 'index']);
-
-//Ruta para Crear (FrontEnd)
-Route::get('/payment_states/create', [PaymentStateController::class, 'create']);
-
-//Ruta para Crear (BackEnd)
-Route::post('/payment_states/store', [PaymentStateController::class, 'store']);
-
-//Ruta para Modificar (FrontEnd)
-Route::get('/payment_states/edit/{payment_state}', [PaymentStateController::class, 'edit']);
-
-//Ruta para Modificar (BackEnd)
-Route::put('/payment_states/update/{payment_state}', [PaymentStateController::class, 'update']);
-
-//Ruta para Eliminar (BackEnd)
-Route::delete('/payment_states/destroy/{payment_state}', [PaymentStateController::class, 'destroy']);
-
-
-// ===RUTAS PARA ESTADOS DE PAQUETES===
-//Ruta para mostrar
-Route::get('/package_states', [PackageStateController::class, 'index']);
-
-//Ruta para Crear (FrontEnd)
-Route::get('/package_states/create', [PackageStateController::class, 'create']);
-
-//Ruta para Crear (BackEnd)
-Route::post('/package_states/store', [PackageStateController::class, 'store']);
-
-//Ruta para Modificar (FrontEnd)
-Route::get('/package_states/edit/{package_state}', [PackageStateController::class, 'edit']);
-
-//Ruta para Modificar (BackEnd)
-Route::put('/package_states/update/{package_state}', [PackageStateController::class, 'update']);
-
-//Ruta para Eliminar (BackEnd)
-Route::delete('/package_states/destroy/{package_state}', [PackageStateController::class, 'destroy']);
-
-
-// ===RUTAS PARA CLIENTES===
-//Ruta para mostrar
-Route::get('/clients', [ClientController::class, 'index']);
-
-//Ruta para Crear (FrontEnd)
-Route::get('/clients/create', [ClientController::class, 'create']);
-
-//Ruta para Crear (BackEnd)
-Route::post('/clients/store', [ClientController::class, 'store']);
-
-//Ruta para Modificar (FrontEnd)
-Route::get('/clients/edit/{client}', [ClientController::class, 'edit']);
-
-//Ruta para Modificar (BackEnd)
-Route::put('/clients/update/{client}', [ClientController::class, 'update']);
-
-//Ruta para Eliminar (BackEnd)
-Route::delete('/clients/destroy/{client}', [ClientController::class, 'destroy']);
-
-
-// ===RUTAS PARA CATEGORIAS===
-//Ruta para mostrar
-Route::get('/categories', [CategoryController::class, 'index']);
-
-//Ruta para Crear (FrontEnd)
-Route::get('/categories/create', [CategoryController::class, 'create']);
-
-//Ruta para Crear (BackEnd)
-Route::post('/categories/store', [CategoryController::class, 'store']);
-
-//Ruta para Modificar (FrontEnd)
-Route::get('/categories/edit/{category}', [CategoryController::class, 'edit']);
-
-//Ruta para Modificar (BackEnd)
-Route::put('/categories/update/{category}', [CategoryController::class, 'update']);
-
-//Ruta para Eliminar (BackEnd)
-Route::delete('/categories/destroy/{category}', [CategoryController::class, 'destroy']);
-
-
-// ===RUTAS PARA USUARIOS===
-//Ruta para mostrar
-Route::get('/users', [UserController::class, 'index']);
-
-//Ruta para Modificar (FrontEnd)
-Route::get('/users/edit/{user}', [UserController::class, 'edit']);
-
-//Ruta para Modificar (BackEnd)
-Route::put('/users/update/{user}', [UserController::class, 'update']);
-
-//Ruta para Eliminar (BackEnd)
-Route::delete('/users/destroy/{user}', [UserController::class, 'destroy']);
-
-// ===RUTAS PARA ERRORES===
-//Ruta para mostrar
-Route::get('/bugs', [FailController::class, 'index']);
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
