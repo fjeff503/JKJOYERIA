@@ -15,12 +15,12 @@ class ProviderController extends Controller
         //Extraemos los proveedores
         $data = Provider::all();
 
-        return view('/admin/provider/index', compact('data'));
+        return view('/provider/index', compact('data'));
     }
 
     public function create()
     {
-        return view('/admin/provider/create');
+        return view('/provider/create');
     }
 
     public function store(StoreProviderRequest $request)
@@ -107,7 +107,7 @@ class ProviderController extends Controller
     public function edit(Provider $provider)
     {
         //Mostrar la vista 
-        return view('/admin/provider/update')->with(['provider' => $provider]);
+        return view('/provider/update')->with(['provider' => $provider]);
     }
 
     public function update(UpdateProviderRequest $request, $idProvider)

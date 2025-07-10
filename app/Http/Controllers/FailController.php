@@ -10,6 +10,6 @@ class FailController extends Controller
     public function index()
     {
         $data = Fail::get();
-        return view('admin.fail.index', compact('data'));
+        return view('fail.index', compact('data'));
     }
 }

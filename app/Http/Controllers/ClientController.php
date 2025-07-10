@@ -15,12 +15,12 @@ class ClientController extends Controller
         //Extraemos los clientes
         $data = Client::all();
 
-        return view('/admin/client/index', compact('data'));
+        return view('/client/index', compact('data'));
     }
 
     public function create()
     {
-        return view('/admin/client/create');
+        return view('/client/create');
     }
 
     public function store(StoreClientRequest $request)
@@ -88,7 +88,7 @@ class ClientController extends Controller
     public function edit(Client $client)
     {
         //Mostrar la vista 
-        return view('/admin/client/update')->with(['client' => $client]);
+        return view('/client/update')->with(['client' => $client]);
     }
 
     public function update(UpdateClientRequest $request, $idClient)

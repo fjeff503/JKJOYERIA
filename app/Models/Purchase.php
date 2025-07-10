@@ -4,16 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Purchase extends Model
 {
     use HasFactory;
 
+    use SoftDeletes;
+    //Nombre de la tabla
+    protected $table = 'purchases';
+
+    //Llave primaria
+    protected $primaryKey = 'idPurchase';
+
     protected $fillable = [
-        'date',
         'total',
         'voucher',
-        'status',
         'idProvider',
         'idUser'
     ];

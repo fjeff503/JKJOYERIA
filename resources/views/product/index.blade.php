@@ -19,11 +19,13 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         {{-- Boton para agregar --}}
-                        <div class="btn-group align-self-center">
-                            <a href="/products/create" type="button" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Nuevo Producto
-                            </a>
-                        </div>
+                        @if (Auth::user()->role->name === 'admin')
+                            <div class="btn-group align-self-center">
+                                <a href="/products/create" type="button" class="btn btn-success">
+                                    <i class="fas fa-plus"></i> Nuevo Producto
+                                </a>
+                            </div>
+                        @endif
                         {{-- FIN Boton para agregar --}}
                     </div>
                     {{-- Tabla donde muestro la informacion --}}
@@ -40,7 +42,9 @@
                                     <th>Categor&iacute;a</th>
                                     <th>Proveedor</th>
                                     <th>Foto</th>
-                                    <th>Acciones</th>
+                                    @if (Auth::user()->role->name === 'admin')
+                                        <th>Acciones</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,33 +52,54 @@
                                     $count = 0;
                                 @endphp
                                 @foreach ($data as $item)
-                                    <tr data-toggle="modal" data-target="#galleryModal{{ $item->first()->codeProduct }}">
+                                    <tr>
                                         @php
                                             $count++;
                                         @endphp
-                                        <td>{{ $count }}</td>
-                                        <td>{{ $item->first()->codeProduct }}</td>
-                                        <td>{{ $item->first()->codeProductProvider }}</td>
-                                        <td>{{ $item->first()->name }}</td>
-                                        <td>${{ $item->first()->sellPrice }}</td>
-                                        <td>{{ $item->first()->stock }}</td>
-                                        <td>{{ $item->first()->category }}</td>
-                                        <td>{{ $item->first()->provider }}</td>
-                                        <td>
-                                            <img src="{{ $item->first()->fotos }}" alt="{{ $item->first()->name }}">
+                                        <td data-toggle="modal"
+                                            data-target="#galleryModal{{ $item->first()->codeProduct }}">{{ $count }}
                                         </td>
-                                        <td>
-                                            {{-- @if (Auth::user()->role == 'admin') --}}
-                                            {{-- boton para modificar --}}
-                                            <a class="btn btn-primary p-2"
-                                                href="/products/edit/{{ $item->first()->codeProduct }}">Modificar</a>
-                                            {{-- @endif --}}
-                                            {{-- boton para eliminar --}}
-                                            <button class="btn btn-danger p-2"
-                                                url="/products/destroy/{{ $item->first()->codeProduct }}"
-                                                onclick="destroy(this, 'Se eliminara el punto de envio {{ $item->first()->name }}','El punto de envio fue eliminado con exito', 'El punto de envio NO fue eliminada')"
-                                                token="{{ csrf_token() }}">Eliminar</button>
+                                        <td data-toggle="modal"
+                                            data-target="#galleryModal{{ $item->first()->codeProduct }}">
+                                            {{ $item->first()->codeProduct }}</td>
+                                        <td data-toggle="modal"
+                                            data-target="#galleryModal{{ $item->first()->codeProduct }}">
+                                            {{ $item->first()->codeProductProvider }}</td>
+                                        <td data-toggle="modal"
+                                            data-target="#galleryModal{{ $item->first()->codeProduct }}">
+                                            {{ $item->first()->name }}</td>
+                                        <td data-toggle="modal"
+                                            data-target="#galleryModal{{ $item->first()->codeProduct }}">
+                                            ${{ $item->first()->sellPrice }}</td>
+                                        <td data-toggle="modal"
+                                            data-target="#galleryModal{{ $item->first()->codeProduct }}">
+                                            {{ $item->first()->stock }}</td>
+                                        <td data-toggle="modal"
+                                            data-target="#galleryModal{{ $item->first()->codeProduct }}">
+                                            {{ $item->first()->category }}</td>
+                                        <td data-toggle="modal"
+                                            data-target="#galleryModal{{ $item->first()->codeProduct }}">
+                                            {{ $item->first()->provider }}</td>
+                                        <td data-toggle="modal"
+                                            data-target="#galleryModal{{ $item->first()->codeProduct }}">
+                                            @if ($item->first()->fotos)
+                                                <img src="{{ $item->first()->fotos }}" alt="{{ $item->first()->name }}">
+                                            @else
+                                                <p>Sin imagen</p>
+                                            @endif
                                         </td>
+                                        @if (Auth::user()->role->name === 'admin')
+                                            <td>
+                                                {{-- boton para modificar --}}
+                                                <a class="btn btn-primary p-2"
+                                                    href="/products/edit/{{ $item->first()->idProduct }}">Modificar</a>
+                                                {{-- boton para eliminar --}}
+                                                <button class="btn btn-danger p-2"
+                                                    url="/products/destroy/{{ $item->first()->idProduct }}"
+                                                    onclick="destroy(this, 'Se eliminara el producto {{ $item->first()->name }}','El producto fue eliminado con exito', 'El producto NO fue eliminado')"
+                                                    token="{{ csrf_token() }}">Eliminar</button>
+                                            </td>
+                                        @endif
                                     </tr>
 
                                     {{-- creamos el modal para cada producto --}}
@@ -154,7 +179,7 @@
     {{-- Incluimos script de errores --}}
     @include('components.error')
 
-    {{-- Incliomos dataTable --}}
+    {{-- Incluimos dataTable --}}
     <script src="{{ asset('jQuery/jquery-3.6.0.min.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
     @include('components.dataTable', ['tablaId' => 'data-table'])

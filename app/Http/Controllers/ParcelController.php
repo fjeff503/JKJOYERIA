@@ -16,12 +16,12 @@ class ParcelController extends Controller
         //Extraemos los clientes
         $data = Parcel::all();
 
-        return view('/admin/parcel/index', compact('data'));
+        return view('/parcel/index', compact('data'));
     }
 
     public function create()
     {
-        return view('/admin/parcel/create');
+        return view('/parcel/create');
     }
 
     public function store(StoreParcelRequest $request)
@@ -107,7 +107,7 @@ class ParcelController extends Controller
     public function edit(Parcel $parcel)
     {
         //Mostrar la vista 
-        return view('/admin/parcel/update')->with(['parcel' => $parcel]);
+        return view('/parcel/update')->with(['parcel' => $parcel]);
     }
 
     public function update(UpdateParcelRequest $request, $idParcel)

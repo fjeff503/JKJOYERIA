@@ -9,7 +9,7 @@ Auth::routes();
 
 // Index
 Route::get('/', function () {
-    return view('welcome');
+    return view('inicio');
 })->middleware('role:admin,sales,user');
 
 require __DIR__.'/categories.php';
@@ -22,6 +22,5 @@ require __DIR__.'/payment_states.php';
 require __DIR__.'/products.php';
 require __DIR__.'/providers.php';
 require __DIR__.'/users.php';
-
-Route::resource('purchases', PurchaseController::class);
-Route::resource('sales', SaleController::class);
+require __DIR__.'/purchases.php';
+require __DIR__.'/sales.php';

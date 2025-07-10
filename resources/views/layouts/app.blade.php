@@ -24,25 +24,11 @@
     <link rel="shortcut icon" href="{{ asset('melody/images/logo-mini.svg') }}">
     <!-- Incluye los archivos de inputmask -->
     <script src="{{ asset('InputMask/inputmask.min.js') }}"></script>
-
-    <!-- Agrega un script para inicializar la máscara en el campo de teléfono -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Inputmask({
-                mask: '9999-9999',
-                placeholder: ''
-            }).mask('#phone');
-            Inputmask({
-                mask: '9999-9999',
-                placeholder: ''
-            }).mask('#whatsapp');
-        });
-    </script>
 </head>
 
 <!-- CUERPO DE LA PAGINA -->
 
-<body>
+<body class="sidebar-icon-only">
     <!-- DIV CONTENEDOR -->
     <div class="container-scroller">
         <!-- INCLUIMOS EL COMPONENETE DEL MENU SUPERIOR -->

@@ -30,7 +30,7 @@ class UserController extends Controller
             ->join("roles", "roles.idRole", "=", "users.idRole")
             ->get();
 
-        return view('/admin/users/index')->with(['data' => $data]);
+        return view('/users/index')->with(['data' => $data]);
     }
 
     /**
@@ -57,7 +57,7 @@ class UserController extends Controller
         //extraemos los roles
         $roles = Role::get();
 
-        return view('/admin/users/update', compact('user', 'roles'));
+        return view('/users/update', compact('user', 'roles'));
     }
 
     /**
@@ -83,8 +83,10 @@ class UserController extends Controller
             //Si se subió nueva imagen
             if ($request->hasFile('profile_photo')) {
                 // Borra la anterior si existía
-                $relativePath = parse_url($user->profile_photo, PHP_URL_PATH);
-                Storage::disk('s3')->delete($relativePath);
+                if ($user->profile_photo) {
+                    $relativePath = parse_url($user->profile_photo, PHP_URL_PATH);
+                    Storage::disk('s3')->delete($relativePath);
+                }
 
             // Almacena nueva imagen
             $path = $request->file('profile_photo')->store('profile-photos', 's3');

@@ -35,8 +35,8 @@ class ProductController extends Controller
             ->leftJoin("galeries", "galeries.idProduct", "=", "products.idProduct") // Se utiliza leftJoin para incluir resultados incluso si no hay coincidencias en la tabla 'galeries'
             ->get()
             ->groupBy('idProduct');  // Agrupar resultados por 'idProduct'
-        $galeria = ["https://static.wixstatic.com/media/e5cc7f_9eab5500f8e842f39fd11d668fd7b679~mv2.png/v1/fill/w_500,h_497,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/e5cc7f_9eab5500f8e842f39fd11d668fd7b679~mv2.png", "https://static.wixstatic.com/media/e5cc7f_9eab5500f8e842f39fd11d668fd7b679~mv2.png/v1/fill/w_500,h_497,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/e5cc7f_9eab5500f8e842f39fd11d668fd7b679~mv2.png", "https://static.wixstatic.com/media/e5cc7f_9eab5500f8e842f39fd11d668fd7b679~mv2.png/v1/fill/w_500,h_497,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/e5cc7f_9eab5500f8e842f39fd11d668fd7b679~mv2.png"];
-        return view('/admin/product/index', compact('data', 'galeria'));
+        
+        return view('/product/index', compact('data'));
     }
 
     public function create()
@@ -46,7 +46,7 @@ class ProductController extends Controller
         //extraemos los proveedores
         $providers = Provider::get();
 
-        return view('/admin/product/create', compact('categories', 'providers'));
+        return view('/product/create', compact('categories', 'providers'));
     }
 
     public function store(StoreProductRequest $request)
@@ -151,7 +151,7 @@ class ProductController extends Controller
         //extraemos los proveedores
         $providers = Provider::get();
 
-        return view('/admin/product/update', compact('categories', 'providers', 'product'));
+        return view('/product/update', compact('categories', 'providers', 'product'));
     }
 
     public function update(UpdateProductRequest $request, $idProduct)

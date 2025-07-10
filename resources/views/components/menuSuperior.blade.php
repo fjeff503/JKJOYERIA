@@ -26,28 +26,60 @@
             {{-- FIN Boton para desplazar el menu a la izquierda cuando este en celular --}}
 
             {{-- Opciones del empleado --}}
-            <ul class="navbar-nav navbar-nav-right">
-                <li class="nav-item nav-profile dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                        <i class="fas fa-user text-white"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                        <a class="dropdown-item">
-                            <i class="fas fa-cog text-primary"></i>
-                            Settings
+            @if (Auth::check())
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown border-0">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
+                            data-toggle="dropdown" id="profileDropdown">
+                            <div class="profile-image">
+                                {{-- FOTOGRAFIA --}}
+                                @if (Auth::user()->profile_photo)
+                                    <img src="{{ Auth::user()->profile_photo }}" alt="Foto de perfil"
+                                        style="width: 3rem; height: 3rem; border-radius: 50%;">
+                                @else
+                                    <i class="fas fa-solid fa-user text-white" style="font-size: 20px;"></i>
+                                @endif
+                            </div>
+                            <div class="profile-name mx-3">
+                                {{-- NOMBRE --}}
+                                <p class="mb-0" style="font-weight: bold; font-size: 1em;">
+                                    {{ Auth::user()->name }}
+                                </p>
+                                {{-- ROL --}}
+                                <p class="mb-0" style="font-size: 0.7em; color: #c3c3c3;">
+                                    @if (Auth::user()->idRole == 1)
+                                        Usuario
+                                    @elseif (Auth::user()->idRole == 2)
+                                        Vendedor
+                                    @elseif (Auth::user()->idRole == 3)
+                                        Administrador
+                                    @else
+                                        Rol desconocido
+                                    @endif
+                                </p>
+                            </div>
                         </a>
-                        <div class="dropdown-divider"></div>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="dropdown-item" style="background: none; border: none; width: 100%; text-align: left;">
-                                <i class="fas fa-power-off text-primary"></i> Cerrar sesión
-                            </button>
-                        </form>
-                    </div>
-                </li>
-                {{-- Opciones personales de cada --}}
-                @yield('options')
-            </ul>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="/users/profile/{{ Auth::id() }}">
+                                <i class="fas fa-cog text-primary"></i> Perfil
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <div class="dropdown-item m-0 p-0">
+                                    <button type="submit" class="dropdown-item"
+                                        style="background: none; border: none; width: 100%; text-align: left; cursor:pointer;">
+                                        <i class="fas fa-power-off text-primary"></i> Cerrar sesión
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    {{-- Opciones personales de cada --}}
+                    @yield('options')
+                </ul>
+            @endif
             {{-- FIN Opciones del empleado --}}
 
 

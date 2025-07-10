@@ -53,7 +53,7 @@
                             <div class="col-12 mt-4">
                                 <label for="address" class="form-label">Direcci&oacute;n:</label>
                                 <textarea rows="5" type="text" class="form-control" placeholder="Dirección" id="address" name="address"
-                                    maxlength="255" value="{{ old('address') }}"></textarea>
+                                    maxlength="255">{{ old('address') }}</textarea>
                                 @error('address')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -93,7 +93,7 @@
                             <div class="col-12 mt-4">
                                 <label for="description" class="form-label">Descripci&oacute;n:</label>
                                 <textarea rows="5" type="text" class="form-control" placeholder="Descripción" id="description"
-                                    name="description" maxlength="255" value="{{ old('description') }}"></textarea>
+                                    name="description" maxlength="255">{{ old('description') }}</textarea>
                                 @error('description')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>

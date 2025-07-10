@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id('idPurchase');
-            $table->dateTime('date')->require();
             $table->decimal('total')->require();
-            $table->string('voucher');
-            $table->enum('status', ['VALID', 'CANCELED'])->default('VALID');
+            $table->string('voucher')->nullable();
 
             //relacion provider
             $table->unsignedBigInteger('idProvider');
             $table->foreign('idProvider')->references('idProvider')->on('providers')->onUpdate('cascade');
+            
             //relacion user
             $table->unsignedBigInteger('idUser');
             $table->foreign('idUser')->references('id')->on('users')->onUpdate('cascade');

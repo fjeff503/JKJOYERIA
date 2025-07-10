@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 {{-- Definimos el titulo --}}
-@section('title', 'Encomendistas')
+@section('title', 'Compras')
 
 {{-- Definimos estilos propios --}}
 @section('styles')
@@ -11,7 +11,7 @@
 {{-- Definimos el contenido --}}
 @section('content')
     {{-- Cuerpo de mi index --}}
-    <h1 class="text-center">Gesti&oacute;n de Encomendistas</h1>
+    <h1 class="text-center">Gesti&oacute;n de Compras</h1>
     <br>
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
@@ -19,13 +19,11 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         {{-- Boton para agregar --}}
-                        @if (Auth::user()->role->name === 'admin')
-                            <div class="btn-group align-self-center">
-                                <a href="/parcels/create" type="button" class="btn btn-success">
-                                    <i class="fas fa-plus"></i> Nuevo Encomendista
-                                </a>
-                            </div>
-                        @endif
+                        <div class="btn-group align-self-center">
+                            <a href="/purchases/create" type="button" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Nueva Compra
+                            </a>
+                        </div>
                         {{-- FIN Boton para agregar --}}
                     </div>
                     {{-- Tabla donde muestro la informacion --}}
@@ -34,10 +32,12 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th>N°</th>
-                                    <th>Nombre</th>
-                                    <th>Tel&eacute;fono</th>
-                                    <th>Whatsapp</th>
-                                    <th>Facebook</th>
+                                    <th>N° Compra</th>
+                                    <th>Total</th>
+                                    <th>Voucher</th>
+                                    <th>Proveedor</th>
+                                    <th>Fecha</th>
+                                    <th>Registro</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -51,28 +51,30 @@
                                             $count++;
                                         @endphp
                                         <td>{{ $count }}</td>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $item->phone }}</td>
-                                        <td>{{ $item->whatsapp }}</td>
+                                        <td>{{ $item->idPurchase }}</td>
+                                        <td>{{ $item->total }}</td>
                                         <td>
-                                            <a class="btn btn-info p-2" href="{{ $item->facebook }}" target="_blank">
-                                                <i class="fas fa-share"></i>
-                                                Ir al perfil </a>
+                                            @if ($item->voucher)
+                                                <img src="{{ $item->voucher }}" alt="Foto de Perfil">
+                                            @else
+                                                <p>Sin imagen</p>
+                                            @endif
                                         </td>
-                                        @if (Auth::user()->role->name === 'admin')
-                                            <td>
-                                                {{-- @if (Auth::user()->role == 'admin') --}}
-                                                {{-- boton para modificar --}}
-                                                <a class="btn btn-primary p-2"
-                                                    href="/parcels/edit/{{ $item->idParcel }}">Modificar</a>
-                                                {{-- @endif --}}
-                                                {{-- boton para eliminar --}}
-                                                <button class="btn btn-danger p-2"
-                                                    url="/parcels/destroy/{{ $item->idParcel }}"
-                                                    onclick="destroy(this, 'Se eliminara el encomendista {{ $item->name }}','El encomendista fue eliminado con exito', 'El encomendista NO fue eliminado')"
-                                                    token="{{ csrf_token() }}">Eliminar</button>
-                                            </td>
-                                        @endif
+                                        <td>{{ $item->provider }}</td>
+                                        <td>{{ $item->date }}</td>
+                                        <td>{{ $item->user }}</td>
+                                        <td>
+                                            {{-- @if (Auth::user()->role == 'admin') --}}
+                                            {{-- boton para modificar --}}
+                                            <a class="btn btn-primary p-2"
+                                                href="/purchases/edit/{{ $item->idPurchase }}">Modificar</a>
+                                            {{-- @endif --}}
+                                            {{-- boton para eliminar --}}
+                                            <button class="btn btn-danger p-2"
+                                                url="/purchases/destroy/{{ $item->idPurchase }}"
+                                                onclick="destroy(this, 'Se eliminara la compra {{ $item->idPurchase }}','La compra fue eliminada con exito', 'La compra NO fue eliminada')"
+                                                token="{{ csrf_token() }}">Eliminar</button>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

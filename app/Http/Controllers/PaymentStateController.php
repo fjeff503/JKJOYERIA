@@ -17,7 +17,7 @@ class PaymentStateController extends Controller
         //Extraemos los estados de paquetes
         $data = PaymentState::all();
 
-        return view('/admin/payment_state/index', compact('data'));
+        return view('/payment_state/index', compact('data'));
     }
 
     /**
@@ -25,7 +25,7 @@ class PaymentStateController extends Controller
      */
     public function create()
     {
-        return view('/admin/payment_state/create');
+        return view('/payment_state/create');
     }
 
     /**
@@ -80,7 +80,7 @@ class PaymentStateController extends Controller
     public function edit(PaymentState $paymentState)
     {
         //Mostrar la vista 
-        return view('/admin/payment_state/update')->with(['data' => $paymentState]);
+        return view('/payment_state/update')->with(['data' => $paymentState]);
     }
 
     /**

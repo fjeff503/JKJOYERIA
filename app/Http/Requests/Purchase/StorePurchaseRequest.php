@@ -22,11 +22,9 @@ class StorePurchaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => 'required|datetime',
-            'total' => 'required|decimal',
-            'voucher' => 'required|string|max:150',
-            'idProvider' => 'required|integer|exists:App\Provider,idProvider',
-            'idUser' => 'required|integer|exists:App\User,idUser'
+            'total' => 'required|numeric|min:0',
+            'voucher' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'idProvider' => 'required|integer|exists:providers,idProvider',
         ];
     }
 
@@ -34,24 +32,20 @@ class StorePurchaseRequest extends FormRequest
     {
         //definimos los mensajes de error que nos mostrara
         return [
-            'date.required' => 'Este campo es requerido.',
-            'date.datetime' => 'El valor del campo es incorrecto.',
-
-            'total.required' => 'Este campo es requerido.',
-            'total.decimal' => 'El valor del campo es incorrecto.',
-
-            'voucher.required' => 'Este campo es requerido.',
-            'voucher.string' => 'El valor del campo es incorrecto.',
-            'voucher.max' => 'Solo se permite 150 caracteres.',
-
-            'idProvider.required' => 'Este campo es requerido.',
-            'idProvider.integer' => 'El valor del campo es incorrecto.',
-            'idProvider.exists' => 'El proveedor no existe.',
-
-            'idUser.required' => 'Este campo es requerido.',
-            'idUser.integer' => 'El valor del campo es incorrecto.',
-            'idUser.exists' => 'El usuario no existe.',
-
+            // TOTAL
+            'total.required' => 'El campo Total es obligatorio.',
+            'total.numeric' => 'El Total debe ser un número válido.',
+            'total.min' => 'El Total no puede ser negativo.',
+            
+            // VOUCHER
+            'voucher.file' => 'El comprobante debe ser un archivo.',
+            'voucher.mimes' => 'El comprobante debe ser un archivo JPG, PNG o PDF.',
+            'voucher.max' => 'El comprobante no debe superar los 2MB.',
+            
+            // IDPROVIDER
+            'idProvider.required' => 'Debe seleccionar un proveedor.',
+            'idProvider.integer' => 'El proveedor seleccionado no es válido.',
+            'idProvider.exists' => 'El proveedor seleccionado no existe en la base de datos.',
         ];
     }
 }

@@ -17,7 +17,7 @@ class PackageStateController extends Controller
         //Extraemos los estados de paquetes
         $data = PackageState::all();
 
-        return view('/admin/package_state/index', compact('data'));
+        return view('/package_state/index', compact('data'));
     }
 
     /**
@@ -25,7 +25,7 @@ class PackageStateController extends Controller
      */
     public function create()
     {
-        return view('/admin/package_state/create');
+        return view('/package_state/create');
     }
 
     /**
@@ -80,7 +80,7 @@ class PackageStateController extends Controller
     public function edit(packageState $packageState)
     {
         //Mostrar la vista 
-        return view('/admin/package_state/update')->with(['data' => $packageState]);
+        return view('/package_state/update')->with(['data' => $packageState]);
     }
 
     /**

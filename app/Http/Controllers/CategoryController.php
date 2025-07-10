@@ -15,12 +15,12 @@ class CategoryController extends Controller
         //Extraemos las Categorias
         $data = Category::all();
 
-        return view('/admin/category/index', compact('data'));
+        return view('/category/index', compact('data'));
     }
 
     public function create()
     {
-        return view('/admin/category/create');
+        return view('/category/create');
     }
 
     public function store(StoreCategoryRequest $request)
@@ -73,7 +73,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         //Mostrar la vista 
-        return view('/admin/category/update')->with(['data' => $category]);
+        return view('/category/update')->with(['data' => $category]);
     }
 
     public function update(UpdateCategoryRequest $request, $idCategory)

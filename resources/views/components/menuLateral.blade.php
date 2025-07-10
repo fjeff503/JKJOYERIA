@@ -2,40 +2,7 @@
 <nav class="sidebar sidebar-offcanvas bg-light navbar-light pt-4" id="sidebar">
     {{-- Items del menu --}}
     <ul class="nav">
-        {{-- Nombre rol y fotografia --}}
-        @if (Auth::check())
-            <li class="nav-item nav-profile">
-                <div class="nav-link">
-                    <div class="profile-image">
-                        {{-- FOTOGRAFIA --}}
-                        @if (Auth::user()->profile_photo)
-                            <img src="{{ Auth::user()->profile_photo }}" alt="Foto de perfil">
-                        @else
-                            <i class="fas fa-solid fa-user text-primary"></i>
-                        @endif
-                    </div>
-                    <div class="profile-name">
-                        {{-- NOMBRE --}}
-                        <p class="name"
-                            style="max-width: 100%; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
-                            {{ Auth::user()->name }}
-                        </p>
-                        {{-- ROL --}}
-                        <p class="designation">
-                            @if (Auth::user()->idRole == 1)
-                                Usuario
-                            @elseif (Auth::user()->idRole == 2)
-                                Vendedor
-                            @elseif (Auth::user()->idRole == 3)
-                                Administrador
-                            @else
-                                Rol desconocido
-                            @endif
-                        </p>
-                    </div>
-                </div>
-            </li>
-        @endif
+
 
         {{-- OPCIONES DEL MENU --}}
         {{-- DASHBOARD --}}
@@ -46,14 +13,18 @@
             </a>
         </li>
 
-        {{-- CATEGORIA --}}
-        <li class="nav-item">
-            <a class="nav-link" href="/categories">
-                <i class="fas fa-tags menu-icon"></i>
-                <span class="menu-title">Categor&iacute;as</span>
-            </a>
-        </li>
 
+        {{-- CATEGORIA --}}
+        @if (Auth::user()->role->name === 'admin')
+            <li class="nav-item">
+                <a class="nav-link" href="/categories">
+                    <i class="fas fa-folder menu-icon"></i>
+                    <span class="menu-title">Categor&iacute;as</span>
+                </a>
+            </li>
+        @endif
+
+        {{-- CLIENTES --}}
         <li class="nav-item">
             <a class="nav-link" href="/clients">
                 <i class="fas fa-users menu-icon"></i>
@@ -61,20 +32,27 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="/package_states">
-                <i class="fas fa-archive menu-icon"></i>
-                <span class="menu-title">Estado Paquetes</span>
-            </a>
-        </li>
+        {{-- ESTADO DE LOS PAQUETES --}}
+        @if (Auth::user()->role->name === 'admin')
+            <li class="nav-item">
+                <a class="nav-link" href="/package_states">
+                    <i class="fas fa-archive menu-icon"></i>
+                    <span class="menu-title">Estado Paquetes</span>
+                </a>
+            </li>
+        @endif
 
-        <li class="nav-item">
-            <a class="nav-link" href="/payment_states">
-                <i class="fas fa-check-square menu-icon"></i>
-                <span class="menu-title">Estado Pagos</span>
-            </a>
-        </li>
+        {{-- ESTADOS DE PAGO --}}
+        @if (Auth::user()->role->name === 'admin')
+            <li class="nav-item">
+                <a class="nav-link" href="/payment_states">
+                    <i class="fas fa-check-square menu-icon"></i>
+                    <span class="menu-title">Estado Pagos</span>
+                </a>
+            </li>
+        @endif
 
+        {{-- ENCOMENDISTAS --}}
         <li class="nav-item">
             <a class="nav-link" href="/parcels">
                 <i class="fas fa-truck menu-icon"></i>
@@ -82,13 +60,17 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="/providers">
-                <i class="fas fa-cart-plus menu-icon"></i>
-                <span class="menu-title">Proveedores</span>
-            </a>
-        </li>
+        {{-- PROVEEDORES --}}
+        @if (Auth::user()->role->name === 'admin')
+            <li class="nav-item">
+                <a class="nav-link" href="/providers">
+                    <i class="fas fa-user-tie menu-icon"></i>
+                    <span class="menu-title">Proveedores</span>
+                </a>
+            </li>
+        @endif
 
+        {{-- PUNTOS DE ENTREGA --}}
         <li class="nav-item">
             <a class="nav-link" href="/delivery_points">
                 <i class="fas fa-map-pin menu-icon"></i>
@@ -96,27 +78,53 @@
             </a>
         </li>
 
+        {{-- PRODUCTOS --}}
         <li class="nav-item">
             <a class="nav-link" href="/products">
-                <i class="fas fa-plus-square menu-icon"></i>
+                <i class="fas fa-tags menu-icon"></i>
                 <span class="menu-title">Productos</span>
             </a>
         </li>
 
+        {{-- USUARIOS --}}
+        @if (Auth::user()->role->name === 'admin')
+            <li class="nav-item">
+                <a class="nav-link" href="/users">
+                    <i class="fas fa-user menu-icon"></i>
+                    <span class="menu-title">Usuarios</span>
+                </a>
+            </li>
+        @endif
+
+        {{-- ERRORES --}}
+        @if (Auth::user()->role->name === 'admin')
+            <li class="nav-item">
+                <a class="nav-link" href="/bugs">
+                    <i class="fas fa-bug menu-icon"></i>
+                    <span class="menu-title">Errores</span>
+                </a>
+            </li>
+        @endif
+
+        {{-- COMPRAS --}}
+        @if (Auth::user()->role->name === 'admin')
+            <li class="nav-item">
+                <a class="nav-link" href="/purchases">
+                    <i class="fas fa-box menu-icon"></i>
+                    <span class="menu-title">Compras</span>
+                </a>
+            </li>
+        @endif
+
+        {{-- VENTAS --}}
         <li class="nav-item">
-            <a class="nav-link" href="/users">
-                <i class="fas fa-user menu-icon"></i>
-                <span class="menu-title">Usuarios</span>
+            <a class="nav-link" href="/sales">
+                <i class="fas fa-shopping-cart menu-icon"></i>
+                <span class="menu-title">Ventas</span>
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="/bugs">
-                <i class="fas fa-bug menu-icon"></i>
-                <span class="menu-title">Errores</span>
-            </a>
-        </li>
-
+        {{-- REPORTES --}}
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false"
                 aria-controls="page-layouts">

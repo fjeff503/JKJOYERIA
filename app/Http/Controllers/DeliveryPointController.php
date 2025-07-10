@@ -27,7 +27,7 @@ class DeliveryPointController extends Controller
             ->join("parcels", "parcels.idParcel", "=", "delivery_points.idParcel")
             ->get();
 
-        return view('/admin/delivery_point/index')->with(['data' => $data]);
+        return view('/delivery_point/index')->with(['data' => $data]);
     }
 
     public function create()
@@ -37,7 +37,7 @@ class DeliveryPointController extends Controller
         //extraemos los dias 
         $days = Day::get();
 
-        return view('/admin/delivery_point/create', compact('parcels', 'days'));
+        return view('/delivery_point/create', compact('parcels', 'days'));
     }
 
     public function store(StoreDeliveryPointRequest $request)
@@ -95,7 +95,7 @@ class DeliveryPointController extends Controller
         //extraemos los dias 
         $days = Day::get();
 
-        return view('/admin/delivery_point/update', compact('deliveryPoint', 'parcels', 'days'));
+        return view('/delivery_point/update', compact('deliveryPoint', 'parcels', 'days'));
     }
 
     public function update(UpdateDeliveryPointRequest $request, $idDeliveryPoint)

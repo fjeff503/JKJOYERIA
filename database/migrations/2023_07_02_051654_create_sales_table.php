@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id('idSale');
 
-            $table->dateTime('date')->require();
             $table->decimal('total')->require();
-            $table->enum('status', ['VALID', 'CANCELED'])->default('VALID');
             $table->string('description')->nullable();
 
             //relacion client
