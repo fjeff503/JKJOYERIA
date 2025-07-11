@@ -20,6 +20,12 @@
     <!-- INCLUIR USO DE MIS ARCHIVOS CSS -->
     @yield('styles')
 
+    <style>
+        select {
+            height: calc(3rem);
+        }
+    </style>
+
     <!--ICONO-->
     <link rel="shortcut icon" href="{{ asset('melody/images/logo-mini.svg') }}">
     <!-- Incluye los archivos de inputmask -->

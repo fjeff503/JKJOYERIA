@@ -18,10 +18,10 @@ class Product extends Model
     protected $primaryKey = 'idProduct';
 
     protected $fillable = [
-        'codeProduct',
         'codeProductProvider',
         'name',
         'sellPrice',
+        'buyPrice',
         'stock',
         'description',
         'idCategory',

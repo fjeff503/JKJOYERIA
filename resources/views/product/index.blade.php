@@ -33,11 +33,13 @@
                         <table id="data-table" class="table table-hover table-bordered text-center">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>N°</th>
                                     <th>C&oacute;digo</th>
                                     <th>Cod Proveedor</th>
                                     <th>Nombre</th>
-                                    <th>Precio</th>
+                                    @if (Auth::user()->role->name === 'admin')
+                                        <th>Precio Compra</th>
+                                    @endif
+                                    <th>Precio Venta</th>
                                     <th>Stock</th>
                                     <th>Categor&iacute;a</th>
                                     <th>Proveedor</th>
@@ -57,17 +59,19 @@
                                             $count++;
                                         @endphp
                                         <td data-toggle="modal"
-                                            data-target="#galleryModal{{ $item->first()->codeProduct }}">{{ $count }}
-                                        </td>
-                                        <td data-toggle="modal"
                                             data-target="#galleryModal{{ $item->first()->codeProduct }}">
-                                            {{ $item->first()->codeProduct }}</td>
+                                            {{ $item->first()->idProduct }}</td>
                                         <td data-toggle="modal"
                                             data-target="#galleryModal{{ $item->first()->codeProduct }}">
                                             {{ $item->first()->codeProductProvider }}</td>
                                         <td data-toggle="modal"
                                             data-target="#galleryModal{{ $item->first()->codeProduct }}">
                                             {{ $item->first()->name }}</td>
+                                        @if (Auth::user()->role->name === 'admin')
+                                            <td data-toggle="modal"
+                                                data-target="#galleryModal{{ $item->first()->codeProduct }}">
+                                                ${{ $item->first()->buyPrice }}</td>
+                                        @endif
                                         <td data-toggle="modal"
                                             data-target="#galleryModal{{ $item->first()->codeProduct }}">
                                             ${{ $item->first()->sellPrice }}</td>

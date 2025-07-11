@@ -23,12 +23,6 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'codeProduct' => [
-                'required',
-                Rule::unique('products', 'codeProduct')->whereNull('deleted_at'),
-                'string',
-                'max:25',
-            ],
             'codeProductProvider' => [
                 'required',
                 Rule::unique('products', 'codeProductProvider')->whereNull('deleted_at'),
@@ -41,7 +35,8 @@ class StoreProductRequest extends FormRequest
                 'string',
                 'max:50',
             ],
-            'sellPrice' => 'required|string|max:15',
+            'sellPrice' => 'required|numeric|min:0|max:9999.99',
+            'buyPrice' => 'required|numeric|min:0|max:9999.99',
             'stock' => 'required|integer',
             'description' => 'nullable|string|max:200',
             'idCategory' => 'required|integer',
@@ -53,11 +48,6 @@ class StoreProductRequest extends FormRequest
     {
         //definimos los mensajes de error que nos mostrara
         return [
-            'codeProduct.required' => 'El código del producto es requerido.',
-            'codeProduct.string' => 'El valor del campo es incorrecto.',
-            'codeProduct.max' => 'Solo se permite 25 caracteres.',
-            'codeProduct.unique' => 'El código del producto ya se encuentra registrado.',
-
             'codeProductProvider.required' => 'El código de proveedor es requerido.',
             'codeProductProvider.string' => 'El valor del campo es incorrecto.',
             'codeProductProvider.max' => 'Solo se permite 25 caracteres.',
@@ -69,8 +59,14 @@ class StoreProductRequest extends FormRequest
             'name.unique' => 'El producto ya se encuentra registrado.',
 
             'sellPrice.required' => 'El precio de venta es necesario.',
-            'sellPrice.string' => 'El valor del campo es incorrecto.',
-            'sellPrice.max' => 'Solo se permite 15 caracteres.',
+            'sellPrice.numeric' => 'El precio de venta debe ser un número válido.',
+            'sellPrice.min' => 'El precio de venta no puede ser negativo.',
+            'sellPrice.max' => 'El precio de venta excede el valor máximo permitido.',
+                    
+            'buyPrice.required' => 'El precio de compra es necesario.',
+            'buyPrice.numeric' => 'El precio de compra debe ser un número válido.',
+            'buyPrice.min' => 'El precio de compra no puede ser negativo.',
+            'buyPrice.max' => 'El precio de compra excede el valor máximo permitido.',
 
             'stock.required' => 'El stock es requerido.',
             'stock.integer' => 'El valor del campo es incorrecto.',

@@ -7,6 +7,9 @@ use App\Http\Controllers\ProductController;
 //Ruta para mostrar
 Route::get('/products', [ProductController::class, 'index'])->middleware('role:admin,sales');
 
+//Ruta para mostrar por codigo
+Route::get('/products/buscar/{codigo}', [ProductController::class, 'buscarPorCodigo']);
+
 //Ruta para Crear (FrontEnd)
 Route::get('/products/create', [ProductController::class, 'create'])->middleware('role:admin');
 

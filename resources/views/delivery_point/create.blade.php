@@ -45,7 +45,7 @@
 
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3">
                                 <label for="idDay" class="form-label">D&iacute;a:</label>
-                                <select name="idDay" id="idDay" class="form-control">
+                                <select name="idDay" id="idDay" class="form-control" style="height: calc(3rem);">
                                     <option value="">-- Seleccionar --</option>
                                     @foreach ($days as $item)
                                         <option value="{{ $item->idDay }}"
@@ -61,7 +61,7 @@
 
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3">
                                 <label for="idParcel" class="form-label">Encomendista:</label>
-                                <select name="idParcel" id="idParcel" class="form-control">
+                                <select name="idParcel" id="idParcel" class="form-control" style="height: calc(3rem);">
                                     <option value="">-- Seleccionar --</option>
                                     @foreach ($parcels as $item)
                                         <option value="{{ $item->idParcel }}"

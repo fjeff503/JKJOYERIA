@@ -20,9 +20,9 @@ class ProductController extends Controller
         //Extraemos las Categorias
         $data = Product::select(
             "products.idProduct",
-            "products.codeProduct",
             "products.codeProductProvider",
             "products.name",
+            "products.buyPrice",
             "products.sellPrice",
             "products.stock",
             "products.description",
@@ -37,6 +37,25 @@ class ProductController extends Controller
             ->groupBy('idProduct');  // Agrupar resultados por 'idProduct'
         
         return view('/product/index', compact('data'));
+    }
+
+    public function buscarPorCodigo($idProduct)
+    {
+        $producto = Product::where('idProduct', $idProduct)->first();
+    
+        if ($producto) {
+            return response()->json([
+                'success' => true,
+                'producto' => [
+                    'idProduct' => $producto->idProduct,
+                    'name' => $producto->name,
+                    'buyPrice' => $producto->buyPrice,
+                    'sellPrice' => $producto->sellPrice
+                ]
+            ]);
+        }
+    
+        return response()->json(['success' => false]);
     }
 
     public function create()
@@ -56,7 +75,6 @@ class ProductController extends Controller
             $validatedData = $request->validated();
             // Verificar si ya existe un Product con el mismo codeProduct, codeProductProvider
             $existingProduct = Product::withTrashed()
-                ->where('codeProduct', $validatedData['codeProduct'])
                 ->where('codeProductProvider', $validatedData['codeProductProvider'])
                 ->first();
 
@@ -69,21 +87,7 @@ class ProductController extends Controller
                 }
             }
 
-            // Verificar si ya existe un Product con el mismo codeProduct
-            $existingCodeProduct = Product::withTrashed()
-                ->where('codeProduct', $validatedData['codeProduct'])
-                ->first();
-
-            if ($existingCodeProduct) {
-                // Si ya existe un Product con el mismo nombre, idDay, e idParcel, verifica si está eliminado lógicamente
-                if ($existingCodeProduct->trashed() != null) {
-                    // Restaurar el Product eliminado lógicamente
-                    $existingCodeProduct->restore();
-                    return redirect('products')->with('info', 'Producto restaurado correctamente');
-                }
-            }
-
-            // Si no existe un encomendista con el mismo nombre, crea un nuevo Punto de Entrega
+            // Si no existe un codigo de proveedor con el mismo nombre, crea un nuevo producto
             $product = Product::create($validatedData);
 
             //almacenar las imagenes
@@ -162,16 +166,14 @@ class ProductController extends Controller
                 $product = Product::findOrFail($idProduct);
 
                 // Verificar si el nuevo valor del campo "telefono" ya existe en otro registro
-                if ($product->codeProduct !== $request->input('codeProduct') && Product::where('codeProduct', $request->input('codeProduct'))->exists()) {
-                    return redirect()->back()->withErrors(['codeProduct' => 'El código del producto ya está siendo utilizado por otro registro.'])->withInput();
-                } else if ($product->codeProductProvider !== $request->input('codeProductProvider') && Product::where('codeProductProvider', $request->input('codeProductProvider'))->exists()) {
+                if ($product->codeProductProvider !== $request->input('codeProductProvider') && Product::where('codeProductProvider', $request->input('codeProductProvider'))->exists()) {
                     return redirect()->back()->withErrors(['codeProductProvider' => 'El código del proveedor ya está siendo utilizado por otro registro.'])->withInput();
                 }
 
                 // Actualizamos los datos
-                $product->codeProduct = $request->input('codeProduct');
-                $product->codeProductProvider = $request->input('codeProductProvider');
                 $product->name = $request->input('name');
+                $product->codeProductProvider = $request->input('codeProductProvider');
+                $product->buyPrice = $request->input('buyPrice');
                 $product->sellPrice = $request->input('sellPrice');
                 $product->stock = $request->input('stock');
                 $product->description = $request->input('description');

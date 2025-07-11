@@ -1,8 +1,7 @@
 <?php
 
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\SaleController;
 use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
