@@ -5,62 +5,35 @@ namespace App\Http\Controllers;
 use App\Models\PurchaseDetail;
 use App\Http\Requests\PurchaseDetail\StorePurchaseDetailRequest;
 use App\Http\Requests\PurchaseDetail\UpdatePurchaseDetailRequest;
+use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseDetailController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function destroy($id)
     {
-        //
-    }
+        DB::beginTransaction();
+        try {              
+            // Eliminar PurchaseDetail (soft delete)
+            $detalle = PurchaseDetail::findOrFail($id);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+            // Obtener el producto asociado
+            $producto = Product::find($detalle->idProduct);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePurchaseDetailRequest $request)
-    {
-        //
-    }
+            if ($producto) {
+            // Restar la cantidad del stock actual
+                $producto->stock = max(0, $producto->stock - $detalle->quantity); // Evita stock negativo
+                $producto->save();
+            }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(PurchaseDetail $purchaseDetail)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PurchaseDetail $purchaseDetail)
-    {
-        //
-    }
+            $detalle->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePurchaseDetailRequest $request, PurchaseDetail $purchaseDetail)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(PurchaseDetail $purchaseDetail)
-    {
-        //
+            DB::commit();
+            return response()->json(['res' => true]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json(['res' => false, 'error' => $e->getMessage()], 500);
+        }
     }
 }

@@ -24,7 +24,6 @@
                 <span class="fas fa-bars"></span>
             </button>
             {{-- FIN Boton para desplazar el menu a la izquierda cuando este en celular --}}
-
             {{-- Opciones del empleado --}}
             @if (Auth::check())
                 <ul class="navbar-nav navbar-nav-right">

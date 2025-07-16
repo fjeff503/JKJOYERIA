@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchaseDetailController;
 
 // ===RUTAS PARA CATEGORIAS===
 Route::middleware(['role:admin'])->group(function () {
@@ -22,4 +23,7 @@ Route::middleware(['role:admin'])->group(function () {
 
     //Ruta para Eliminar (BackEnd)
     Route::delete('/purchases/destroy/{purchase}', [PurchaseController::class, 'destroy']);
+
+    //Ruta para Eliminar PurchaseDetail (BackEnd)
+    Route::delete('/purchase-details/destroy/{purchase}', [PurchaseDetailController::class, 'destroy']);
 });

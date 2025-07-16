@@ -17,7 +17,7 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card bg-light">
                 <div class="card-body">
-                    {{-- CUERPO PARA CREAR --}}
+                    {{-- CUERPO PARA ACTUALIZAR --}}
                     <form action="/purchases/update/{{ $purchase->idPurchase }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -68,6 +68,37 @@
                                 @enderror
                             </div>
 
+                            {{-- Vamos con el detalleCompra --}}
+                            {{-- Buscar producto por código --}}
+                            <div class="col-12 mt-4">
+                                <label for="codigoProducto" class="form-label">Agregar producto por código:</label>
+                                <input type="text" id="codigoProducto" class="form-control"
+                                    placeholder="Código del producto">
+                            </div>
+
+                            {{-- Tabla para mostrar productos agregados --}}
+                            <div class="col-12 mt-3">
+                                <table class="table table-bordered" id="tablaProductos">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Precio Venta</th>
+                                            <th>Precio Compra</th>
+                                            <th>Cantidad</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {{-- Campo oculto para enviar los productos como JSON --}}
+                            <input type="hidden" name="detalle" id="detalle">
+                            {{-- Cerramos el detalleCompra --}}
+
                             <div class="col-12 text-center pt-3">
                                 <button onclick="deshabilitar(this)"
                                     class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Guardar</button>
@@ -85,9 +116,16 @@
 
     <!-- Modal -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-md" id="modalDialog">
             <div class="modal-content">
-                <div class="modal-body text-center">
+                <div class="modal-body position-relative text-center">
+                    <!-- Botón de lupa interactivo -->
+                    <button id="zoomButton" class="btn btn-light position-absolute"
+                        style="top: 10px; right: 10px; z-index: 1050;" onclick="toggleModalSize()">
+                        <i id="zoomIcon" class="fas fa-search-plus"></i>
+                    </button>
+
+                    <!-- Imagen -->
                     <img id="modalImage" src="" alt="Imagen Ampliada" class="img-fluid rounded">
                 </div>
             </div>
@@ -95,33 +133,194 @@
     </div>
 
     <script src="{{ asset('jQuery/jquery-3.6.0.min.js') }}"></script>
+    {{-- incluimos el archivo para SweetAlert --}}
+    <script src="{{ asset('SweetAlert/sweetalert.min.js') }}"></script>
+
+    {{-- Incluimos el script para mensajes satisfactorios --}}
+    @include('components.exito')
+
+    {{-- Incluimos el script para mensajes de informacion --}}
+    @include('components.info')
+
+    {{-- Incluimos el script para mensajes satisfactorios al eliminar --}}
+    @include('components.eliminado')
+
+    {{-- Incluimos script de errores --}}
+    @include('components.error')
+
 @endsection
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const input = document.getElementById('voucher');
+        // Variables globales
+        const inputVoucher = document.getElementById('voucher');
         const previewImage = document.getElementById('previewImage');
-
-        input.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file && file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImage.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const preview = document.getElementById('previewImage');
         const modalImage = document.getElementById('modalImage');
+        const inputCodigo = document.getElementById('codigoProducto');
+        const form = document.getElementById('Formulario');
+        let productos = {!! json_encode(
+            //!! escapa los caracteres para escribir json crudo
+            $purchase_details->map(function ($item) {
+                return [
+                    'idPurchaseDetail' => $item->idPurchaseDetail,
+                    'idProduct' => $item->idProduct ?? $item->idPurchaseDetail,
+                    'codeProduct' => '',
+                    'name' => $item->product,
+                    'sellPrice' => (float) $item->sellPrice,
+                    'buyPrice' => (float) $item->price,
+                    'cantidad' => $item->quantity,
+                    'subtotal' => (float) $item->price * $item->quantity,
+                ];
+            }),
+        ) !!};
 
-        preview.addEventListener('click', function() {
-            modalImage.src = preview.src;
-        });
+        renderTabla();
+
+        // Mostrar preview de imagen cargada
+        if (inputVoucher) {
+            inputVoucher.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewImage.classList.remove('d-none');
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    previewImage.classList.add('d-none');
+                    previewImage.src = '';
+                }
+            });
+        }
+
+        // Abrir imagen en modal al hacer clic en el preview
+        if (previewImage) {
+            previewImage.addEventListener('click', function() {
+                if (previewImage.src) {
+                    modalImage.src = previewImage.src;
+                }
+            });
+        }
+
+        // Listener para agregar producto por código cuando presionas Enter
+        if (inputCodigo) {
+            inputCodigo.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const codigo = this.value.trim();
+                    if (!codigo) return;
+
+                    fetch(`/products/buscar/${encodeURIComponent(codigo)}`)
+                        .then(response => {
+                            if (!response.ok) throw new Error('Error en la respuesta del servidor');
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                agregarProducto(data.producto);
+                                this.value = '';
+                            } else {
+                                alert('Producto no encontrado');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Ocurrió un error al buscar el producto.');
+                        });
+                }
+            });
+        }
+
+        // Evitar enviar formulario si el foco está en el input codigoProducto
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                if (document.activeElement && document.activeElement.id === 'codigoProducto') {
+                    e.preventDefault();
+                    alert(
+                        'Por favor usa Enter para agregar el producto, no para enviar el formulario.'
+                    );
+                }
+            });
+        }
+
+        // Función para agregar un producto a la lista
+        function agregarProducto(producto) {
+            const existente = productos.find(p => p.idProduct === producto.idProduct);
+            if (existente) {
+                existente.cantidad++;
+                existente.subtotal = existente.buyPrice * existente.cantidad;
+            } else {
+                productos.push({
+                    idProduct: producto.idProduct,
+                    codeProduct: producto.codeProduct,
+                    name: producto.name,
+                    sellPrice: parseFloat(producto.sellPrice),
+                    buyPrice: parseFloat(producto.buyPrice), // editable por el usuario
+                    cantidad: 1,
+                    subtotal: parseFloat(producto.buyPrice)
+                });
+            }
+            renderTabla();
+        }
+
+        function renderTabla() {
+            const tbody = document.querySelector('#tablaProductos tbody');
+            tbody.innerHTML = '';
+
+            productos.forEach((p, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${p.idProduct}</td>
+                        <td>${p.name}</td>
+                        <td>$${(parseFloat(p.sellPrice) || 0).toFixed(2)}</td>
+                        <td><input type="number" value="${p.buyPrice}" min="0" step="0.01"
+                            onchange="actualizarCampo(${index}, 'buyPrice', this.value)" class="form-control"></td>
+                        <td><input type="number" value="${p.cantidad}" min="1"
+                            onchange="actualizarCampo(${index}, 'cantidad', this.value)" class="form-control"></td>
+                        <td>{{-- boton para eliminar --}}
+                                            <button type="button" onclick="eliminarProducto(${index})" class="btn btn-danger btn-sm">Eliminar</button></td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('detalle').value = JSON.stringify(productos);
+            actualizarTotal();
+            document.getElementById('codigoProducto').focus();
+        }
+
+        // Para que estas funciones puedan ser llamadas desde los inputs y botones que generas dinámicamente,
+        // las agregamos al objeto window:
+        window.actualizarCampo = function(index, campo, valor) {
+            productos[index][campo] = parseFloat(valor);
+            productos[index].subtotal = productos[index].buyPrice * productos[index].cantidad;
+            renderTabla();
+        }
+
+        window.eliminarProducto = function(index) {
+            productos.splice(index, 1);
+            renderTabla();
+        }
+
+        function actualizarTotal() {
+            let total = productos.reduce((sum, p) => sum + (p.buyPrice * p.cantidad), 0);
+            document.getElementById('total').value = total.toFixed(2);
+        }
     });
+
+    // Función para agrandar o reducir modal de imagen
+    function toggleModalSize() {
+        const dialog = document.getElementById('modalDialog');
+        const icon = document.getElementById('zoomIcon');
+
+        const isMd = dialog.classList.contains('modal-md');
+
+        dialog.classList.toggle('modal-md', !isMd);
+        dialog.classList.toggle('modal-lg', isMd);
+
+        icon.classList.remove('fa-search-plus', 'fa-search-minus');
+        icon.classList.add(isMd ? 'fa-search-minus' : 'fa-search-plus');
+    }
 </script>

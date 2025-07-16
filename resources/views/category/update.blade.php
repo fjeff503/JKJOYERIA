@@ -45,7 +45,7 @@
                                 <button
                                     class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Actualizar</button>
                                 <a class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
-                                    href="/clients">Cancelar</a>
+                                    href="/categories">Cancelar</a>
                             </div>
                         </div>
                     </form>

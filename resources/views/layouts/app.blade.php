@@ -49,7 +49,7 @@
             @yield('preference')
 
             <!-- CONTENDIO PRINCIPAL -->
-            <div class="main-panel p-4">
+            <div class="main-panel m-4">
                 <!--CONTENIDO DEL MENU OCULTO -->
                 @yield('content')
                 <!-- FIN CONTENDIO PRINCIPAL -->
