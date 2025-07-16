@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 {{-- Definimos el titulo --}}
-@section('title', 'Compras | Registrar')
+@section('title', 'Compras | Actualizar')
 
 {{-- Definimos estilos propios --}}
 @section('styles')
@@ -11,24 +11,27 @@
 {{-- Definimos el contenido --}}
 @section('content')
     {{-- Cuerpo de mi index --}}
-    <h1 class="text-center">Registrar Compra</h1>
+    <h1 class="text-center">Actualizar Compra {{ $purchase->idPurchase }}</h1>
     <br>
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card bg-light">
                 <div class="card-body">
-                    {{-- CUERPO PARA CREAR --}}
-                    <form id="Formulario" action="/purchases/store" method="POST" enctype="multipart/form-data">
+                    {{-- CUERPO PARA ACTUALIZAR --}}
+                    <form action="/purchases/update/{{ $purchase->idPurchase }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="row m-auto col-xxl-8 col-xl-9 col-lg-10 col-md-11 col-sm-12">
                             {{-- Proveedor --}}
-                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3">
+                            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 mt-3">
                                 <label for="idProvider" class="form-label">Proveedor:</label>
                                 <select name="idProvider" id="idProvider" class="form-control" style="height: calc(3rem);">
                                     <option value="">-- Seleccionar --</option>
                                     @foreach ($providers as $item)
                                         <option value="{{ $item->idProvider }}"
-                                            @if (old('idProvider') == $item->idProvider) selected @endif>{{ $item->name }}</option>
+                                            {{ $item->idProvider == $purchase->idProvider ? 'selected' : '' }}>
+                                            {{ $item->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('idProvider')
@@ -39,40 +42,38 @@
                             </div>
 
                             {{-- Voucher --}}
-                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3 d-flex align-items-center">
-                                <div class="col-10">
+                            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 d-flex align-items-center mt-3">
+                                <div class="me-3">
                                     <label for="voucher" class="form-label">Voucher</label>
                                     <input type="file" name="voucher" id="voucher"
                                         class="form-control @error('voucher') is-invalid @enderror">
                                 </div>
-                                <img id="previewImage" src="" alt="Imagen Actual" class="ml-2 mr-0 d-none"
+                                <img id="previewImage" src="{{ $purchase->voucher }}" alt="Imagen Actual" class="ml-2 mr-0"
                                     style="width: 4.5rem; height: 4.5rem; cursor: pointer;" data-bs-toggle="modal"
                                     data-bs-target="#imageModal">
                             </div>
-
-
-                            {{-- Vamos con el detalleCompra --}}
-                            {{-- Buscar producto por código --}}
-                            <div class="col-10 mt-4">
-                                <label for="codigoProducto" class="form-label">Agregar producto por código:</label>
-                                <input type="text" id="codigoProducto" class="form-control"
-                                    placeholder="Código del producto">
-                            </div>
-
                             {{-- Total --}}
-                            <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mt-4">
+                            <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mt-3">
                                 <label for="total" class="form-label">Total:</label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
                                     <input type="number" class="form-control @error('total') is-invalid @enderror"
                                         placeholder="0.00" id="total" name="total" maxlength="50" min="0"
-                                        step="0.01" value="{{ old('total') }}">
+                                        step="0.01" value="{{ $purchase->total }}">
                                 </div>
                                 @error('total')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
+
+                            {{-- Vamos con el detalleCompra --}}
+                            {{-- Buscar producto por código --}}
+                            <div class="col-12 mt-4">
+                                <label for="codigoProducto" class="form-label">Agregar producto por código:</label>
+                                <input type="text" id="codigoProducto" class="form-control"
+                                    placeholder="Código del producto">
                             </div>
 
                             {{-- Tabla para mostrar productos agregados --}}
@@ -88,7 +89,9 @@
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody></tbody>
+                                    <tbody>
+
+                                    </tbody>
                                 </table>
                             </div>
 
@@ -110,6 +113,7 @@
         </div>
     </div>
 
+
     <!-- Modal -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md" id="modalDialog">
@@ -127,10 +131,24 @@
             </div>
         </div>
     </div>
-@endsection
 
-{{-- Incluimos el script para desactivar los botones --}}
-@include('components.procesando')
+    <script src="{{ asset('jQuery/jquery-3.6.0.min.js') }}"></script>
+    {{-- incluimos el archivo para SweetAlert --}}
+    <script src="{{ asset('SweetAlert/sweetalert.min.js') }}"></script>
+
+    {{-- Incluimos el script para mensajes satisfactorios --}}
+    @include('components.exito')
+
+    {{-- Incluimos el script para mensajes de informacion --}}
+    @include('components.info')
+
+    {{-- Incluimos el script para mensajes satisfactorios al eliminar --}}
+    @include('components.eliminado')
+
+    {{-- Incluimos script de errores --}}
+    @include('components.error')
+
+@endsection
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -140,7 +158,23 @@
         const modalImage = document.getElementById('modalImage');
         const inputCodigo = document.getElementById('codigoProducto');
         const form = document.getElementById('Formulario');
-        let productos = [];
+        let productos = {!! json_encode(
+            //!! escapa los caracteres para escribir json crudo
+            $purchase_details->map(function ($item) {
+                return [
+                    'idPurchaseDetail' => $item->idPurchaseDetail,
+                    'idProduct' => $item->idProduct ?? $item->idPurchaseDetail,
+                    'codeProduct' => '',
+                    'name' => $item->product,
+                    'sellPrice' => (float) $item->sellPrice,
+                    'buyPrice' => (float) $item->price,
+                    'cantidad' => $item->quantity,
+                    'subtotal' => (float) $item->price * $item->quantity,
+                ];
+            }),
+        ) !!};
+
+        renderTabla();
 
         // Mostrar preview de imagen cargada
         if (inputVoucher) {
@@ -246,13 +280,15 @@
                             onchange="actualizarCampo(${index}, 'buyPrice', this.value)" class="form-control"></td>
                         <td><input type="number" value="${p.cantidad}" min="1"
                             onchange="actualizarCampo(${index}, 'cantidad', this.value)" class="form-control"></td>
-                        <td><button type="button" onclick="eliminarProducto(${index})" class="btn btn-danger btn-sm">Eliminar</button></td>
+                        <td>{{-- boton para eliminar --}}
+                                            <button type="button" onclick="eliminarProducto(${index})" class="btn btn-danger btn-sm">Eliminar</button></td>
                     </tr>
                 `;
             });
 
             document.getElementById('detalle').value = JSON.stringify(productos);
             actualizarTotal();
+            document.getElementById('codigoProducto').focus();
         }
 
         // Para que estas funciones puedan ser llamadas desde los inputs y botones que generas dinámicamente,

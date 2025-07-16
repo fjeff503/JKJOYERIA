@@ -6,23 +6,53 @@ use App\Models\Sale;
 use App\Http\Requests\Sale\StoreSaleRequest;
 use App\Http\Requests\Sale\UpdateSaleRequest;
 use App\Models\Client;
+use App\Models\DeliveryPoint;
 use App\Models\packageState;
 use App\Models\paymentState;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
     public function index()
     {
-        $sales = Sale::get();
-        return view('admin.sale.index', compact('sales'));
+        //Extraemos las Compras
+        $data = Sale::select(
+            'sales.idSale',
+            DB::raw("DATE_FORMAT(sales.created_at, '%d/%m/%Y %H:%i') as date"),
+            'sales.total',
+            'sales.description',
+            'clients.name as client',
+            'delivery_points.name as delivery_point',
+            'package_states.name as package_state',
+            'payment_states.name as payment_state',
+            'users.name as user',
+            
+        )
+            ->join('clients', 'clients.idClient', '=', 'sales.idClient')
+            ->join('delivery_points', 'delivery_points.idDeliveryPoint', '=', 'sales.idDeliveryPoint')
+            ->join('package_states', 'package_states.idPackageState', '=', 'sales.idPackageState')
+            ->join('payment_states', 'payment_states.idPaymentState', '=', 'sales.idPaymentState')
+            ->join('users', 'users.id', '=', 'sales.idUser')
+            ->get();
+        
+            return view('/sale/index')->with(['data' => $data]);
     }
 
     public function create()
     {
+        //extraemos los clientes
         $clients = Client::get();
-        $packageStates = packageState::get();
-        $paymentStates = paymentState::get();
-        return view('admin.sale.create', compact('clients', 'packageStates', 'paymentStates'));
+
+        //extraemos los puntos de entrega
+        $delivery_points = DeliveryPoint::get();
+
+        //extraemos los estados de paquetes
+        $package_states = packageState::get();
+
+        //extraemos los estados de pago
+        $payment_states = paymentState::get();
+
+        return view('/sale/create', compact('clients', 'delivery_points', 'package_states', 'payment_states'));
     }
 
     public function store(StoreSaleRequest $request)

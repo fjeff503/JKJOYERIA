@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 {{-- Definimos el titulo --}}
-@section('title', 'Compras | Registrar')
+@section('title', 'Ventas | Registrar')
 
 {{-- Definimos estilos propios --}}
 @section('styles')
@@ -11,45 +11,97 @@
 {{-- Definimos el contenido --}}
 @section('content')
     {{-- Cuerpo de mi index --}}
-    <h1 class="text-center">Registrar Compra</h1>
+    <h1 class="text-center">Registrar Venta</h1>
     <br>
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card bg-light">
                 <div class="card-body">
                     {{-- CUERPO PARA CREAR --}}
-                    <form id="Formulario" action="/purchases/store" method="POST" enctype="multipart/form-data">
+                    <form id="Formulario" action="/sales/store" method="POST">
                         @csrf
                         <div class="row m-auto col-xxl-8 col-xl-9 col-lg-10 col-md-11 col-sm-12">
-                            {{-- Proveedor --}}
+                            {{-- Cliente --}}
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3">
-                                <label for="idProvider" class="form-label">Proveedor:</label>
-                                <select name="idProvider" id="idProvider" class="form-control" style="height: calc(3rem);">
+                                <label for="idClient" class="form-label">Cliente:</label>
+                                <select name="idClient" id="idClient" class="form-control" style="height: calc(3rem);">
                                     <option value="">-- Seleccionar --</option>
-                                    @foreach ($providers as $item)
-                                        <option value="{{ $item->idProvider }}"
-                                            @if (old('idProvider') == $item->idProvider) selected @endif>{{ $item->name }}</option>
+                                    @foreach ($clients as $item)
+                                        <option value="{{ $item->idClient }}"
+                                            @if (old('idClient') == $item->idClient) selected @endif>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('idProvider')
+                                @error('idClient')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
 
-                            {{-- Voucher --}}
-                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3 d-flex align-items-center">
-                                <div class="col-10">
-                                    <label for="voucher" class="form-label">Voucher</label>
-                                    <input type="file" name="voucher" id="voucher"
-                                        class="form-control @error('voucher') is-invalid @enderror">
-                                </div>
-                                <img id="previewImage" src="" alt="Imagen Actual" class="ml-2 mr-0 d-none"
-                                    style="width: 4.5rem; height: 4.5rem; cursor: pointer;" data-bs-toggle="modal"
-                                    data-bs-target="#imageModal">
+                            {{-- Punto de Entrega --}}
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3">
+                                <label for="idDeliveryPoint" class="form-label">Punto de Entrega:</label>
+                                <select name="idDeliveryPoint" id="idDeliveryPoint" class="form-control"
+                                    style="height: calc(3rem);">
+                                    <option value="">-- Seleccionar --</option>
+                                    @foreach ($delivery_points as $item)
+                                        <option value="{{ $item->idClient }}"
+                                            @if (old('idDeliveryPoint') == $item->idDeliveryPoint) selected @endif>{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('idDeliveryPoint')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
+                            {{-- Estado de Paquete --}}
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3">
+                                <label for="idPackageState" class="form-label">Estado de Paquete:</label>
+                                <select name="idPackageState" id="idPackageState" class="form-control"
+                                    style="height: calc(3rem);">
+                                    <option value="">-- Seleccionar --</option>
+                                    @foreach ($package_states as $item)
+                                        <option value="{{ $item->idPackageState }}"
+                                            @if (old('idPackageState') == $item->idPackageState) selected @endif>{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('idPackageState')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            {{-- Estado de Pago --}}
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3">
+                                <label for="idPaymentState" class="form-label">Estado de Pago:</label>
+                                <select name="idPaymentState" id="idPaymentState" class="form-control"
+                                    style="height: calc(3rem);">
+                                    <option value="">-- Seleccionar --</option>
+                                    @foreach ($payment_states as $item)
+                                        <option value="{{ $item->idPaymentState }}"
+                                            @if (old('idPaymentState') == $item->idPaymentState) selected @endif>{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('idPaymentState')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            {{-- Descripcion --}}
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3">
+                                <label for="description" class="form-label">Comentarios:</label>
+                                <textarea class="form-control" placeholder="Comentarios" id="description" name="description" maxlength="250">{{ old('description') }}</textarea>
+                                @error('description')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
 
                             {{-- Vamos con el detalleCompra --}}
                             {{-- Buscar producto por código --}}
@@ -82,8 +134,7 @@
                                         <tr>
                                             <th>Código</th>
                                             <th>Nombre</th>
-                                            <th>Precio Venta</th>
-                                            <th>Precio Compra</th>
+                                            <th>Precio</th>
                                             <th>Cantidad</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -217,16 +268,15 @@
             const existente = productos.find(p => p.idProduct === producto.idProduct);
             if (existente) {
                 existente.cantidad++;
-                existente.subtotal = existente.buyPrice * existente.cantidad;
+                existente.subtotal = existente.sellPrice * existente.cantidad;
             } else {
                 productos.push({
                     idProduct: producto.idProduct,
                     codeProduct: producto.codeProduct,
                     name: producto.name,
                     sellPrice: parseFloat(producto.sellPrice),
-                    buyPrice: parseFloat(producto.buyPrice), // editable por el usuario
                     cantidad: 1,
-                    subtotal: parseFloat(producto.buyPrice)
+                    subtotal: parseFloat(producto.sellPrice)
                 });
             }
             renderTabla();
@@ -241,9 +291,8 @@
                     <tr>
                         <td>${p.idProduct}</td>
                         <td>${p.name}</td>
-                        <td>$${(parseFloat(p.sellPrice) || 0).toFixed(2)}</td>
-                        <td><input type="number" value="${p.buyPrice}" min="0" step="0.01"
-                            onchange="actualizarCampo(${index}, 'buyPrice', this.value)" class="form-control"></td>
+                        <td><input type="number" value="${p.sellPrice}" min="0" step="0.01"
+                            onchange="actualizarCampo(${index}, 'sellPrice', this.value)" class="form-control"></td>
                         <td><input type="number" value="${p.cantidad}" min="1"
                             onchange="actualizarCampo(${index}, 'cantidad', this.value)" class="form-control"></td>
                         <td><button type="button" onclick="eliminarProducto(${index})" class="btn btn-danger btn-sm">Eliminar</button></td>
@@ -259,7 +308,7 @@
         // las agregamos al objeto window:
         window.actualizarCampo = function(index, campo, valor) {
             productos[index][campo] = parseFloat(valor);
-            productos[index].subtotal = productos[index].buyPrice * productos[index].cantidad;
+            productos[index].subtotal = productos[index].sellPrice * productos[index].cantidad;
             renderTabla();
         }
 
@@ -269,7 +318,7 @@
         }
 
         function actualizarTotal() {
-            let total = productos.reduce((sum, p) => sum + (p.buyPrice * p.cantidad), 0);
+            let total = productos.reduce((sum, p) => sum + (p.sellPrice * p.cantidad), 0);
             document.getElementById('total').value = total.toFixed(2);
         }
     });

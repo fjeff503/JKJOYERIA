@@ -4,21 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sale extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+    //Nombre de la tabla
+    protected $table = 'sales';
 
+    //Llave primaria
+    protected $primaryKey = 'idSale';
     protected $fillable = [
-        'date',
         'total',
-        'status',
         'description',
-        'idPaymentState',
-        'idPackageState',
         'idClient',
+        'idUser',
         'idDeliveryPoint',
-        'idUser'
+        'idPackageState',
+        'idPaymentState'  
     ];
 
     //relacionar con client
@@ -39,7 +43,7 @@ class Sale extends Model
         return $this->belongsTo(paymentState::class);
     }
 
-    //relacionar con paymentState
+    //relacionar con packageState
     public function packageState()
     {
         return $this->belongsTo(packageState::class);

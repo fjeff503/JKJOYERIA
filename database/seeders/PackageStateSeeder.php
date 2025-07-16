@@ -16,6 +16,10 @@ class PackageStateSeeder extends Seeder
     {
         $data = array(
             [
+                'name' => 'Enviado',
+                'created_at' => Carbon::now()
+            ],
+            [
                 'name' => 'Entregado',
                 'created_at' => Carbon::now()
             ],

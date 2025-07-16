@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 {{-- Definimos el titulo --}}
-@section('title', 'Compras')
+@section('title', 'Ventas')
 
 {{-- Definimos estilos propios --}}
 @section('styles')
@@ -11,7 +11,7 @@
 {{-- Definimos el contenido --}}
 @section('content')
     {{-- Cuerpo de mi index --}}
-    <h1 class="text-center">Gesti&oacute;n de Compras</h1>
+    <h1 class="text-center">Gesti&oacute;n de Ventas</h1>
     <br>
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
@@ -20,8 +20,8 @@
                     <div class="d-flex justify-content-between">
                         {{-- Boton para agregar --}}
                         <div class="btn-group align-self-center">
-                            <a href="/purchases/create" type="button" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Nueva Compra
+                            <a href="/sales/create" type="button" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Nueva Venta
                             </a>
                         </div>
                         {{-- FIN Boton para agregar --}}
@@ -31,48 +31,39 @@
                         <table id="clientes-table" class="table table-hover table-bordered text-center">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>N°</th>
-                                    <th>N° Compra</th>
-                                    <th>Total</th>
-                                    <th>Voucher</th>
-                                    <th>Proveedor</th>
+                                    <th>N° Venta</th>
+                                    <th>Cliente</th>
                                     <th>Fecha</th>
-                                    <th>Registro</th>
+                                    <th>Punto Entrega</th>
+                                    <th>Estado paquete</th>
+                                    <th>Estado pago</th>
+                                    <th>Total</th>
+                                    <th>Comentarios</th>
+                                    <th>Usuario</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $count = 0;
-                                @endphp
                                 @foreach ($data as $item)
                                     <tr>
-                                        @php
-                                            $count++;
-                                        @endphp
-                                        <td>{{ $count }}</td>
-                                        <td>{{ $item->idPurchase }}</td>
-                                        <td>${{ $item->total }}</td>
-                                        <td>
-                                            @if ($item->voucher)
-                                                <img src="{{ $item->voucher }}" alt="Foto de Perfil">
-                                            @else
-                                                <p>Sin imagen</p>
-                                            @endif
-                                        </td>
-                                        <td>{{ $item->provider }}</td>
+                                        <td>{{ $item->idSale }}</td>
+                                        <td>{{ $item->client }}</td>
                                         <td>{{ $item->date }}</td>
+                                        <td>{{ $item->delivery_point }}</td>
+                                        <td>{{ $item->package_state }}</td>
+                                        <td>{{ $item->payment_state }}</td>
+                                        <td>${{ $item->total }}</td>
+                                        <td>{{ $item->description }}</td>
                                         <td>{{ $item->user }}</td>
                                         <td>
                                             {{-- @if (Auth::user()->role == 'admin') --}}
                                             {{-- boton para modificar --}}
                                             <a class="btn btn-primary p-2"
-                                                href="/purchases/edit/{{ $item->idPurchase }}">Modificar</a>
+                                                href="/sales/edit/{{ $item->idSale }}">Modificar</a>
                                             {{-- @endif --}}
                                             {{-- boton para eliminar --}}
-                                            <button class="btn btn-danger p-2"
-                                                url="/purchases/destroy/{{ $item->idPurchase }}"
-                                                onclick="destroy(this, 'Se eliminara la compra {{ $item->idPurchase }}','La compra fue eliminada con exito', 'La compra NO fue eliminada')"
+                                            <button class="btn btn-danger p-2" url="/sales/destroy/{{ $item->idSale }}"
+                                                onclick="destroy(this, 'Se eliminara la venta {{ $item->idSale }}','La venta fue eliminada con exito', 'La compra NO fue eliminada')"
                                                 token="{{ csrf_token() }}">Eliminar</button>
                                         </td>
                                     </tr>
