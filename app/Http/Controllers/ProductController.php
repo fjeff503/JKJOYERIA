@@ -50,7 +50,8 @@ class ProductController extends Controller
                     'idProduct' => $producto->idProduct,
                     'name' => $producto->name,
                     'buyPrice' => $producto->buyPrice,
-                    'sellPrice' => $producto->sellPrice
+                    'sellPrice' => $producto->sellPrice,
+                    'stock' => $producto->stock,
                 ]
             ]);
         }

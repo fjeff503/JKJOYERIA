@@ -83,6 +83,7 @@ class PurchaseController extends Controller
         
             // 2. Actualizar el stock y precio del producto
             $producto = Product::find($item['idProduct']);
+            
             if ($producto) {
                 $producto->stock += $item['cantidad']; // quantity según la base
                 $producto->buyPrice = $item['buyPrice']; // buyPrice nuevo

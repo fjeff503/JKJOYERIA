@@ -25,17 +25,17 @@ class Sale extends Model
         'idPaymentState'  
     ];
 
-    //relacionar con client
-    public function client()
-    {
-        return $this->belongsTo(Client::class);
-    }
+// relacionar con client
+public function client()
+{
+    return $this->belongsTo(Client::class, 'idClient', 'idClient');
+}
 
-    //relacionar con deliveryPoint
-    public function deliveryPoint()
-    {
-        return $this->belongsTo(DeliveryPoint::class);
-    }
+// relacionar con deliveryPoint
+public function deliveryPoint()
+{
+    return $this->belongsTo(DeliveryPoint::class, 'idDeliveryPoint', 'idDeliveryPoint');
+}
 
     //relacionar con paymentState
     public function paymentState()

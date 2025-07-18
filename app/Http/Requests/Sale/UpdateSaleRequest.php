@@ -22,14 +22,12 @@ class UpdateSaleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => 'required|datetime',
-            'total' => 'required|decimal',
-            'description' => 'required|string|max:255',
-            'idPackageState' => 'required|integer|exists:App\PackageState,idPackageState',
-            'idPaymentState' => 'required|integer|exists:App\PaymentState,idPaymentState',
-            'idClient' => 'required|integer|exists:App\Client,idClient',
-            'idDeliveryPoint' => 'required|integer|exists:App\DeliveryPoint,idDeliveryPoint',
-            'idUser' => 'required|integer|exists:App\User,idUser'
+            'total' => 'required|numeric|min:0',
+            'description' => 'nullable|string|max:255',
+            'idClient' => 'required|integer|exists:clients,idClient',
+            'idPackageState' => 'required|integer|exists:package_states,idPackageState',
+            'idPaymentState' => 'required|integer|exists:payment_states,idPaymentState',
+            'idDeliveryPoint' => 'required|integer|exists:delivery_points,idDeliveryPoint',
         ];
     }
 
@@ -37,35 +35,34 @@ class UpdateSaleRequest extends FormRequest
     {
         //definimos los mensajes de error que nos mostrara
         return [
-            'date.required' => 'Este campo es requerido.',
-            'date.datetime' => 'El valor del campo es incorrecto.',
+            // TOTAL
+            'total.required' => 'El campo Total es obligatorio.',
+            'total.decimal' => 'El Total debe ser un número decimal válido.',
+            'total.min' => 'El Total no puede ser negativo.',
 
-            'total.required' => 'Este campo es requerido.',
-            'total.decimal' => 'El valor del campo es incorrecto.',
+            // DESCRIPTION
+            'description.string' => 'La descripción debe ser un texto válido.',
+            'description.max' => 'La descripción no debe exceder los 255 caracteres.',
 
-            'description.required' => 'Este campo es requerido.',
-            'description.string' => 'El valor del campo es incorrecto.',
-            'description.max' => 'Solo se permite 255 caracteres.',
+            // CLIENT
+            'idClient.required' => 'Debe seleccionar un cliente.',
+            'idClient.integer' => 'El cliente seleccionado no es válido.',
+            'idClient.exists' => 'El cliente seleccionado no existe en la base de datos.',
 
-            'idPackageState.required' => 'Este campo es requerido.',
-            'idPackageState.integer' => 'El valor del campo es incorrecto.',
-            'idPackageState.exists' => 'El estado del paquete no existe.',
+            // PACKAGESTATE
+            'idPackageState.required' => 'Debe seleccionar un estado de paquete.',
+            'idPackageState.integer' => 'El estado de paquete seleccionado no es válido.',
+            'idPackageState.exists' => 'El estado de paquete seleccionado no existe en la base de datos.',
 
-            'idPaymentState.required' => 'Este campo es requerido.',
-            'idPaymentState.integer' => 'El valor del campo es incorrecto.',
-            'idPaymentState.exists' => 'El estado de pago no existe.',
+            // PAYMENTSTATE
+            'idPaymentState.required' => 'Debe seleccionar un estado de pago.',
+            'idPaymentState.integer' => 'El estado de pago seleccionado no es válido.',
+            'idPaymentState.exists' => 'El estado de pago seleccionado no existe en la base de datos.',
 
-            'idClient.required' => 'Este campo es requerido.',
-            'idClient.integer' => 'El valor del campo es incorrecto.',
-            'idClient.exists' => 'El cliente no existe.',
-
-            'idDeliveryPoint.required' => 'Este campo es requerido.',
-            'idDeliveryPoint.integer' => 'El valor del campo es incorrecto.',
-            'idDeliveryPoint.exists' => 'El destino no existe.',
-
-            'idUser.required' => 'Este campo es requerido.',
-            'idUser.integer' => 'El valor del campo es incorrecto.',
-            'idUser.exists' => 'El usuario no existe.',
+            // DELIVERYPOINT
+            'idDeliveryPoint.required' => 'Debe seleccionar un punto de entrega.',
+            'idDeliveryPoint.integer' => 'El punto de entrega seleccionado no es válido.',
+            'idDeliveryPoint.exists' => 'El punto de entrega seleccionado no existe en la base de datos.',
 
         ];
     }

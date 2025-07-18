@@ -33,13 +33,13 @@
                                 <tr>
                                     <th>N° Venta</th>
                                     <th>Cliente</th>
+                                    <th>Tel&eacute;fono</th>
                                     <th>Fecha</th>
                                     <th>Punto Entrega</th>
                                     <th>Estado paquete</th>
                                     <th>Estado pago</th>
                                     <th>Total</th>
                                     <th>Comentarios</th>
-                                    <th>Usuario</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -48,13 +48,13 @@
                                     <tr>
                                         <td>{{ $item->idSale }}</td>
                                         <td>{{ $item->client }}</td>
+                                        <td>{{ $item->phone }}</td>
                                         <td>{{ $item->date }}</td>
                                         <td>{{ $item->delivery_point }}</td>
                                         <td>{{ $item->package_state }}</td>
                                         <td>{{ $item->payment_state }}</td>
                                         <td>${{ $item->total }}</td>
                                         <td>{{ $item->description }}</td>
-                                        <td>{{ $item->user }}</td>
                                         <td>
                                             {{-- @if (Auth::user()->role == 'admin') --}}
                                             {{-- boton para modificar --}}

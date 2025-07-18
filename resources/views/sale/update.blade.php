@@ -2,66 +2,113 @@
 @extends('layouts.app')
 
 {{-- Definimos el titulo --}}
-@section('title', 'Compras | Actualizar')
+@section('title', 'Ventas | Actualizar')
 
 {{-- Definimos estilos propios --}}
 @section('styles')
 @endsection
 
+<style>
+    .modal-dialog {
+        max-width: 80% !important;
+        /* Ajusta el porcentaje a lo que necesites */
+        width: 80% !important;
+    }
+</style>
+
 {{-- Definimos el contenido --}}
 @section('content')
     {{-- Cuerpo de mi index --}}
-    <h1 class="text-center">Actualizar Compra {{ $purchase->idPurchase }}</h1>
+    <h1 class="text-center">Actualizar Venta {{ $sale->idSale }}</h1>
     <br>
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card bg-light">
                 <div class="card-body">
-                    {{-- CUERPO PARA ACTUALIZAR --}}
-                    <form action="/purchases/update/{{ $purchase->idPurchase }}" method="POST" enctype="multipart/form-data">
+                    {{-- CUERPO PARA CREAR --}}
+                    <form action="/sales/update/{{ $sale->idSale }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row m-auto col-xxl-8 col-xl-9 col-lg-10 col-md-11 col-sm-12">
-                            {{-- Proveedor --}}
-                            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 mt-3">
-                                <label for="idProvider" class="form-label">Proveedor:</label>
-                                <select name="idProvider" id="idProvider" class="form-control" style="height: calc(3rem);">
-                                    <option value="">-- Seleccionar --</option>
-                                    @foreach ($providers as $item)
-                                        <option value="{{ $item->idProvider }}"
-                                            {{ $item->idProvider == $purchase->idProvider ? 'selected' : '' }}>
-                                            {{ $item->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('idProvider')
+                            {{-- Cliente --}}
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3">
+                                <label for="idClient" class="form-label">Cliente:</label>
+                                <input type="hidden" id="idClient" name="idClient" value="{{ $sale->idClient }}">
+                                <div class="input-group">
+                                    <input type="text" id="nombreCliente" name="nombreCliente" class="form-control"
+                                        placeholder="Selecciona un cliente" readonly value="{{ $sale->client->name }}"
+                                        data-bs-toggle="modal" data-bs-target="#clientesModal" style="cursor:pointer;">
+                                </div>
+                                @error('idClient')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
 
-                            {{-- Voucher --}}
-                            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 d-flex align-items-center mt-3">
-                                <div class="me-3">
-                                    <label for="voucher" class="form-label">Voucher</label>
-                                    <input type="file" name="voucher" id="voucher"
-                                        class="form-control @error('voucher') is-invalid @enderror">
-                                </div>
-                                <img id="previewImage" src="{{ $purchase->voucher }}" alt="Imagen Actual" class="ml-2 mr-0"
-                                    style="width: 4.5rem; height: 4.5rem; cursor: pointer;" data-bs-toggle="modal"
-                                    data-bs-target="#imageModal">
-                            </div>
-                            {{-- Total --}}
-                            <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mt-3">
-                                <label for="total" class="form-label">Total:</label>
+                            {{-- Punto de Entrega --}}
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3">
+                                <label for="idDeliveryPoint" class="form-label">Punto de Entrega:</label>
+                                <input type="hidden" id="idDeliveryPoint" name="idDeliveryPoint"
+                                    value="{{ $sale->idDeliveryPoint }}">
+
                                 <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input type="number" class="form-control @error('total') is-invalid @enderror"
-                                        placeholder="0.00" id="total" name="total" maxlength="50" min="0"
-                                        step="0.01" value="{{ $purchase->total }}">
+                                    <input type="text" id="nombreDeliveryPoint" name="nombreDeliveryPoint"
+                                        class="form-control" placeholder="Selecciona un Punto de Entrega" readonly
+                                        value="{{ $sale->deliveryPoint->name }}" data-bs-toggle="modal"
+                                        data-bs-target="#deliveryPointsModal" style="cursor:pointer;">
                                 </div>
-                                @error('total')
+
+                                @error('idDeliveryPoint')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            {{-- Estado de Paquete --}}
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3">
+                                <label for="idPackageState" class="form-label">Estado de Paquete:</label>
+                                <select name="idPackageState" id="idPackageState" class="form-control"
+                                    style="height: calc(3rem);">
+                                    @foreach ($package_states as $item)
+                                        <option value="{{ $item->idPackageState }}"
+                                            {{ $item->idPackageState == $sale->idPackageState ? 'selected' : '' }}>
+                                            {{ $item->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('idPackageState')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            {{-- Estado de Pago --}}
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mt-3">
+                                <label for="idPaymentState" class="form-label">Estado de Pago:</label>
+                                <select name="idPaymentState" id="idPaymentState" class="form-control"
+                                    style="height: calc(3rem);">
+                                    @foreach ($payment_states as $item)
+                                        <option value="{{ $item->idPaymentState }}"
+                                            {{ $item->idPaymentState == $sale->idPaymentState ? 'selected' : '' }}>
+                                            {{ $item->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('idPaymentState')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            {{-- Descripcion --}}
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3">
+                                <label for="description" class="form-label">Comentarios:</label>
+                                <textarea class="form-control" placeholder="Comentarios" id="description" name="description" maxlength="250">{{ $sale->description }}</textarea>
+                                @error('description')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -70,10 +117,26 @@
 
                             {{-- Vamos con el detalleCompra --}}
                             {{-- Buscar producto por código --}}
-                            <div class="col-12 mt-4">
+                            <div class="col-10 mt-4">
                                 <label for="codigoProducto" class="form-label">Agregar producto por código:</label>
                                 <input type="text" id="codigoProducto" class="form-control"
                                     placeholder="Código del producto">
+                            </div>
+
+                            {{-- Total --}}
+                            <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mt-4">
+                                <label for="total" class="form-label">Total:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control @error('total') is-invalid @enderror"
+                                        placeholder="0.00" id="total" name="total" maxlength="50" min="0"
+                                        step="0.01" value="{{ old('total') }}">
+                                </div>
+                                @error('total')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             {{-- Tabla para mostrar productos agregados --}}
@@ -83,28 +146,31 @@
                                         <tr>
                                             <th>Código</th>
                                             <th>Nombre</th>
-                                            <th>Precio Venta</th>
-                                            <th>Precio Compra</th>
+                                            <th>Precio</th>
+                                            <th>Descuento</th>
                                             <th>Cantidad</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-
-                                    </tbody>
+                                    <tbody></tbody>
                                 </table>
                             </div>
 
                             {{-- Campo oculto para enviar los productos como JSON --}}
-                            <input type="hidden" name="detalle" id="detalle">
+                            <input type="hidden" name="detalle" id="detalle" value="{{ old('detalle') }}">
+                            @error('detalle')
+                                <span class="invalid-feedback d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                             {{-- Cerramos el detalleCompra --}}
 
                             <div class="col-12 text-center pt-3">
-                                <button onclick="deshabilitar(this)"
+                                <button {{--  onclick="deshabilitar(this)" --}}
                                     class="mt-2 btn btn-primary btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5">Guardar</button>
                                 <a id="btnCancelar"
                                     class="mt-2 btn btn-dark btn-md col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-5"
-                                    href="/purchases">Cancelar</a>
+                                    href="/sales">Cancelar</a>
                             </div>
                         </div>
                     </form>
@@ -113,97 +179,143 @@
         </div>
     </div>
 
-
-    <!-- Modal -->
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-md" id="modalDialog">
+    {{-- Modal de Clientes --}}
+    <div class="modal fade" id="clientesModal" tabindex="-1" aria-labelledby="clientesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-body position-relative text-center">
-                    <!-- Botón de lupa interactivo -->
-                    <button id="zoomButton" class="btn btn-light position-absolute"
-                        style="top: 10px; right: 10px; z-index: 1050;" onclick="toggleModalSize()">
-                        <i id="zoomIcon" class="fas fa-search-plus"></i>
-                    </button>
+                <div class="modal-header">
+                    <h4 class="modal-title w-100 text-center" id="clientesModalLabel">Selecciona un Cliente</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive pt-4">
+                        <table id="tablaClientes" class="table table-hover table-bordered text-center">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Teléfono</th>
+                                    <th>Whatsapp</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $count = 1; @endphp
+                                @foreach ($clients as $cliente)
+                                    <tr>
+                                        <td>{{ $count++ }}</td>
+                                        <td>{{ $cliente->name }}</td>
+                                        <td>{{ $cliente->phone }}</td>
+                                        <td>{{ $cliente->whatsapp }}</td>
+                                        <td>
+                                            <button class="btn btn-success seleccionar-cliente p-3"
+                                                data-id="{{ $cliente->idClient }}" data-name="{{ $cliente->name }}">
+                                                Seleccionar
+                                            </button>
+                                        </td>
 
-                    <!-- Imagen -->
-                    <img id="modalImage" src="" alt="Imagen Ampliada" class="img-fluid rounded">
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="{{ asset('jQuery/jquery-3.6.0.min.js') }}"></script>
-    {{-- incluimos el archivo para SweetAlert --}}
-    <script src="{{ asset('SweetAlert/sweetalert.min.js') }}"></script>
-
-    {{-- Incluimos el script para mensajes satisfactorios --}}
-    @include('components.exito')
-
-    {{-- Incluimos el script para mensajes de informacion --}}
-    @include('components.info')
-
-    {{-- Incluimos el script para mensajes satisfactorios al eliminar --}}
-    @include('components.eliminado')
-
-    {{-- Incluimos script de errores --}}
-    @include('components.error')
+    {{-- Modal de Puntos de Entrega --}}
+    <div class="modal fade" id="deliveryPointsModal" tabindex="-1" aria-labelledby="deliveryPointsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title w-100 text-center" id="deliveryPointsModalLabel">Selecciona un Punto de Entrega
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive pt-4">
+                        <table id="tablaDeliveryPoints" class="table table-hover table-bordered text-center">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Encomendista</th>
+                                    <th>D&iacute;a</th>
+                                    <th>Hora</th>
+                                    <th>Descripc&oacute;n</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($delivery_points as $deliveryPoint)
+                                    <tr>
+                                        <td>{{ $deliveryPoint->name }}</td>
+                                        <td>{{ $deliveryPoint->parcel }}</td>
+                                        <td>{{ $deliveryPoint->day }}</td>
+                                        <td>{{ $deliveryPoint->hour }}</td>
+                                        <td>{{ $deliveryPoint->description }}</td>
+                                        <td>
+                                            <button class="btn btn-success p-3 seleccionar-deliveryPoint"
+                                                data-id="{{ $deliveryPoint->idDeliveryPoint }}"
+                                                data-name="{{ $deliveryPoint->name }}">
+                                                Seleccionar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
 
+{{-- Incluimos el script para desactivar los botones --}}
+@include('components.procesando')
+
+<!-- jQuery -->
+<script src="{{ asset('jQuery/jquery-3.6.0.min.js') }}"></script>
+<script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
+@include('components.dataTable', ['tablaId' => 'tablaClientes'])
+@include('components.dataTable', ['tablaId' => 'tablaDeliveryPoints'])
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Variables globales
-        const inputVoucher = document.getElementById('voucher');
-        const previewImage = document.getElementById('previewImage');
-        const modalImage = document.getElementById('modalImage');
         const inputCodigo = document.getElementById('codigoProducto');
         const form = document.getElementById('Formulario');
         let productos = {!! json_encode(
-            //!! escapa los caracteres para escribir json crudo
-            $purchase_details->map(function ($item) {
+            $sale_details->map(function ($item) {
                 return [
-                    'idPurchaseDetail' => $item->idPurchaseDetail,
-                    'idProduct' => $item->idProduct ?? $item->idPurchaseDetail,
-                    'codeProduct' => '',
+                    'idProduct' => $item->idProduct,
                     'name' => $item->product,
-                    'sellPrice' => (float) $item->sellPrice,
-                    'buyPrice' => (float) $item->price,
-                    'cantidad' => $item->quantity,
-                    'subtotal' => (float) $item->price * $item->quantity,
+                    'stock' => $item->stock ?? 0,
+                    'price' => (float) $item->price,
+                    'discount' => (float) $item->discount,
+                    'cantidad' => (int) $item->quantity,
+                    'cantidadOriginal' => (int) $item->quantity,
+                    'subtotal' => ((float) $item->price - (float) $item->discount) * (int) $item->quantity,
                 ];
             }),
+            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES,
         ) !!};
+
+        console.log(productos);
 
         renderTabla();
 
-        // Mostrar preview de imagen cargada
-        if (inputVoucher) {
-            inputVoucher.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (file && file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        previewImage.src = e.target.result;
-                        previewImage.classList.remove('d-none');
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    previewImage.classList.add('d-none');
-                    previewImage.src = '';
-                }
-            });
+        //rellenar la lista en caso de actualizar la pagina
+        const detalleInput = document.getElementById('detalle');
+        if (detalleInput && detalleInput.value) {
+            try {
+                productos = JSON.parse(detalleInput.value);
+                renderTabla();
+            } catch (error) {
+                productos = [];
+            }
         }
 
-        // Abrir imagen en modal al hacer clic en el preview
-        if (previewImage) {
-            previewImage.addEventListener('click', function() {
-                if (previewImage.src) {
-                    modalImage.src = previewImage.src;
-                }
-            });
-        }
-
-        // Listener para agregar producto por código cuando presionas Enter
         if (inputCodigo) {
             inputCodigo.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') {
@@ -234,7 +346,6 @@
             });
         }
 
-        // Evitar enviar formulario si el foco está en el input codigoProducto
         if (form) {
             form.addEventListener('submit', function(e) {
                 if (document.activeElement && document.activeElement.id === 'codigoProducto') {
@@ -246,21 +357,31 @@
             });
         }
 
-        // Función para agregar un producto a la lista
         function agregarProducto(producto) {
             const existente = productos.find(p => p.idProduct === producto.idProduct);
             if (existente) {
                 existente.cantidad++;
-                existente.subtotal = existente.buyPrice * existente.cantidad;
+                existente.subtotal = (existente.price - (existente.discount || 0)) * existente.cantidad;
             } else {
+                if (producto.stock <= 0) {
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: 'error',
+                        title: `Este producto no tiene unidades disponibles.`,
+                        showConfirmButton: true,
+                    });
+                    return;
+                }
                 productos.push({
                     idProduct: producto.idProduct,
                     codeProduct: producto.codeProduct,
                     name: producto.name,
-                    sellPrice: parseFloat(producto.sellPrice),
-                    buyPrice: parseFloat(producto.buyPrice), // editable por el usuario
+                    stock: producto.stock,
+                    price: parseFloat(producto.sellPrice),
+                    discount: 0,
                     cantidad: 1,
-                    subtotal: parseFloat(producto.buyPrice)
+                    subtotal: parseFloat(producto.price)
                 });
             }
             renderTabla();
@@ -272,30 +393,51 @@
 
             productos.forEach((p, index) => {
                 tbody.innerHTML += `
-                    <tr>
-                        <td>${p.idProduct}</td>
-                        <td>${p.name}</td>
-                        <td>$${(parseFloat(p.sellPrice) || 0).toFixed(2)}</td>
-                        <td><input type="number" value="${p.buyPrice}" min="0" step="0.01"
-                            onchange="actualizarCampo(${index}, 'buyPrice', this.value)" class="form-control"></td>
-                        <td><input type="number" value="${p.cantidad}" min="1"
-                            onchange="actualizarCampo(${index}, 'cantidad', this.value)" class="form-control"></td>
-                        <td>{{-- boton para eliminar --}}
-                                            <button type="button" onclick="eliminarProducto(${index})" class="btn btn-danger btn-sm">Eliminar</button></td>
-                    </tr>
-                `;
+                <tr>
+                    <td>${p.idProduct}</td>
+                    <td>${p.name}</td>
+                    <td>$${p.price.toFixed(2)}</td>
+                    <td><div class="input-group"><span class="input-group-text">$</span><input type="number" value="${p.discount}" min="0" step="0.01"
+                        onchange="actualizarCampo(${index}, 'discount', this.value)" class="form-control"></div></td>
+                    <td><input type="number" value="${p.cantidad}" min="1" max="${p.cantidad + p.stock}"
+                        onchange="actualizarCampo(${index}, 'cantidad', this.value)" class="form-control"></td>
+                    <td><button type="button" onclick="eliminarProducto(${index})" class="btn btn-danger btn-sm">Eliminar</button></td>
+                </tr>
+            `;
             });
 
             document.getElementById('detalle').value = JSON.stringify(productos);
             actualizarTotal();
-            document.getElementById('codigoProducto').focus();
         }
 
-        // Para que estas funciones puedan ser llamadas desde los inputs y botones que generas dinámicamente,
-        // las agregamos al objeto window:
         window.actualizarCampo = function(index, campo, valor) {
-            productos[index][campo] = parseFloat(valor);
-            productos[index].subtotal = productos[index].buyPrice * productos[index].cantidad;
+            let nuevoValor = parseFloat(valor);
+
+            if (campo === 'cantidad') {
+                const stock = productos[index].stock || 0;
+                const cantidadOriginal = productos[index].cantidadOriginal || 0;
+                const maxPermitido = stock + cantidadOriginal;
+
+                if (nuevoValor > maxPermitido) {
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: 'error',
+                        title: `Solo hay ${maxPermitido} unidades disponibles en stock.`,
+                        showConfirmButton: true,
+                    });
+
+                    nuevoValor = maxPermitido;
+                } else if (nuevoValor < 1) {
+                    nuevoValor = 1;
+                }
+            }
+
+            productos[index][campo] = nuevoValor;
+
+            const precioReal = productos[index].price - (productos[index].discount || 0);
+            productos[index].subtotal = precioReal * productos[index].cantidad;
+
             renderTabla();
         }
 
@@ -305,22 +447,44 @@
         }
 
         function actualizarTotal() {
-            let total = productos.reduce((sum, p) => sum + (p.buyPrice * p.cantidad), 0);
+            const total = productos.reduce((sum, p) => {
+                const precioFinal = p.price - (p.discount || 0);
+                return sum + (precioFinal * p.cantidad);
+            }, 0);
             document.getElementById('total').value = total.toFixed(2);
         }
     });
 
-    // Función para agrandar o reducir modal de imagen
-    function toggleModalSize() {
-        const dialog = document.getElementById('modalDialog');
-        const icon = document.getElementById('zoomIcon');
 
-        const isMd = dialog.classList.contains('modal-md');
+    $(document).ready(function() {
+        // Evento para seleccionar cliente
+        $('#tablaClientes').on('click', '.seleccionar-cliente', function() {
+            const id = $(this).data('id');
+            const name = $(this).data('name');
 
-        dialog.classList.toggle('modal-md', !isMd);
-        dialog.classList.toggle('modal-lg', isMd);
+            $('#idClient').val(id);
+            $('#nombreCliente').val(name);
 
-        icon.classList.remove('fa-search-plus', 'fa-search-minus');
-        icon.classList.add(isMd ? 'fa-search-minus' : 'fa-search-plus');
-    }
+            const modalEl = document.getElementById('clientesModal');
+            const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+            modal.hide();
+        });
+
+        // Evento para seleccionar punto de entrega
+        $('#tablaDeliveryPoints').on('click', '.seleccionar-deliveryPoint', function() {
+            const id = $(this).data('id');
+            const name = $(this).data('name');
+
+            // Actualiza el input hidden con el id seleccionado
+            $('#idDeliveryPoint').val(id);
+
+            // Actualiza el input visible con el nombre
+            $('#nombreDeliveryPoint').val(name);
+
+            // Cierra el modal
+            const modalEl = document.getElementById('deliveryPointsModal');
+            const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+            modal.hide();
+        });
+    });
 </script>

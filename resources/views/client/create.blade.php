@@ -8,6 +8,22 @@
 @section('styles')
 @endsection
 
+<!-- Incluye los archivos de inputmask -->
+<script src="{{ asset('InputMask/inputmask.min.js') }}"></script>
+
+<!-- Agrega un script para inicializar la máscara en el campo de teléfono -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Inputmask({
+            mask: '9999-9999',
+            placeholder: ''
+        }).mask('#phone');
+        Inputmask({
+            mask: '9999-9999',
+            placeholder: ''
+        }).mask('#whatsapp');
+    });
+</script>
 
 
 

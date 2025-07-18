@@ -93,7 +93,7 @@
                             </div>
 
                             {{-- Campo oculto para enviar los productos como JSON --}}
-                            <input type="hidden" name="detalle" id="detalle">
+                            <input type="hidden" name="detalle" id="detalle" value="{{ old('detalle') }}">
                             {{-- Cerramos el detalleCompra --}}
 
                             <div class="col-12 text-center pt-3">
@@ -141,6 +141,17 @@
         const inputCodigo = document.getElementById('codigoProducto');
         const form = document.getElementById('Formulario');
         let productos = [];
+
+        //rellenar la lista en caso de actualizar la pagina
+        const detalleInput = document.getElementById('detalle');
+        if (detalleInput && detalleInput.value) {
+            try {
+                productos = JSON.parse(detalleInput.value);
+                renderTabla();
+            } catch (error) {
+                productos = [];
+            }
+        }
 
         // Mostrar preview de imagen cargada
         if (inputVoucher) {

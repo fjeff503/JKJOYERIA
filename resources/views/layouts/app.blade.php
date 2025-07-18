@@ -61,6 +61,7 @@
         <!-- FIN DIV CONTENEDOR -->
     </div>
     <!-- FIN CUERPO DE LA PAGINA -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 <!-- plugins:js -->
