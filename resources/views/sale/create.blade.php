@@ -104,7 +104,7 @@
                             {{-- Descripcion --}}
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3">
                                 <label for="description" class="form-label">Comentarios:</label>
-                                <textarea class="form-control" placeholder="Comentarios" id="description" name="description" maxlength="250">{{ old('description') }}</textarea>
+                                <textarea class="form-control" placeholder="Comentarios" id="description" name="description" maxlength="100">{{ old('description') }}</textarea>
                                 @error('description')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>

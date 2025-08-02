@@ -39,7 +39,6 @@
                                     <th>Estado paquete</th>
                                     <th>Estado pago</th>
                                     <th>Total</th>
-                                    <th>Comentarios</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -54,17 +53,18 @@
                                         <td>{{ $item->package_state }}</td>
                                         <td>{{ $item->payment_state }}</td>
                                         <td>${{ $item->total }}</td>
-                                        <td>{{ $item->description }}</td>
                                         <td>
                                             {{-- @if (Auth::user()->role == 'admin') --}}
                                             {{-- boton para modificar --}}
-                                            <a class="btn btn-primary p-2"
-                                                href="/sales/edit/{{ $item->idSale }}">Modificar</a>
+                                            <a class="btn btn-primary p-2" href="/sales/edit/{{ $item->idSale }}"><i
+                                                    class="fas fa-edit menu-icon"></i></a>
                                             {{-- @endif --}}
                                             {{-- boton para eliminar --}}
                                             <button class="btn btn-danger p-2" url="/sales/destroy/{{ $item->idSale }}"
                                                 onclick="destroy(this, 'Se eliminara la venta {{ $item->idSale }}','La venta fue eliminada con exito', 'La compra NO fue eliminada')"
-                                                token="{{ csrf_token() }}">Eliminar</button>
+                                                token="{{ csrf_token() }}"><i class="fas fa-trash menu-icon"></i></button>
+                                            <a class="btn btn-info p-2" href="/sales/{{ $item->idSale }}/reporteEntrega"
+                                                target="_blank"><i class="fas fa-file-alt menu-icon"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -26,4 +26,7 @@ Route::middleware(['role:admin'])->group(function () {
 
     //Ruta para Eliminar saleDetail (BackEnd)
     Route::delete('/sale-details/destroy/{sale}', [SaleDetailController::class, 'destroy']);
+
+    //Ruta para generar el ReporteEntrega de entrega
+    Route::get('sales/{id}/reporteEntrega', [SaleController::class, 'generarReporteEntrega']);
 });

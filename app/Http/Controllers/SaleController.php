@@ -13,6 +13,7 @@ use App\Models\paymentState;
 use App\Models\Product;
 use App\Models\SaleDetail;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SaleController extends Controller
 {
@@ -37,6 +38,7 @@ class SaleController extends Controller
             ->join('package_states', 'package_states.idPackageState', '=', 'sales.idPackageState')
             ->join('payment_states', 'payment_states.idPaymentState', '=', 'sales.idPaymentState')
             ->join('users', 'users.id', '=', 'sales.idUser')
+            ->orderBy('sales.idSale', 'desc')
             ->get();
         
             return view('/sale/index')->with(['data' => $data]);
@@ -316,4 +318,40 @@ class SaleController extends Controller
             return response()->json(['res' => false, 'error' => $e->getMessage()], 500);
         }
     }
+
+    //Generamos el detalleEntrega
+public function generarReporteEntrega($id)
+{
+    $entrega = 
+
+    Sale::select(
+    'clients.name as cliente',
+    'clients.whatsapp as whatsapp',
+    'delivery_points.name as destino',
+    'days.name as dia',
+    'delivery_points.hour as hora',
+    'sales.total as total',
+    'parcels.name as encomendista',
+    'sales.description as descripcion',
+)
+->join('clients', 'clients.idClient', '=', 'sales.idClient')
+->join('delivery_points', 'delivery_points.idDeliveryPoint', '=', 'sales.idDeliveryPoint')
+->join('days', 'days.idDay', '=', 'delivery_points.idDay') // corregido aquí
+->join('parcels', 'parcels.idParcel', '=', 'delivery_points.idParcel')
+->where('sales.idSale', $id)
+->first();
+
+    // Verifica si el destino es "Personalizado"
+    if (strcasecmp($entrega->destino, 'Personalizado') === 0) {
+        return Pdf::loadView('reports.entrega_personalizada', compact('entrega'))
+            ->setPaper([0, 0, 288, 216], 'portrait')
+            ->stream("entrega_{$entrega->idSale}.pdf");
+    }
+
+    // Vista por defecto
+    return Pdf::loadView('reports.entrega', compact('entrega'))
+        ->setPaper([0, 0, 288, 216], 'portrait')
+        ->stream("entrega_{$entrega->idSale}.pdf");
 }
+}
+

@@ -24,7 +24,10 @@
                 }
             },
             lengthMenu: [5, 10, 25, 50, 75, 100],
-            pageLength: 10
+            pageLength: 10,
+            order: [
+                [0, 'desc']
+            ]
         });
     });
 </script>
